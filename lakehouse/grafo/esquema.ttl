@@ -1,0 +1,52 @@
+@prefix obra: <https://w3id.org/obras-mx/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix geo:  <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+# Vocabulario del grafo de obra pública federalizada. El capítulo dejó el grafo implícito
+# en las llaves foráneas; aquí esas relaciones se vuelven explícitas. El prefijo w3id
+# todavía no está registrado, así que los IRI identifican, pero no resuelven.
+
+<https://w3id.org/obras-mx/> a owl:Ontology ;
+    rdfs:label "Obra pública federalizada"@es, "Federalised public works"@en .
+
+obra:Proyecto a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Proyecto"@es ;
+    rdfs:comment "Proyecto identificado por un folio de SHCP, estable entre ciclos."@es .
+
+obra:VersionProyecto a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Versión de proyecto"@es ;
+    rdfs:comment "Una fila de dim_proyecto_federal: el estado del proyecto entre dos cambios."@es .
+
+obra:ObservacionCiclo a owl:Class ;
+    rdfs:subClassOf geo:Feature ;
+    rdfs:label "Observación por ciclo"@es ;
+    rdfs:comment "Una fila de fact_proyecto_ciclo: lo informado sobre un proyecto al cierre de un ciclo."@es .
+
+obra:Municipio a owl:Class ;
+    rdfs:subClassOf geo:Feature ;
+    rdfs:label "Municipio"@es .
+
+obra:folio a owl:DatatypeProperty ; rdfs:domain obra:Proyecto ; rdfs:range xsd:string .
+obra:version a owl:DatatypeProperty ; rdfs:domain obra:VersionProyecto ; rdfs:range xsd:integer .
+obra:estatus a owl:DatatypeProperty ; rdfs:domain obra:VersionProyecto ; rdfs:range xsd:string .
+obra:clasificacion a owl:DatatypeProperty ; rdfs:domain obra:VersionProyecto ; rdfs:range xsd:string .
+obra:motivoCambio a owl:DatatypeProperty ; rdfs:domain obra:VersionProyecto ; rdfs:range xsd:string .
+obra:ciclo a owl:DatatypeProperty ; rdfs:domain obra:ObservacionCiclo ; rdfs:range xsd:integer .
+obra:aprobado a owl:DatatypeProperty ; rdfs:range xsd:decimal ;
+    rdfs:comment "Monto global aprobado, en pesos. Se repite entre ciclos: no se suma entre ellos."@es .
+obra:pagado a owl:DatatypeProperty ; rdfs:domain obra:ObservacionCiclo ; rdfs:range xsd:decimal ;
+    rdfs:comment "Pagado acumulado al cierre del ciclo, en pesos."@es .
+obra:avanceFisico a owl:DatatypeProperty ; rdfs:domain obra:ObservacionCiclo ; rdfs:range xsd:decimal .
+obra:avanceFinanciero a owl:DatatypeProperty ; rdfs:domain obra:ObservacionCiclo ; rdfs:range xsd:decimal .
+obra:poblacion a owl:DatatypeProperty ; rdfs:domain obra:Municipio ; rdfs:range xsd:integer .
+obra:gradoRezago a owl:DatatypeProperty ; rdfs:domain obra:Municipio ; rdfs:range xsd:string .
+obra:claveINEGI a owl:DatatypeProperty ; rdfs:domain obra:Municipio ; rdfs:range xsd:string .
+
+obra:deProyecto a owl:ObjectProperty ; rdfs:range obra:Proyecto .
+obra:versionVigente a owl:ObjectProperty ; rdfs:domain obra:ObservacionCiclo ; rdfs:range obra:VersionProyecto .
+obra:enMunicipio a owl:ObjectProperty ; rdfs:domain obra:ObservacionCiclo ; rdfs:range obra:Municipio .

@@ -1,0 +1,49 @@
+{
+ "tripletas": 2821739,
+ "segundos_materializacion": 68.8,
+ "bytes_gz": 29938588,
+ "clases": {
+  "DatatypeProperty": 13,
+  "Geometry": 159285,
+  "Class": 4,
+  "Municipio": 125,
+  "Proyecto": 80022,
+  "ObjectProperty": 3,
+  "ObservacionCiclo": 159285,
+  "VersionProyecto": 108556,
+  "Ontology": 1
+ },
+ "consultas": {
+  "01_pagado_por_ciclo": {
+   "filas": 6,
+   "ms": 1894.6,
+   "igual": true,
+   "sha256": "b832b22eb40e044af052b5a2f1148c5cc4b8ca4c435464e90b15fe3d6a4455ce"
+  },
+  "02_cadena_de_versiones": {
+   "filas": 3,
+   "ms": 268.6,
+   "igual": true,
+   "sha256": "c7eae580f52e7100129668f6edede8f2ca87e892866fc0bcca37a37e3783a761"
+  },
+  "03_proyectos_a_terminado": {
+   "filas": 14,
+   "ms": 454.3,
+   "igual": true,
+   "sha256": "9ad0e52535e43f7e5d6d3b90a719ac46598a0604ded014983309576c0a90badd"
+  },
+  "04_rezago_2023": {
+   "filas": 4,
+   "ms": 337.5,
+   "igual": true,
+   "sha256": "5d1938576024e6d14cc62be30b19135870f00d877789f3671d813cafca03a110"
+  },
+  "05_temascaltepec": {
+   "filas": 6,
+   "ms": 11.3,
+   "igual": true,
+   "sha256": "60f02fee6a349f2058234851eb2330c9fe8dcb58c112cf4d40bacfe7fa2e545f"
+  }
+ },
+ "fallos": 0
+}

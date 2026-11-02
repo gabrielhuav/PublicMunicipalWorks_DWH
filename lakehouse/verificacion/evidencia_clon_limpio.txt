@@ -1,0 +1,33 @@
+Prueba desde un clon limpio, 2 de noviembre de 2026
+Rama ijcopi-obras, commit a302bb8, ruta C:/t/clon37. Entorno de Python nuevo; base, almacén de
+objetos y volúmenes propios (proyectos obras-clon y obras-lago-clon, puertos 55433 y 18334).
+La población sintética se sembró de cero con docker/compose.yml.
+
+Límite de la prueba: los seis ZIP de SHCP, INEGI y CONEVAL no se volvieron a bajar en este clon.
+SHCP entregaba 150 KB/s esa noche. Se copiaron a la caché y descargar.py comprobó su SHA-256;
+los 9 archivos se habían bajado de su origen entre el 1 y el 2 de noviembre.
+
+etl/ejecutar.py terminó con salida 0 en 569 s, con fallos: 0.
+Tablas originales idénticas tras la carga: True (34 tablas).
+
+Consulta                      filas  SHA-256 del clon     igual al lago principal
+01_totales_por_ciclo             6  aa525717ee06bf5d     sí
+02_clasificacion_2024          435  1d7f26429a7472e2     sí
+03_estado_de_mexico_2024       125  5f17ab75b05385a9     sí
+04_rezago_2023                   5  3bb872b1fd41d266     sí
+05_alertas_por_ciclo             6  3a0ac7871591a3ad     sí
+06_historial_de_un_folio         5  1d93a7ed00c17ff6     sí
+07_temascaltepec                 6  3bbb5bb5ae299edb     sí
+
+oro.proyecto_ciclo        1,537,019 filas,   111.4 MB, igual: sí
+oro.alertas               1,465,856 filas,    27.6 MB, igual: sí
+oro.municipio_ciclo          14,561 filas,     0.4 MB, igual: sí
+oro.calidad_geo                   6 filas,     0.0 MB, igual: sí
+oro.cruce_cngmd               2,469 filas,     0.1 MB, igual: sí
+
+capa bronce      9 objetos    2136.3 MB
+capa oro         5 objetos     139.5 MB
+capa plata    1130 objetos     291.5 MB
+CSV de los seis ciclos 2,803.0 MB; tablas nuevas de PostgreSQL 753.1 MB
+poda: 1 de 192 archivos
+diferencias con el lago principal: 0

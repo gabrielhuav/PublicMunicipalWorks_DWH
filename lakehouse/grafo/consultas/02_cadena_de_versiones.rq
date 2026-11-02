@@ -1,0 +1,10 @@
+PREFIX obra: <https://w3id.org/obras-mx/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Recorre el historial SCD 2 como un camino: cuántas revisiones tiene cada motivo.
+SELECT ?motivo (COUNT(?v) AS ?versiones) WHERE {
+  ?v prov:wasRevisionOf ?previa ; obra:motivoCambio ?motivo .
+}
+GROUP BY ?motivo
+ORDER BY ?motivo

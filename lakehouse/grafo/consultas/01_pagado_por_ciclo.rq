@@ -1,0 +1,11 @@
+PREFIX obra: <https://w3id.org/obras-mx/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Observaciones y pagado por ciclo en el Estado de México.
+SELECT ?ciclo (COUNT(?o) AS ?proyectos) (SUM(COALESCE(?p, 0.0)) AS ?pagado) WHERE {
+  ?o a obra:ObservacionCiclo ; obra:ciclo ?ciclo .
+  OPTIONAL { ?o obra:pagado ?p }
+}
+GROUP BY ?ciclo
+ORDER BY ?ciclo

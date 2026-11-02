@@ -54,6 +54,30 @@ Los archivos oficiales no se guardan en Git, porque suman 2.1 GB: se bajan de su
 
 Las consultas y los comandos para verlas están en [`consultas/README.md`](consultas/README.md).
 
+## Interoperabilidad
+
+Alcance: el Estado de México. Las dos salidas se generan de los datos, sin edición a mano, y
+quedan en `lakehouse/datos/publicar/`, que Git ignora.
+
+**OC4IDS.** `proyecciones/oc4ids.py` proyecta cada proyecto de inversión a OC4IDS 0.9.5 y lo
+valida contra el esquema oficial, copiado en `proyecciones/esquema/`. Un campo sin dato se
+omite, no se rellena. El id es el folio porque el proyecto no tiene un prefijo registrado, y el
+resultado es una proyección de investigación, no una publicación de SHCP.
+
+**Grafo RDF.** `grafo/materializar.py` aplica el mapeo R2RML `grafo/mapeo.r2rml.ttl` sobre
+PostgreSQL con morph-kgc, y usa PROV para volver recorrible el historial SCD 2. Cada consulta
+`grafo/consultas/*.rq` tiene un gemelo `.sql` y se comparan por SHA-256. Instala su entorno aparte:
+
+```bash
+py -3 -m venv lakehouse/grafo/.venv
+lakehouse/grafo/.venv/Scripts/python -m pip install -r lakehouse/grafo/requirements.txt
+lakehouse/grafo/.venv/Scripts/python lakehouse/grafo/materializar.py
+```
+
+```bash
+lakehouse/.venv/Scripts/python lakehouse/proyecciones/oc4ids.py
+```
+
 ## Decisiones sobre los datos
 
 - **Plata conserva lo que dice la fuente y oro lo corrige a la vista.** Tres filas de

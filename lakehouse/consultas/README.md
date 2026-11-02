@@ -44,7 +44,7 @@ docker exec -it obras-publicas-db-1 psql -U obras -d obras_publicas
 SELECT * FROM warehouse.v_proyecto_federal WHERE cvemun = '15086' AND ciclo = 2025 LIMIT 5;
 SELECT folio, version, estatus, fecha_efectiva, fecha_expiracion, motivo_cambio
 FROM warehouse.dim_proyecto_federal
-WHERE folio = 'MEX00180101071655'
+WHERE folio = 'MEX16170300965559'
 ORDER BY version;
 ```
 

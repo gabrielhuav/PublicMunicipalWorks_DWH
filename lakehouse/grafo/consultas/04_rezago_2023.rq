@@ -1,0 +1,11 @@
+PREFIX obra: <https://w3id.org/obras-mx/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Del proyecto al municipio y a su rezago social.
+SELECT ?grado (COUNT(DISTINCT ?m) AS ?municipios) (SUM(?p) AS ?pagado) WHERE {
+  ?o obra:ciclo 2023 ; obra:enMunicipio ?m ; obra:pagado ?p .
+  ?m obra:gradoRezago ?grado .
+}
+GROUP BY ?grado
+ORDER BY ?grado

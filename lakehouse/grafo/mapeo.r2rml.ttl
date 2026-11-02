@@ -1,0 +1,81 @@
+@prefix rr:   <http://www.w3.org/ns/r2rml#> .
+@prefix obra: <https://w3id.org/obras-mx/> .
+@prefix geo:  <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# Del esquema en estrella al grafo. Alcance: el Estado de México, entidad 15. Las
+# versiones de dim_proyecto_federal se enlazan con PROV: el historial SCD 2 se vuelve
+# una cadena que SPARQL puede recorrer. Nombres de contratistas: fuera del grafo.
+
+<#Municipio> a rr:TriplesMap ;
+    rr:logicalTable [ rr:sqlQuery """
+        SELECT cvemun, municipio, pobtot, grado_rezago
+        FROM warehouse.dim_municipio WHERE left(cvemun, 2) = '15' """ ] ;
+    rr:subjectMap [ rr:template "https://w3id.org/obras-mx/municipio/{cvemun}" ; rr:class obra:Municipio ] ;
+    rr:predicateObjectMap [ rr:predicate rdfs:label ; rr:objectMap [ rr:column "municipio" ; rr:language "es" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:claveINEGI ; rr:objectMap [ rr:column "cvemun" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:poblacion ; rr:objectMap [ rr:column "pobtot" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:gradoRezago ; rr:objectMap [ rr:column "grado_rezago" ] ] .
+
+<#Proyecto> a rr:TriplesMap ;
+    rr:logicalTable [ rr:sqlQuery """
+        SELECT DISTINCT d.folio
+        FROM warehouse.dim_proyecto_federal d
+        JOIN warehouse.fact_proyecto_ciclo f USING (proyecto_key)
+        WHERE f.id_entidad = 15 """ ] ;
+    rr:subjectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}" ; rr:class obra:Proyecto ] ;
+    rr:predicateObjectMap [ rr:predicate obra:folio ; rr:objectMap [ rr:column "folio" ] ] .
+
+<#Version> a rr:TriplesMap ;
+    rr:logicalTable [ rr:sqlQuery """
+        SELECT DISTINCT d.folio, d.version, d.nombre, d.clasificacion, d.estatus, d.aprobado,
+               d.fecha_efectiva, d.motivo_cambio,
+               CASE WHEN d.version > 1 THEN CAST(d.version - 1 AS TEXT) END AS version_previa
+        FROM warehouse.dim_proyecto_federal d
+        JOIN warehouse.fact_proyecto_ciclo f USING (proyecto_key)
+        WHERE f.id_entidad = 15 """ ] ;
+    rr:subjectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}/v{version}" ; rr:class obra:VersionProyecto ] ;
+    rr:predicateObjectMap [ rr:predicate prov:specializationOf ;
+        rr:objectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}" ] ] ;
+    rr:predicateObjectMap [ rr:predicate prov:wasRevisionOf ;
+        rr:objectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}/v{version_previa}" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:version ; rr:objectMap [ rr:column "version" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate rdfs:label ; rr:objectMap [ rr:column "nombre" ; rr:language "es" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:clasificacion ; rr:objectMap [ rr:column "clasificacion" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:estatus ; rr:objectMap [ rr:column "estatus" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:aprobado ; rr:objectMap [ rr:column "aprobado" ; rr:datatype xsd:decimal ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:motivoCambio ; rr:objectMap [ rr:column "motivo_cambio" ] ] ;
+    rr:predicateObjectMap [ rr:predicate prov:generatedAtTime ; rr:objectMap [ rr:column "fecha_efectiva" ; rr:datatype xsd:date ] ] .
+
+<#Observacion> a rr:TriplesMap ;
+    rr:logicalTable [ rr:sqlQuery """
+        SELECT d.folio, d.version, f.ciclo, m.cvemun, f.pagado, f.pct_fisico, f.pct_financiero,
+               CASE WHEN f.lat IS NOT NULL THEN 'POINT(' || f.lon || ' ' || f.lat || ')' END AS wkt
+        FROM warehouse.fact_proyecto_ciclo f
+        JOIN warehouse.dim_proyecto_federal d USING (proyecto_key)
+        LEFT JOIN warehouse.dim_municipio m USING (municipio_key)
+        WHERE f.id_entidad = 15 """ ] ;
+    rr:subjectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}/ciclo/{ciclo}" ; rr:class obra:ObservacionCiclo ] ;
+    rr:predicateObjectMap [ rr:predicate obra:deProyecto ;
+        rr:objectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:versionVigente ;
+        rr:objectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}/v{version}" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:enMunicipio ;
+        rr:objectMap [ rr:template "https://w3id.org/obras-mx/municipio/{cvemun}" ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:ciclo ; rr:objectMap [ rr:column "ciclo" ; rr:datatype xsd:integer ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:pagado ; rr:objectMap [ rr:column "pagado" ; rr:datatype xsd:decimal ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:avanceFisico ; rr:objectMap [ rr:column "pct_fisico" ; rr:datatype xsd:decimal ] ] ;
+    rr:predicateObjectMap [ rr:predicate obra:avanceFinanciero ; rr:objectMap [ rr:column "pct_financiero" ; rr:datatype xsd:decimal ] ] ;
+    rr:predicateObjectMap [ rr:predicate geo:hasGeometry ;
+        rr:objectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}/ciclo/{ciclo}/punto" ] ] .
+
+<#Punto> a rr:TriplesMap ;
+    rr:logicalTable [ rr:sqlQuery """
+        SELECT d.folio, f.ciclo, 'POINT(' || f.lon || ' ' || f.lat || ')' AS wkt
+        FROM warehouse.fact_proyecto_ciclo f
+        JOIN warehouse.dim_proyecto_federal d USING (proyecto_key)
+        WHERE f.id_entidad = 15 AND f.lat IS NOT NULL """ ] ;
+    rr:subjectMap [ rr:template "https://w3id.org/obras-mx/proyecto/{folio}/ciclo/{ciclo}/punto" ; rr:class geo:Geometry ] ;
+    rr:predicateObjectMap [ rr:predicate geo:asWKT ; rr:objectMap [ rr:column "wkt" ; rr:datatype geo:wktLiteral ] ] .

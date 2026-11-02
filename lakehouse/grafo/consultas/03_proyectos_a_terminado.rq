@@ -1,0 +1,11 @@
+PREFIX obra: <https://w3id.org/obras-mx/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Proyectos que estaban en ejecución y su versión siguiente ya está terminada: dos saltos.
+SELECT ?clasificacion (COUNT(DISTINCT ?nueva) AS ?proyectos) WHERE {
+  ?nueva prov:wasRevisionOf ?previa ; obra:estatus "Terminado" ; obra:clasificacion ?clasificacion .
+  ?previa obra:estatus "En Ejecución" .
+}
+GROUP BY ?clasificacion
+ORDER BY ?clasificacion

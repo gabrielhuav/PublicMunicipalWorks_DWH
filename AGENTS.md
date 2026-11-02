@@ -97,6 +97,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 | `lakehouse/oro/` | Una consulta por tabla oro |
 | `lakehouse/consultas/` | 7 pares de consultas (PostgreSQL y DuckDB) y una solo de lago; su `README.md` trae los comandos |
 | `lakehouse/verificacion/` | `verificar_lago.py`, `resumen_auditoria.py` y sus evidencias. De ahí salen las cifras del artículo |
+| `lakehouse/proyecciones/oc4ids.py` | Proyección a OC4IDS 0.9.5 validada con el esquema oficial, copiado en `esquema/` |
+| `lakehouse/grafo/` | Grafo RDF: mapeo R2RML, vocabulario, consultas `.rq` con gemelo `.sql` y entorno propio |
 | `scripts/evaluacion/eval_criterio_costo.py` | Entrega 3: criterio de costo por tipo y brecha de pago |
 
 ## Hechos establecidos (no volver a investigar)
@@ -159,8 +161,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Gabriel decidió el 2 nov que el lago se puebla con todo el país:** no importa que los datos no
   sean de Temascaltepec. El plan de cinco entregas está aprobado.
 - **Tamaño:** 6 ciclos, 32 entidades, 967,495 folios, 1,537,019 filas folio-ciclo y 2,008,738 filas
-  en `plata.proyectos`. Bronce 2,136 MB; plata 298 MB (contra 2,803 MB de CSV); oro 139 MB; las tablas
-  nuevas de PostgreSQL 752 MB. Plata se construye en unos 200 s.
+  en `plata.proyectos`. Plata suma 11.0 millones de filas en 10 tablas. Bronce 2,136 MB; plata 291.5 MB (contra 2,803 MB
+  de CSV); oro 139.5 MB; las tablas nuevas de PostgreSQL 753 MB, medidos en el clon limpio. Plata se construye en unos 200 s.
 - **Las 7 consultas dan el mismo SHA-256 en PostgreSQL y en el lago.** El lago gana en barridos
   (566 contra 25 ms, 291 contra 14 ms) y PostgreSQL en búsquedas con índice (1.5 contra 30 ms).
   PostgreSQL corre con la configuración por omisión de la pila de referencia.
@@ -183,6 +185,15 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   Spearman de .39 a .57 entre ciclos.
 - **Modalidad, contratos de obra 2023-2025:** adjudicación directa 49.9 % de los contratos y 23.7 %
   del monto.
+
+### Interoperabilidad (entrega 5, 2 nov, Estado de México)
+
+- **OC4IDS:** 78,826 proyectos validados contra el esquema 0.9.5, con 0 errores. SHCP llena 15 de los
+  37 campos de primer nivel. El id es el folio porque no hay prefijo registrado.
+- **Grafo:** 2,821,739 tripletas en 69 s y 29.9 MB comprimido. Las 5 consultas SPARQL dan el mismo
+  SHA-256 que su gemelo SQL. El contraste atrapó dos errores del mapeo: sumas con datos faltantes
+  y `v1.0` en los enlaces entre versiones, porque pandas volvía flotante un entero con nulos.
+- El prefijo `w3id.org/obras-mx/` no está registrado: los IRI identifican, pero no resuelven.
 
 ### Criterio de costo (entrega 3, 2 nov)
 
@@ -208,6 +219,11 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   `v1.2.0` (`515a1c6`) y `v1.7.3` (`8feb73c`), los dos con release.
 - **MinIO ya no se puede bajar de Docker Hub ni de quay.io (2 nov):** por eso el lago usa SeaweedFS.
   Tarda unos segundos en aceptar conexiones después de arrancar.
+- morph-kgc convierte en flotante una columna entera con nulos: en una plantilla IRI, castea a texto.
+- `LIKE '15%'` rompe morph-kgc por el `%`: usa `left(cvemun, 2) = '15'`.
+- morph-kgc 2.10 obliga a pyoxigraph 0.3, cuya API difiere de la 0.5.
+- `curl` de Git Bash da error 43 en `standard.open-contracting.org`; usa `C:/Windows/System32/curl.exe`.
+- La noche del 2 nov SHCP entregaba 150 KB/s; el día anterior, los 2.1 GB en minutos.
 - `VACUUM` paralelo falla en el contenedor por sus 64 MB de `/dev/shm`: `almacen.py` lo hace en serie.
 - PyIceberg 0.9 rechaza decimales de precisión 18 o menor: `plata.py` usa `decimal(20,2)`.
 - Bash rechazó dos veces bloques largos con heredocs y comillas: usa el Write para scripts largos.
@@ -236,8 +252,7 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   repositorios de alumnos. Nada subido a `origin`.
 - **Descargas de trabajo:** los ZIP de SHCP y los extractos están en el scratchpad de la sesión, no
   en el repositorio. Otra sesión debe volver a bajarlos.
-- **Hecho (2 nov):** lago completo (entregas 1, 2 y 4) y criterio de costo (entrega 3). Falta la
-  entrega 5 (OC4IDS y RDF).
+- **Hecho (2 nov):** las cinco entregas del plan: lago, auditoría, criterio de costo, OC4IDS y grafo.
 - **Sin recalcular:** las 11 páginas y 6,844 palabras de la base en Word. Se miden con
   `word_a_pdf.ps1` antes de escribir.
 - **Riesgo de páginas:** faltan 2,738 palabras en 4 páginas, 684 por página contra 622 de la base.
@@ -252,7 +267,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 1. [x] Reproducir las cifras principales y reportar cuáles no coinciden.
 2. [x] Plan ordenado por valor y esfuerzo. Aprobado el 2 nov.
-3. [ ] ETL completo y reproducible, con manifiesto y hashes. Falta anotar la prueba desde un clon limpio.
+3. [x] ETL completo y reproducible. Probado desde un clon limpio (`verificacion/evidencia_clon_limpio.txt`), con los
+   archivos oficiales tomados de la caché porque SHCP estaba lento; se comprobó su SHA-256.
 4. [x] Consultas SQL y comandos para verlas en la base de datos (`lakehouse/consultas/`).
 5. [ ] Páginas nuevas en el repositorio nuevo, verificadas contra la base.
 6. [ ] Extensión en `paper/ijcopi/`, con la plantilla, amarillo y revisión del PDF a ojo.
@@ -263,4 +279,5 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   verificador de enlaces. Reprodujo las cifras del capítulo: encontró el error de población y el
   conteo de eventos. Verificó fuentes reales y revisó los repositorios de alumnos. No hizo push.
 - 2026-11-02, Claude (Claude Code, Opus 5.5): con el plan aprobado, implementó `lakehouse/` con datos
-  nacionales: SeaweedFS, Iceberg, DuckDB y carga aditiva a PostgreSQL. Evaluó el criterio de costo. Sin push.
+  nacionales: SeaweedFS, Iceberg, DuckDB y carga aditiva a PostgreSQL. Evaluó el criterio de costo,
+  proyectó a OC4IDS y materializó el grafo RDF. Sin push.
