@@ -329,8 +329,22 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 ### Pendientes para Gabriel
 
-- Aprobar el título. El 2 nov dijo "el nombre te lo confirmo" al autorizar la subida; se tomó como el
-  nombre del repositorio, no como el título. La v1 ya trae el título propuesto, en amarillo.
+- **Título aprobado por Gabriel el 2 nov:** "From Synthetic Seeds to Federal Records: An Extended
+  Dimensional Data Warehouse for Municipal Public Works with a Measured Lakehouse Layer".
+- **Mapa base (pedido el 2 nov: "tiene que funcionar como el mapa del artículo de agua"):** se portó
+  `assets/mapa-teselas.js` del trabajo 38 a `lakehouse/sitio/mapa-teselas.js`, con su control "¿No
+  carga el mapa? Probar otro proveedor". Probado en local: lista con estados y cambio manual. Falta la
+  copia local nacional: pedir permiso para bajar de Natural Earth v5.1.2
+  `ne_10m_admin_0_countries` (13.3 MB), `ne_10m_admin_1_states_provinces_lines` (21.1 MB) y
+  `ne_10m_admin_1_label_points` (4.4 MB), y escribir `lakehouse/etl/mapa_base.py` con el formato del
+  generador del 38. Luego corregir el texto de la sección 9.4 del artículo y los README, y pedir
+  autorización para subir.
+- **Pedido el 2 nov, sin empezar:** filtrar en el mapa los proyectos por estatus (por ejemplo, solo
+  cancelados) y por marcas C1-C4.
+- **Imágenes como prueba (pregunta del 2 nov):** SHCP no trae fotos, pero `contratos.csv` trae `URL` y
+  `URL_DOCUMENTO`. En 2024 los 165,373 contratos traen `URL` y 106,307 traen `URL_DOCUMENTO`, sobre todo
+  carpetas de Google Drive, portales estatales y PDF. No se ha abierto ninguno. Se podrían enlazar en
+  la ficha de cada proyecto como "documentos que reportó la dependencia", nunca como prueba verificada.
 - Decidir si los alumnos de los repositorios de referencia van en agradecimientos.
 - Revisar la v1 completa, sobre todo la declaración de IA, que dice que los autores revisaron y
   aprobaron el texto nuevo.

@@ -33,8 +33,6 @@
       'o.sql': 'Ver la consulta', 'o.cmd': 'Para ver lo mismo en la base de datos:',
       'o.verif': 'lakehouse/verificacion/verificar_capas.py repite la consulta y compara el resultado con este archivo, byte por byte.',
       'motor.pg': 'PostgreSQL (almacén)', 'motor.duck': 'DuckDB sobre el lago',
-      'tes.titulo': 'Mapa base', 'tes.ninguno': 'Ningún proveedor respondió; los datos se dibujan sin fondo.',
-      'tes.usa': 'Usando {n}.',
       'd.entidad': 'Entidad', 'd.pob': 'Población 2020', 'd.grado': 'Rezago social 2020', 'd.irs': 'Índice de rezago social',
       'd.ciclo': 'Ciclo {c}', 'd.proyectos': 'Proyectos', 'd.aprobado': 'Aprobado', 'd.pagado': 'Pagado',
       'd.pagado_hab': 'Pagado por habitante', 'd.fais': 'Del FAIS', 'd.evaluados': 'Proyectos de inversión',
@@ -67,8 +65,6 @@
       'o.sql': 'Show the query', 'o.cmd': 'To see the same result in the database:',
       'o.verif': 'lakehouse/verificacion/verificar_capas.py repeats the query and compares the result with this file, byte by byte.',
       'motor.pg': 'PostgreSQL (warehouse)', 'motor.duck': 'DuckDB over the lake',
-      'tes.titulo': 'Base map', 'tes.ninguno': 'No provider answered; the data are drawn without a background.',
-      'tes.usa': 'Using {n}.',
       'd.entidad': 'State', 'd.pob': 'Population 2020', 'd.grado': 'Social deprivation 2020', 'd.irs': 'Social deprivation index',
       'd.ciclo': 'Fiscal year {c}', 'd.proyectos': 'Projects', 'd.aprobado': 'Approved', 'd.pagado': 'Paid',
       'd.pagado_hab': 'Paid per inhabitant', 'd.fais': 'From FAIS', 'd.evaluados': 'Investment projects',
@@ -406,12 +402,7 @@
     controles();
     pintarMunicipios();
     if (estado.obras) ponerObras();
-
-    const tes = document.getElementById('teselas');
-    Teselas.iniciar(mapa, id => {
-      const p = Teselas.PROVEEDORES.find(x => x.id === id);
-      tes.innerHTML = `<h2>${S.esc(t('tes.titulo'))}</h2><p class="nota">${S.esc(p ? t('tes.usa', { n: p.nombre }) : t('tes.ninguno'))}</p>`;
-    });
+    MapaTeselas.montar(mapa, { maxZoom: 19 });
   }
 
   iniciar();

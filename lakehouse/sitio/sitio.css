@@ -3,11 +3,19 @@
   --fondo: #f6f7f9; --superficie: #ffffff; --texto: #1d232b; --texto-2: #46505c; --texto-3: #6b7480;
   --borde: #d9dee5; --marca: #0f5c63; --marca-suave: #e3f0f1; --aviso: #fff4d6; --aviso-borde: #e6c55c;
   --r: 8px; --sombra: 0 1px 2px rgba(16, 24, 40, .06);
+  /* Nombres que usa el control del mapa base, el del trabajo 38. --marca-600 va en hexadecimal:
+     mapa-teselas.js lo lee para dibujar la copia local. */
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --r-s: 6px; --r-m: 8px;
+  --sombra-2: 0 2px 6px rgba(16, 24, 40, .14); --sombra-3: 0 8px 24px rgba(16, 24, 40, .18);
+  --marca-100: var(--marca-suave); --marca-500: var(--marca); --marca-600: #0f5c63;
+  --superficie-2: var(--fondo); --ok: #2e7d32; --error: #c62828; --alerta: #d39e00;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --fondo: #12161b; --superficie: #1a2027; --texto: #e7ebf0; --texto-2: #b9c1cb; --texto-3: #8b95a1;
     --borde: #2e3640; --marca: #6cc3c9; --marca-suave: #1b3134; --aviso: #3a3115; --aviso-borde: #8c7426;
+    --marca-600: #6cc3c9; --ok: #66bb6a; --error: #ef5350; --alerta: #ffca28;
+    --sombra-2: 0 2px 6px rgba(0, 0, 0, .5); --sombra-3: 0 8px 24px rgba(0, 0, 0, .55);
   }
 }
 * { box-sizing: border-box; }
@@ -62,17 +70,65 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
   border-radius: 6px; border: 1px solid var(--borde); margin: .4rem 0 0; }
 details summary { cursor: pointer; color: var(--marca); margin-top: .4rem; }
 .estado { margin: 0 0 .5rem; color: var(--texto-2); }
-.teselas { margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--borde); }
+
+/* Mapa base: control «¿No carga el mapa? Probar otro proveedor», copiado del trabajo 38
+   (assets/estilo.css). Los proveedores sin versión oscura se invierten en modo oscuro. */
+.leaflet-layer.teselas-invertidas { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.55); }
+.mapa-teselas { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; max-width: 340px;
+  font-family: var(--sans); color: var(--texto); }
+.mapa-teselas button { appearance: none; margin: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.mapa-teselas__barra { display: flex; align-items: stretch; overflow: hidden; max-width: 100%;
+  background: var(--superficie); border: 1px solid var(--borde); border-radius: var(--r-s); box-shadow: var(--sombra-2); }
+.mapa-teselas__probar, .mapa-teselas__abrir { display: flex; align-items: center; gap: 6px; padding: 6px 10px;
+  font-size: .74rem; line-height: 1.2; white-space: nowrap; transition: background .14s; }
+.mapa-teselas__probar { color: var(--texto-2); flex: none; }
+.mapa-teselas__probar strong { color: var(--texto); font-weight: 650; }
+.mapa-teselas__abrir { border-left: 1px solid var(--borde) !important; color: var(--texto-2); min-width: 0; }
+.mapa-teselas__actual { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.mapa-teselas__probar:hover, .mapa-teselas__abrir:hover,
+.mapa-teselas__abrir[aria-expanded="true"] { background: var(--marca-100); }
+.mapa-teselas button:focus-visible { outline: 2px solid var(--marca-600); outline-offset: -2px; }
+.mapa-teselas svg { width: 14px; height: 14px; flex: none; }
+.mapa-teselas__probar svg { color: var(--marca-500); }
+.mapa-teselas__abrir[aria-expanded="false"] svg { transform: rotate(180deg); }
+.mapa-teselas__panel, .mapa-teselas__aviso { background: var(--superficie); border: 1px solid var(--borde);
+  border-radius: var(--r-m); box-shadow: var(--sombra-3); }
+.mapa-teselas__panel { width: 100%; padding: 10px 8px 8px; overflow-y: auto; overscroll-behavior: contain; }
+.mapa-teselas__panel[hidden], .mapa-teselas__aviso[hidden] { display: none; }
+.mapa-teselas__titulo { margin: 0 6px 6px; font-size: .68rem; font-weight: 650; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--texto-2); }
+.mapa-teselas__lista { list-style: none; margin: 0; padding: 0; }
+.mapa-teselas__opcion { width: 100%; display: grid !important; grid-template-columns: 10px 1fr auto;
+  grid-template-areas: "punto nombre estado" "punto tipo estado"; column-gap: 8px; align-items: center;
+  padding: 5px 8px !important; border-radius: var(--r-s); text-align: left; }
+.mapa-teselas__opcion:hover { background: var(--superficie-2); }
+.mapa-teselas__opcion[aria-pressed="true"] { background: var(--marca-100); }
+.mapa-teselas__punto { grid-area: punto; width: 8px; height: 8px; border-radius: 50%; background: var(--texto-3); opacity: .45; }
+.mapa-teselas__opcion[data-estado="uso"] .mapa-teselas__punto,
+.mapa-teselas__opcion[data-estado="ok"] .mapa-teselas__punto { background: var(--ok); opacity: 1; }
+.mapa-teselas__opcion[data-estado="falla"] .mapa-teselas__punto { background: var(--error); opacity: 1; }
+.mapa-teselas__opcion[data-estado="comprobando"] .mapa-teselas__punto { background: var(--alerta); opacity: 1; }
+.mapa-teselas__nombre { grid-area: nombre; font-size: .78rem; font-weight: 600; }
+.mapa-teselas__tipo { grid-area: tipo; font-size: .68rem; color: var(--texto-2); }
+.mapa-teselas__estado { grid-area: estado; font-size: .68rem; color: var(--texto-2); }
+.mapa-teselas__opcion[data-estado="falla"] .mapa-teselas__estado { color: var(--error); }
+.mapa-teselas__nota { margin: 8px 6px 0; font-size: .68rem; line-height: 1.45; color: var(--texto-2); white-space: normal; }
+.mapa-teselas__aviso { padding: 7px 11px; font-size: .74rem; line-height: 1.35; }
+@media (max-width: 600px) {
+  .mapa-teselas__pregunta { display: none; }
+  .mapa-teselas__probar, .mapa-teselas__abrir { padding: 6px 8px; }
+}
 
 /* Vista para las figuras del artículo: el mapa a toda la ventana, sin botones, y la leyenda
    encima y en grande, para que se lea impresa. */
-body.figura .barra, body.figura .aviso, body.figura .control, body.figura .leaflet-control-zoom { display: none; }
+body.figura .barra, body.figura .aviso, body.figura .control, body.figura .leaflet-control-zoom,
+body.figura .mapa-teselas { display: none; }
 body.figura .rejilla { display: block; position: relative; padding: 0; }
 body.figura #mapa { height: 100vh; min-height: 0; border: 0; border-radius: 0; }
 body.figura .rejilla > aside:last-child { position: absolute; left: 12px; bottom: 28px; z-index: 1000;
   font-size: 1.05rem; padding: .7rem .9rem; }
 body.figura #leyendaTitulo { font-size: 1.1rem; }
-body.figura .origen, body.figura .teselas, body.figura #detalle { display: none; }
+body.figura .origen, body.figura #detalle { display: none; }
 
 /* Página de consultas */
 .contenido { max-width: 1100px; margin: 0 auto; padding: 12px 16px 32px; }

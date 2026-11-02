@@ -79,5 +79,39 @@
     });
   }
 
+  /* Textos del control del mapa base (mapa-teselas.js, el módulo del trabajo 38), que los pide a
+     window.I18N.t como en aquel sitio. */
+  const TESELAS = {
+    es: {
+      'teselas.pregunta': '¿No carga el mapa?', 'teselas.probar': 'Probar otro proveedor',
+      'teselas.elegir': 'Elegir el proveedor del mapa base', 'teselas.titulo': 'Mapa base',
+      'teselas.explica': 'Cada proveedor se comprueba antes de usarlo; si deja de responder, el mapa pasa solo al siguiente. La copia local se sirve desde este mismo sitio y no depende de ningún servidor externo.',
+      'teselas.local': 'Copia local', 'teselas.aviso': '{antes} no respondía; ahora el mapa usa {ahora}.',
+      'teselas.usando': 'Ahora el mapa usa {nombre}.',
+      'teselas.estado.uso': 'en uso', 'teselas.estado.ok': 'disponible',
+      'teselas.estado.falla': 'no responde', 'teselas.estado.comprobando': 'comprobando…',
+      'teselas.nota.gris': 'el de la figura del artículo; gris claro u oscuro',
+      'teselas.nota.osm': 'el estándar de OpenStreetMap', 'teselas.nota.calles': 'callejero',
+      'teselas.nota.hot': 'estilo humanitario', 'teselas.nota.topo': 'topográfico',
+      'teselas.nota.satelite': 'imagen de satélite', 'teselas.nota.carto': 'sólo si no muestra marca de agua',
+      'teselas.nota.local': 'Natural Earth, servido desde este sitio',
+    },
+    en: {
+      'teselas.pregunta': 'Map not loading?', 'teselas.probar': 'Try another provider',
+      'teselas.elegir': 'Choose the basemap provider', 'teselas.titulo': 'Basemap',
+      'teselas.explica': 'Each provider is checked before it is used; if it stops answering, the map moves to the next one on its own. The local copy is served from this same site and depends on no external server.',
+      'teselas.local': 'Local copy', 'teselas.aviso': '{antes} was not answering; the map now uses {ahora}.',
+      'teselas.usando': 'The map now uses {nombre}.',
+      'teselas.estado.uso': 'in use', 'teselas.estado.ok': 'available',
+      'teselas.estado.falla': 'not answering', 'teselas.estado.comprobando': 'checking…',
+      'teselas.nota.gris': "the one in the paper's figure; light or dark grey",
+      'teselas.nota.osm': 'standard OpenStreetMap', 'teselas.nota.calles': 'street map',
+      'teselas.nota.hot': 'humanitarian style', 'teselas.nota.topo': 'topographic',
+      'teselas.nota.satelite': 'satellite imagery', 'teselas.nota.carto': 'only if it shows no watermark',
+      'teselas.nota.local': 'Natural Earth, served from this site',
+    },
+  };
+  window.I18N = { t: (k, v) => t(TESELAS, k, v) };
+
   window.Sitio = { idioma, locale, t, esc, numero, pesos, objetos, json, pintarFijos };
 })();

@@ -7,7 +7,7 @@ param(
 $edge = "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
 $perfil = Join-Path $env:TEMP "captura_mapa_lago_edge"
 $figuras = @{
-    "figura_mapa_lago.png" = "?vista=figura&lang=en&ind=pagado_hab&ciclo=2024&teselas=esri"
+    "figura_mapa_lago.png" = "?vista=figura&lang=en&ind=pagado_hab&ciclo=2024&teselas=esri-gris"
 }
 foreach ($nombre in $figuras.Keys) {
     $destino = Join-Path $Salida $nombre
