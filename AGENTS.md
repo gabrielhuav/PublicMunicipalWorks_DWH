@@ -196,6 +196,12 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 - **Repositorio aprobado por Gabriel el 2 nov:** `gabrielhuav/PublicMunicipalWorks_Lakehouse`, con
   Pages por Actions desde `lakehouse/sitio/`. URL: `https://gabrielhuav.github.io/PublicMunicipalWorks_Lakehouse/`.
+- **Publicado el 2 nov con su autorización:** commit `53b9c9d` en `main`. Los 16 archivos del sitio
+  dan en vivo el mismo SHA-256 que en local, y la página de consultas muestra las 7 comparaciones.
+  Cuando el artículo imprima estas URL, quedan tan inmutables como las del capítulo.
+- **Para actualizarlo:** commit en la rama, `lakehouse/publicar/publicar.ps1`, revisar la copia en
+  `Documents/GitHub Desktop/PublicMunicipalWorks_Lakehouse` (remoto `origin`), commit ahí y push
+  solo con autorización.
 - **Capas:** 5 consultas, de 6 a 21,335 filas; `verificar_capas.py` las da iguales byte por byte, y
   falla si se altera un archivo (probado). La capa de obras del Estado de México 2024 pesa 5 MB.
 - **2 municipios sin cabecera en ITER** (Francisco León, Chiapas, y Villa de Arista, San Luis Potosí):
@@ -268,6 +274,10 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - En Python 3.10, `platform.release()` dice "10" en Windows 11: usa `platform.version()`.
 - CARTO sigue sin pasar la prueba de dos teselas; el sitio cae en Esri Canvas.
 - Windows PowerShell 5.1 lee como ANSI un `.ps1` sin BOM: no pongas acentos en los scripts.
+- Actions avisa que Node 20 está obsoleto en `checkout@v4`, `configure-pages@v5`,
+  `upload-pages-artifact@v3` y `deploy-pages@v4`; el 2 nov corrían forzadas en Node 24 y publicaban bien.
+- La plantilla de IJCOPI no está en este repositorio: está en
+  `Data_Warehouse_static/paper/ijcopi/2027-IJCOPI_template_simple_British_English.docx`.
 
 ## Estado actual
 
@@ -282,14 +292,13 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Riesgo de páginas:** faltan 2,738 palabras en 4 páginas, 684 por página contra 622 de la base.
   Cabe, como mucho, una figura nueva.
 
-- **Hecho (2 nov):** el sitio del lago, verificado contra las bases, y la copia pública lista en
-  `Documents/GitHub Desktop/PublicMunicipalWorks_Lakehouse`, con commit local. El repositorio aún no
-  existe en GitHub.
+- **Hecho (2 nov):** el sitio del lago, verificado contra las bases y publicado en
+  `gabrielhuav/PublicMunicipalWorks_Lakehouse`. La rama `ijcopi-obras` sigue sin subirse a `origin`.
 
 ### Pendientes para Gabriel
 
-- Autorizar que se cree `gabrielhuav/PublicMunicipalWorks_Lakehouse` y se suba la copia pública.
-- Aprobar el título.
+- Aprobar el título. El 2 nov dijo "el nombre te lo confirmo" al autorizar la subida; se tomó como el
+  nombre del repositorio, no como el título.
 - Confirmar el bloque de autores y si los alumnos van en agradecimientos o como autores.
 
 ## Siguiente paso
@@ -299,8 +308,7 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 3. [x] ETL completo y reproducible. Probado desde un clon limpio (`verificacion/evidencia_clon_limpio.txt`), con los
    archivos oficiales tomados de la caché porque SHCP estaba lento; se comprobó su SHA-256.
 4. [x] Consultas SQL y comandos para verlas en la base de datos (`lakehouse/consultas/`).
-5. [ ] Páginas nuevas en el repositorio nuevo, verificadas contra la base. Hechas y verificadas en
-   local; falta crear el repositorio, subirlo, activar Pages y revisar las URL en vivo.
+5. [x] Páginas nuevas en el repositorio nuevo, verificadas contra la base y en vivo.
 6. [ ] Extensión en `paper/ijcopi/`, con la plantilla, amarillo y revisión del PDF a ojo.
 
 ## Bitácora
@@ -314,3 +322,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-02, Claude (Claude Code, Opus 5.5): Gabriel aprobó el nombre `PublicMunicipalWorks_Lakehouse`.
   Hizo el sitio (5 capas verificadas byte por byte) y la copia pública local. Corrigió la evidencia
   del lago: conteos exactos, oro al día, sistema operativo y saltos de línea. Sin push.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): con autorización de Gabriel, corrió el verificador de
+  enlaces (`fallos: 0`), creó `gabrielhuav/PublicMunicipalWorks_Lakehouse`, subió `main`, activó Pages
+  y comprobó en vivo los 16 archivos del sitio. No subió la rama `ijcopi-obras`.
