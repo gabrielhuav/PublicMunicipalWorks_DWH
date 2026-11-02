@@ -81,6 +81,10 @@ PostgreSQL and the lake ([evidence](lakehouse/verificacion/evidencia_lago.json))
 clean clone gave the same query hashes; that run reused official files already downloaded, after
 checking their hashes ([evidence](lakehouse/verificacion/evidencia_clon_limpio.txt)).
 
+`scripts/cifras_capitulo.py` measures the three figures of the chapter that the extended version
+corrects. It also needs the API, started with `docker compose -f docker/compose.yml up -d db api`
+([evidence](lakehouse/verificacion/cifras_capitulo.json)).
+
 ## Limits of the data
 
 - The records cover federally funded spending reported to SHCP, not all the works of any municipality.
@@ -95,11 +99,12 @@ checking their hashes ([evidence](lakehouse/verificacion/evidencia_clon_limpio.t
 
 ## Credit and licences
 
-The warehouse, the operational database and the seeding scripts (`backend/`, `db/`, `docker/`,
-`scripts/`) are the chapter's, by Uriel González Casiano and Marco Tulio Maldonado Mejía, imported
-from [`gabrielhuav/PublicMunicipalWorks_DWH`](https://github.com/gabrielhuav/PublicMunicipalWorks_DWH),
-whose origin is [`Urigc/Obras_publicas`](https://github.com/Urigc/Obras_publicas). `lakehouse/` is the
-extension. Code is released under the MIT licence; see `LICENSE.md`.
+`backend/`, `db/`, `docker/` and `scripts/` come from the chapter's repository,
+[`gabrielhuav/PublicMunicipalWorks_DWH`](https://github.com/gabrielhuav/PublicMunicipalWorks_DWH), whose
+origin is [`Urigc/Obras_publicas`](https://github.com/Urigc/Obras_publicas) by Uriel González Casiano and
+Marco Tulio Maldonado Mejía. The extension is `lakehouse/` and two scripts:
+`scripts/evaluacion/eval_criterio_costo.py`, which evaluates the per-type cost criterion, and
+`scripts/cifras_capitulo.py`. Code is released under the MIT licence; see `LICENSE.md`.
 
 Data keep the terms of their publishers, listed file by file in `lakehouse/fuentes.json`: SHCP under
 its [terms of use](https://www.transparenciapresupuestaria.gob.mx/es/PTP/Terminos_y_Condiciones),
