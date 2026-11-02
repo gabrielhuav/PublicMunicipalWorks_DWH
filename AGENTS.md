@@ -505,4 +505,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   con coordenadas fuera del estado en los 32 estados), actualizó la figura 4 con el mapa completo del
   Estado de México y todos los filtros visibles, y verificó todas las cifras, scripts y las 28
   referencias/32 URL y DOI de `Paper37_IJCOPI_v1_extendida.docx` (15 páginas, 10,180 palabras, 0 sin
-  amarillo). Sin push.
+  amarillo). Con autorización de Gabriel y `fallos: 0` en el verificador de Springer, subió
+  `ijcopi-obras` (`df8ccc0`, incluido `PROMPT_RELEVO.md`) y publicó el sitio (`1032ccf`, 2,545 archivos
+  iguales en vivo, `distintos: 0`).
