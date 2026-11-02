@@ -57,9 +57,10 @@ Las consultas y los comandos para verlas están en [`consultas/README.md`](consu
 
 ## Sitio
 
-`sitio/` es un mapa estático con su página de consultas, y se publica aparte, en un repositorio
-propio, con `publicar/publicar.ps1`. Cada capa es el resultado de una consulta de `capas/`: las
-`.pg.sql` corren en PostgreSQL y las `.duck.sql` en el lago. Para regenerarlas y comprobarlas:
+`sitio/` es un mapa estático con su página de consultas. Se publica con GitHub Pages desde un
+repositorio propio, `gabrielhuav/PublicMunicipalWorks_Lakehouse`, para que el sitio del capítulo no
+cambie. Cada capa es el resultado de una consulta de `capas/`: las `.pg.sql` corren en PostgreSQL y
+las `.duck.sql` en el lago. Para regenerarlas y comprobarlas:
 
 ```bash
 lakehouse/.venv/Scripts/python lakehouse/etl/exportar_capas.py
