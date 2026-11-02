@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-tema="guinda">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,64 +7,105 @@
     <meta name="description" content="Mapa del lago de datos de obra pública federalizada en México, 2020-2025, con datos oficiales de SHCP, INEGI y CONEVAL. Cada capa es el resultado de una consulta a la base de datos.">
     <link rel="stylesheet" href="vendor/leaflet-1.9.4.css">
     <link rel="stylesheet" href="sitio.css">
+    <script src="comun.js"></script>
 </head>
-<body>
+<body class="app">
 <header class="barra">
-    <div>
-        <h1 data-t="titulo"></h1>
-        <p data-t="lema"></p>
+    <a class="marca" href="./"><span class="marca__sello" aria-hidden="true"></span><span class="marca__nombre" data-t="marca"></span></a>
+    <button type="button" class="boton-barra barra__abrir" id="abrirMenu" aria-expanded="false" aria-controls="menuBarra" data-t="menu"></button>
+    <div class="barra__menu" id="menuBarra">
+        <nav class="barra__nav" aria-label="Secciones">
+            <a href="./" aria-current="page" data-t="nav.mapa"></a>
+            <a href="consultas.html" data-t="nav.consultas"></a>
+            <a href="https://github.com/gabrielhuav/PublicMunicipalWorks_Lakehouse" data-t="nav.repo"></a>
+        </nav>
+        <div class="barra__acciones">
+            <div class="segmentado" role="group" data-t-aria="tema.titulo">
+                <button type="button" data-tema-boton="guinda" data-t="tema.guinda"></button>
+                <button type="button" data-tema-boton="azul" data-t="tema.azul"></button>
+            </div>
+            <button type="button" class="boton-barra" id="modo"></button>
+            <button type="button" class="boton-barra" id="idioma"></button>
+        </div>
     </div>
-    <nav>
-        <a href="./" aria-current="page" data-t="nav.mapa"></a>
-        <a href="consultas.html" data-t="nav.consultas"></a>
-        <a href="https://github.com/gabrielhuav/PublicMunicipalWorks_Lakehouse" data-t="nav.repo"></a>
-        <button type="button" id="idioma"></button>
-    </nav>
 </header>
-<p class="aviso" data-t="aviso" data-html></p>
 
-<main class="rejilla">
-    <aside class="panel control">
-        <label for="buscar" data-t="b.titulo"></label>
-        <input type="search" id="buscar" class="buscar" autocomplete="off">
-        <ul id="resultados" class="resultados" hidden></ul>
-        <p class="nota" data-t="b.nota"></p>
-        <label for="indicador" data-t="c.indicador"></label>
-        <select id="indicador"></select>
-        <label for="ciclo" data-t="c.ciclo"></label>
-        <select id="ciclo"></select>
-        <p id="notaIndicador" class="nota"></p>
-        <label class="casilla"><input type="checkbox" id="obras"> <span data-t="c.obras"></span></label>
-        <select id="estadoObras"></select>
-        <p class="nota" data-t="c.obras.nota"></p>
-        <fieldset id="filtros" class="filtros" hidden>
-            <legend data-t="f.titulo"></legend>
-            <div id="filtrosEstatus"></div>
-            <label class="casilla"><input type="checkbox" id="soloMarcas"> <span data-t="f.marcas"></span></label>
-            <p class="nota" id="filtroConteo"></p>
-        </fieldset>
-        <button type="button" class="boton" id="temascaltepec" data-t="c.temascaltepec"></button>
-        <ul class="conteos" id="conteos"></ul>
-    </aside>
+<main class="escena">
+    <div id="mapa" role="region" data-t-aria="mapa.region"></div>
 
-    <div>
-        <p id="estado" class="estado" data-t="cargando"></p>
-        <div id="mapa" role="region" aria-label="Mapa"></div>
+    <div class="buscador" role="search">
+        <span class="buscador__lupa" aria-hidden="true"></span>
+        <input type="search" id="buscar" autocomplete="off" spellcheck="false"
+               aria-autocomplete="list" aria-controls="sugerencias">
+        <ul id="sugerencias" class="sugerencias" role="listbox" hidden></ul>
     </div>
 
-    <aside class="panel">
-        <h2 id="leyendaTitulo"></h2>
-        <div id="leyenda"></div>
-        <div id="detalle"></div>
-        <div class="origen" id="origen"></div>
+    <button type="button" id="abrirPanel" class="boton-flotante" aria-controls="panel" aria-expanded="false" data-t="panel.abrir"></button>
+
+    <aside id="panel" class="panel-lateral" aria-label="Capas y filtros">
+        <div class="panel-lateral__cabecera">
+            <h1 data-t="titulo"></h1>
+            <button type="button" id="cerrarPanel" class="cerrar" data-t-aria="panel.cerrar">×</button>
+        </div>
+        <p class="lema" data-t="lema"></p>
+
+        <section class="seccion">
+            <h2 data-t="s.proyectos"></h2>
+            <label for="estadoObras" data-t="c.estado"></label>
+            <select id="estadoObras"></select>
+            <p id="estadoObrasNota" class="nota" data-t="c.estado.nota"></p>
+            <div id="filtros" hidden>
+                <p class="subtitulo" data-t="f.estatus"></p>
+                <div id="filtrosEstatus" class="fichas"></div>
+                <p class="subtitulo" data-t="f.evidencia"></p>
+                <div id="filtrosEvidencia" class="fichas"></div>
+                <p class="subtitulo" data-t="f.revision"></p>
+                <div class="fichas"><button type="button" id="soloMarcas" class="ficha" aria-pressed="false" data-t="f.marcas"></button></div>
+                <p id="filtroConteo" class="conteo"></p>
+                <button type="button" class="enlace-boton" id="verFiltrados" data-t="f.ver" hidden></button>
+            </div>
+        </section>
+
+        <section class="seccion">
+            <h2 data-t="s.municipios"></h2>
+            <label for="indicador" data-t="c.indicador"></label>
+            <select id="indicador"></select>
+            <label for="ciclo" data-t="c.ciclo"></label>
+            <select id="ciclo"></select>
+            <p id="notaIndicador" class="nota"></p>
+        </section>
+
+        <section class="seccion" id="seccionLeyenda">
+            <h2 id="leyendaTitulo"></h2>
+            <div id="leyenda"></div>
+        </section>
+
+        <section class="seccion">
+            <ul class="conteos" id="conteos"></ul>
+            <button type="button" class="enlace-boton" id="temascaltepec" data-t="c.temascaltepec"></button>
+        </section>
+
+        <details class="seccion origen">
+            <summary data-t="o.titulo"></summary>
+            <div id="origen"></div>
+        </details>
+
+        <p class="aviso" data-t="aviso" data-html></p>
     </aside>
+
+    <aside id="detalle" class="cajon" hidden aria-live="polite">
+        <button type="button" id="cerrarDetalle" class="cerrar" data-t-aria="d.cerrar">×</button>
+        <div id="detalleContenido"></div>
+    </aside>
+
+    <p id="cargando" class="cargando" role="status" hidden></p>
 </main>
 
 <div id="comparar" class="comparar" hidden role="dialog" aria-modal="true" aria-labelledby="compararTitulo">
     <div class="comparar__caja">
         <div class="comparar__cabecera">
             <h2 id="compararTitulo"></h2>
-            <button type="button" id="cerrarComparar" data-t="cmp.cerrar"></button>
+            <button type="button" id="cerrarComparar" class="cerrar" data-t-aria="cmp.cerrar">×</button>
         </div>
         <div class="comparar__mapas">
             <figure><div id="mapaAntes" class="comparar__mapa"></div><figcaption></figcaption></figure>
@@ -75,7 +116,6 @@
 </div>
 
 <script src="vendor/leaflet-1.9.4.js"></script>
-<script src="comun.js"></script>
 <script src="mapa-teselas.js"></script>
 <script src="mapa.js"></script>
 </body>

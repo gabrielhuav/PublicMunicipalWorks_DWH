@@ -20,7 +20,6 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("consulta")
     ap.add_argument("--instantanea", type=int)
-    ap.add_argument("--entidad", type=int, help="clave del estado para las consultas de capas/ que la piden")
     args = ap.parse_args()
 
     con = duck()
@@ -36,8 +35,6 @@ def main():
                     f"'{tabla.metadata_location}', snapshot_from_id={foto.snapshot_id})")
     ruta = Path(args.consulta)
     sql = ruta.read_text(encoding="utf-8") if ruta.suffix == ".sql" and ruta.exists() else args.consulta
-    if args.entidad is not None:
-        sql = sql.replace("{entidad}", str(args.entidad))
     print(con.sql(sql).df().to_string(index=False))
     return 0
 

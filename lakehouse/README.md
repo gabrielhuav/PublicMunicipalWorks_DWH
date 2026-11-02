@@ -75,12 +75,19 @@ local con el contorno del país y los límites estatales, de Natural Earth, que 
 La ficha de cada municipio y de cada proyecto nombra el archivo oficial del que sale, con su
 SHA-256. Los proyectos enlazan además los documentos que la dependencia publicó con sus contratos:
 `etl/enlaces.py` los guarda en la tabla anexa `anexo.enlaces_contratos` (2023 a 2025), fuera de
-plata, y la capa omite los que llevan la cuenta de correo de quien los subió. Los proyectos de 2024
-de todo el país se cargan por estado: una consulta que lleva `{entidad}` se corre una vez por estado
-y deja un archivo por estado (`consultas/lago.py ... --entidad 15` la repite en consola). Se pueden
-filtrar por estatus y por marcas C1 a C4, y buscar por palabras. Cada proyecto se compara en dos
-versiones del archivo histórico de imágenes de Esri (World Imagery Wayback): la última publicada antes
-de su inicio y la más reciente.
+plata, y la capa omite los que llevan la cuenta de correo de quien los subió.
+
+Los proyectos de 2024 de todo el país se bajan por partes. Una consulta que empieza con
+`-- particion: columna` se corre una vez y su resultado se reparte en un archivo por valor de esa
+columna, con un `indice.json`: `05_puntos_2024` deja un archivo por estado con lo que el mapa
+necesita para dibujar, filtrar y buscar, y `06_detalle_2024` uno por municipio con montos, fechas y
+enlaces, que se baja al abrir un proyecto. `verificar_capas.py` vuelve a repartir el resultado y
+compara cada archivo. Los proyectos se filtran por estatus, por marcas C1 a C4 y por evidencia
+(documentos, PDF, imagen, o inicio posterior a la primera versión del archivo de imágenes de Esri).
+El buscador encuentra estados, municipios, proyectos y folios del sitio y, por OpenStreetMap
+(Photon, y Nominatim si no responde), cualquier lugar. Cada proyecto se compara en dos versiones del
+archivo histórico de imágenes de Esri (World Imagery Wayback): la última publicada antes de su
+inicio y la más reciente. El sitio tiene tema guinda y azul, cada uno claro u oscuro.
 
 ## Interoperabilidad
 

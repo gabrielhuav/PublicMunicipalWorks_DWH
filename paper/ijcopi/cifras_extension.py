@@ -226,12 +226,26 @@ def cifras():
     assert "verificaciones fallidas: 0" in (V / "evidencia_capas.txt").read_text(encoding="utf-8")
     pon("capas_palabra", PALABRA[len({c["consulta"] for c in man["consultas"]})], "sitio/datos/manifiesto.json")
     datos_sitio = LAGO / "sitio" / "datos"
-    obras = sorted(datos_sitio.glob("05_obras_2024_*.json"))
-    enlaces = sorted(datos_sitio.glob("06_enlaces_2024_*.json"))
-    assert len(obras) == len(enlaces) == 32
-    pon("obras_2024", ent(sum(len(leer(r)["filas"]) for r in obras)), "sitio/datos/05_obras_2024_*.json")
-    pon("docs_proy", ent(len({f[0] for r in enlaces for f in leer(r)["filas"]})),
-        "sitio/datos/06_enlaces_2024_*.json")
+
+    def columna(capa, nombre):
+        """Los valores de una columna en todos los archivos de una capa repartida."""
+        valores = []
+        for r in sorted((datos_sitio / capa).glob("*.json")):
+            if r.name != "indice.json":
+                c = leer(r)
+                i = c["columnas"].index(nombre)
+                valores += [f[i] for f in c["filas"]]
+        return valores
+
+    evidencia = columna("05_puntos_2024", "evidencia")
+    enlaces = columna("06_detalle_2024", "enlaces")
+    assert len(evidencia) == len(enlaces)
+    con_enlaces = sum(1 for e in enlaces if e)
+    assert con_enlaces == sum(1 for e in evidencia if e & 1)
+    pon("obras_2024", ent(len(evidencia)), "sitio/datos/05_puntos_2024/*.json")
+    pon("docs_proy", ent(con_enlaces), "sitio/datos/06_detalle_2024/*.json")
+    pon("pdf_proy", ent(sum(1 for e in evidencia if e & 2)), "sitio/datos/05_puntos_2024/*.json")
+    pon("foto_proy", ent(sum(1 for e in evidencia if e & 4)), "sitio/datos/05_puntos_2024/*.json")
     res = leer(LAGO / "sitio" / "datos" / "01_resumen.json")
     por_ciclo = {f[0]: dict(zip(res["columnas"], f)) for f in res["filas"]}
     pon("p2024", ent(por_ciclo[2024]["proyectos"]), "sitio/datos/01_resumen.json")

@@ -43,10 +43,18 @@ and compares the result byte by byte with the published file
 Each municipality and project on the map names the official file it comes from, with its SHA-256,
 so a reader can find the record in the source. Projects also list the links that the reporting
 agency published with their contracts, shown as reported and kept apart from the measured silver
-layer, in `anexo.enlaces_contratos`. The 2024 projects of every state load one state at a time: a
-query that carries `{entidad}` runs once per state. They can be filtered by status or flag, found by
-keyword, and compared in two releases of Esri's public satellite-imagery archive (World Imagery
-Wayback), the last one published before the project started and the latest.
+layer, in `anexo.enlaces_contratos`.
+
+The 2024 projects of the whole country are downloaded in parts. A query that starts with
+`-- particion: column` runs once, and its result is split into one file per value of that column,
+with an `indice.json`: the map points come in one file per state, and the details of each project in
+one file per municipality, fetched when a project is opened. The verification splits the result again
+and compares every file. Projects can be filtered by status, by flags C1 to C4 and by evidence
+(documents, PDF, image, or a start date after the first release of Esri's imagery archive). The search
+box finds states, municipalities, projects and folios on the site, and any place through OpenStreetMap
+(Photon, or Nominatim when Photon does not answer). Each project can be compared in two releases of
+Esri's public satellite-imagery archive (World Imagery Wayback): the last one published before the
+project started and the latest.
 
 ## Rebuilding it
 

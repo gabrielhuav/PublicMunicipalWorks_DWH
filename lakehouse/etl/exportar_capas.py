@@ -4,11 +4,17 @@ Cada archivo `NN_nombre.pg.sql` corre en PostgreSQL y cada `NN_nombre.duck.sql` 
 y su resultado se guarda tal cual en sitio/datos/NN_nombre.json. No hay otra entrada: ni
 archivos de las fuentes ni valores escritos aquí. manifiesto.json guarda el hash de cada
 consulta y de su resultado, y verificacion/verificar_capas.py lo comprueba contra las bases.
+
+Una consulta con la línea `-- particion: columna` se corre una vez y su resultado se reparte
+por esa columna en sitio/datos/NN_nombre/<valor>.json, para que el mapa baje solo la parte que
+necesita. indice.json guarda el hash de cada parte; el manifiesto, el del resultado completo.
 """
 import datetime as dt
 import decimal
 import hashlib
 import json
+import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -20,6 +26,7 @@ CAPAS = RAIZ / "capas"
 SALIDA = RAIZ / "sitio" / "datos"
 EVIDENCIA_LAGO = "verificacion/evidencia_lago.json"
 FUENTES = "fuentes.json"
+PARTICION = re.compile(r"^-- particion: (\w+)\s*$", re.M)
 
 
 def plano(v):
@@ -27,6 +34,8 @@ def plano(v):
         return int(v) if v == v.to_integral_value() and abs(v) < 2 ** 53 else float(v)
     if isinstance(v, (dt.date, dt.datetime)):
         return v.isoformat()
+    if isinstance(v, list):
+        return [plano(x) for x in v]
     return v
 
 
@@ -38,14 +47,19 @@ def texto(ruta):
     return ruta.read_bytes().replace(b"\r\n", b"\n")
 
 
+def particion(ruta):
+    m = PARTICION.search(texto(ruta).decode("utf-8"))
+    return m.group(1) if m else None
+
+
 class Bases:
     """Abre cada base solo si alguna consulta la usa."""
 
     def __init__(self):
         self.pg = self.lago = None
 
-    def correr(self, ruta, sql=None):
-        sql = sql if sql is not None else texto(ruta).decode("utf-8")
+    def correr(self, ruta):
+        sql = texto(ruta).decode("utf-8")
         if motor(ruta) == "pg":
             if self.pg is None:
                 self.pg = psycopg2.connect(PG_DSN)
@@ -87,18 +101,17 @@ def nombre(ruta):
     return ruta.name.split(".", 1)[0]
 
 
-ENTIDADES = range(1, 33)
+def repartir(columnas, filas, columna):
+    """Parte el resultado por una columna, sin ella, en el orden de la consulta.
 
-
-def corridas(ruta):
-    """Una corrida por consulta, o una por estado si la consulta lleva {entidad}.
-
-    Devuelve (archivo de salida sin extensión, SQL, entidad o None).
+    Devuelve las columnas de cada parte y {valor: bytes canónicos}.
     """
-    sql = texto(ruta).decode("utf-8")
-    if "{entidad}" not in sql:
-        return [(nombre(ruta), sql, None)]
-    return [(f"{nombre(ruta)}_{e:02d}", sql.replace("{entidad}", str(e)), e) for e in ENTIDADES]
+    i = columnas.index(columna)
+    partes = {}
+    for f in filas:
+        partes.setdefault(str(f[i]), []).append(f[:i] + f[i + 1:])
+    resto = columnas[:i] + columnas[i + 1:]
+    return resto, {v: canonico(resto, fs) for v, fs in partes.items()}
 
 
 def main():
@@ -108,17 +121,31 @@ def main():
     resumen = []
     try:
         for q in consultas():
-            for salida, sql, entidad in corridas(q):
-                columnas, filas = bases.correr(q, sql)
-                datos = canonico(columnas, filas)
-                (SALIDA / f"{salida}.json").write_bytes(datos)
-                resumen.append({"consulta": q.name, "motor": motor(q), "datos": f"{salida}.json",
-                                "entidad": entidad, "filas": len(filas), "columnas": columnas,
-                                "sha256_consulta": sha(texto(q)), "sha256_datos": sha(datos),
-                                "sql": texto(q).decode("utf-8")})
-                if entidad is None or entidad == ENTIDADES[-1]:
-                    total = sum(r["filas"] for r in resumen if r["consulta"] == q.name)
-                    print(f"{nombre(q):<24}{motor(q):>5}{total:>9,} filas")
+            columnas, filas = bases.correr(q)
+            datos = canonico(columnas, filas)
+            entrada = {"consulta": q.name, "motor": motor(q), "filas": len(filas), "columnas": columnas,
+                       "sha256_consulta": sha(texto(q)), "sha256_datos": sha(datos),
+                       "sql": texto(q).decode("utf-8")}
+            col = particion(q)
+            if col is None:
+                (SALIDA / f"{nombre(q)}.json").write_bytes(datos)
+                entrada["datos"] = f"{nombre(q)}.json"
+                detalle = ""
+            else:
+                carpeta = SALIDA / nombre(q)
+                shutil.rmtree(carpeta, ignore_errors=True)
+                carpeta.mkdir()
+                resto, partes = repartir(columnas, filas, col)
+                for valor, contenido in partes.items():
+                    (carpeta / f"{valor}.json").write_bytes(contenido)
+                indice = {"particion": col, "columnas": resto,
+                          "archivos": {v: sha(c) for v, c in partes.items()}}
+                (carpeta / "indice.json").write_text(json.dumps(indice, ensure_ascii=False, indent=0) + "\n",
+                                                     encoding="utf-8", newline="\n")
+                entrada.update(datos=f"{nombre(q)}/", particion=col, archivos=len(partes))
+                detalle = f" en {len(partes):,} archivos por {col}"
+            resumen.append(entrada)
+            print(f"{nombre(q):<24}{motor(q):>5}{len(filas):>9,} filas{detalle}")
     finally:
         bases.cerrar()
     # Se copian sin cambiar un byte: la comparación lago contra almacén, tal como la escribió

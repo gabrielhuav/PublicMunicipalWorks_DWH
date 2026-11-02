@@ -210,8 +210,11 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Para actualizarlo:** commit en la rama, `lakehouse/publicar/publicar.ps1`, revisar la copia en
   `Documents/GitHub Desktop/PublicMunicipalWorks_Lakehouse` (remoto `origin`), commit ahí y push
   solo con autorización.
-- **Capas:** 5 consultas, de 6 a 21,335 filas; `verificar_capas.py` las da iguales byte por byte, y
-  falla si se altera un archivo (probado). La capa de obras del Estado de México 2024 pesa 5 MB.
+- **Capas:** 6 consultas, de 6 a 253,346 filas. Una consulta que empieza con `-- particion: columna`
+  se corre una vez y se reparte en un archivo por valor, con `indice.json`: `05_puntos_2024` en 32
+  (por estado, 38 MB) y `06_detalle_2024` en 2,492 (por municipio, 49 MB). `verificar_capas.py` las
+  da iguales byte por byte y falla si se altera un archivo, también uno de una capa repartida (probado
+  el 2 nov con `06_detalle_2024/15086.json`).
 - **2 municipios sin cabecera en ITER** (Francisco León, Chiapas, y Villa de Arista, San Luis Potosí):
   no se dibujan.
 - **2025 es el informe definitivo de SHCP, pero trae 91,062 proyectos contra 253,494 de 2024.** No
@@ -355,7 +358,20 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   - Respaldos del mapa base, comprobados: con `?teselas=carto` el módulo detecta la marca de agua y usa
     Esri Canvas. Son siete mecanismos: prueba de dos teselas, vigilancia de errores y atascos, copia
     provisional, copia local, contorno incrustado, elección manual y reintento al volver la red.
-- La v1 del artículo describe esto en 9.4: 15 páginas, 9,928 palabras, 0 sin amarillo.
+- **Pedidos del 2 nov, tercera tanda (rediseño del mapa), hechos y SIN publicar:**
+  - Las capas `05_obras_2024`/`06_enlaces_2024` con `{entidad}` se cambiaron por `05_puntos_2024` y
+    `06_detalle_2024`, repartidas por la consulta (ver Capas). El detalle se baja al abrir un proyecto.
+  - Filtro por evidencia, sobre 253,346 proyectos con coordenadas: con documentos 158,919, con PDF
+    37,682, con imagen 45 (29 en San Luis Potosí, 14 en Coahuila) y con antes y después 253,272.
+  - Buscador como el de un mapa de calles: estados, municipios, proyectos y folios del sitio, y
+    lugares por Photon (Nominatim si no responde), sin clave.
+  - Temas guinda y azul, cada uno automático, claro u oscuro. En el teléfono la barra es un menú y el
+    panel y la ficha son hojas inferiores de 60 %; la ficha es compacta y un aro marca lo abierto.
+  - En español el mapa base empieza por OpenStreetMap (nombres en español). Lo elegido a mano se
+    recuerda por idioma, con clave nueva, así que una elección vieja de Esri Canvas ya no se arrastra.
+  - Los saltos del mapa van sin animación: con la pestaña oculta, Leaflet aplicaba al volver una
+    animación pendiente y llevaba el mapa a otro estado.
+- La v1 del artículo describe esto en 9.4: 15 páginas, 9,969 palabras, 0 sin amarillo (2 nov).
 - Decidir si los alumnos de los repositorios de referencia van en agradecimientos.
 - Revisar la v1 completa, sobre todo la declaración de IA, que dice que los autores revisaron y
   aprobaron el texto nuevo.
@@ -394,3 +410,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-02, Claude (Claude Code, Opus 5.5): mapa base del trabajo 38 con copia local de Natural Earth,
   filtro por estatus y marcas, fuente oficial y enlaces de la dependencia en cada ficha, y botón de
   satélite. Publicado con autorización (`cd6a606`) y verificado en vivo. La v1 queda en 9,877 palabras.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): rediseñó el mapa a pedido de Gabriel: capas repartidas
+  por estado y municipio, filtros de evidencia, buscador de lugares, temas guinda y azul con claro y
+  oscuro, y diseño para teléfono. Probado en el navegador; v1 en 9,969 palabras. Sin publicar.

@@ -33,7 +33,9 @@
 (function () {
   'use strict';
 
-  var K_PROVEEDOR = 'obraslago-teselas';
+  /* Lo elegido a mano se recuerda por idioma: Esri Canvas rotula en inglés,
+     y quien lo eligió leyendo en inglés no debe verlo al pasar a español. */
+  var K_PROVEEDOR = 'obraslago-teselas-' + ((document.documentElement.lang || '').indexOf('es') === 0 ? 'es' : 'en');
   /* Centro de la vista inicial (mapa.js). Las teselas de prueba son las de
      ese centro, que luego se ven, así que la prueba no se desperdicia. */
   var CENTRO = { lat: 23.6, lng: -102.5 };
@@ -97,6 +99,14 @@
       atribucion: NE }
   ];
   var LOCAL = PROVEEDORES[PROVEEDORES.length - 1];
+
+  /* En español va primero OpenStreetMap, que rotula con los nombres locales; Esri Canvas rotula en
+     inglés. comun.js pone el idioma en <html> antes de cargar este script. */
+  if ((document.documentElement.lang || '').indexOf('es') === 0) {
+    for (var iOsm = 0; iOsm < PROVEEDORES.length; iOsm++) {
+      if (PROVEEDORES[iOsm].id === 'osm') { PROVEEDORES.unshift(PROVEEDORES.splice(iOsm, 1)[0]); break; }
+    }
+  }
 
   /* Respaldo de la copia local, por si ni su archivo llegara: el contorno
      de México, los límites entre estados y sus nombres, más simplificados,
