@@ -344,7 +344,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
     capa 06). 10,878 de 21,335 proyectos de 2024 tienen enlaces; se omiten 67 de OneDrive personal.
   - SHCP no publica fotos de las obras. Los enlaces que apuntan directo a una imagen son muy pocos (4
     distintos en 2024); el sitio los enseña en miniatura.
-- **Pedidos del 2 nov, segunda tanda, hechos y probados en local, sin publicar:**
+- **Pedidos del 2 nov, segunda tanda, publicados con autorización (`9b30e01` en el repositorio
+  público; los 82 archivos del sitio dan en vivo el mismo SHA-256 que en local):**
   - Proyectos de 2024 de los 32 estados, uno a la vez: `capas/05_obras_2024.duck.sql` y
     `06_enlaces_2024.duck.sql` llevan `{entidad}` y el exportador las corre por estado (253,346
     proyectos, 210,384 enlaces, 68 archivos verificados). Botón en cada municipio para cargar su estado.
