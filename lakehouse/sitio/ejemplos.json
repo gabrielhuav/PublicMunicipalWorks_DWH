@@ -1,0 +1,9 @@
+{
+  "nota": "Panoramas de Google Street View que los autores eligieron a mano en Google Maps el 2 de noviembre de 2026 para el ejemplo del artículo. No salen de ninguna consulta: mapa.js los incrusta en el antes y ahora de ese folio. rumbo e inclinacion vienen de la URL de Google Maps (h y t menos 90); fecha es el mes que Google asigna a la toma.",
+  "streetview": {
+    "MEX17170401001337": {
+      "antes": {"pano": "z2H60Xn5Y-PQyQ66anQKwg", "fecha": "2015-07", "lat": 19.508352, "lon": -99.2746453, "rumbo": 305.17, "inclinacion": 9.25},
+      "despues": {"pano": "rVA3qpMCqX3RnNufR4Ccvw", "fecha": "2024-08", "lat": 19.5083191, "lon": -99.2746486, "rumbo": 305.17, "inclinacion": 9.25}
+    }
+  }
+}

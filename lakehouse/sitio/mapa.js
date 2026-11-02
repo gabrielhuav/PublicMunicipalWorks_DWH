@@ -4,7 +4,7 @@
    de lakehouse/capas/. Aquí no hay cifras escritas a mano: solo se decide cómo pintarlas. Los datos
    se bajan por partes: los municipios al abrir, los puntos de un estado al elegirlo y el detalle de
    un municipio al abrir uno de sus proyectos. La URL admite ?ind=, ?ciclo=, ?estado=, ?estatus=,
-   ?evidencia=, ?marcas=1, ?c=lat,lng,zoom, ?lang=, ?teselas= y ?vista=figura. */
+   ?evidencia=, ?marcas=1, ?folio=, ?comparar=1, ?c=lat,lng,zoom, ?lang=, ?teselas= y ?vista=figura. */
 (function () {
   'use strict';
 
@@ -58,16 +58,28 @@
       'fu.pob': 'Población: INEGI, Censo 2020', 'fu.rezago': 'Rezago social: CONEVAL 2020',
       'fu.shcp': 'Proyectos y montos: SHCP', 'fu.cngmd': 'Contratos 2022: INEGI, CNGMD 2023',
       'fu.docs': 'Documentos que reportó la dependencia ({n})', 'fu.mas': 'y {n} más.',
-      'fu.docs.nota': 'Enlaces tal como los publicó la dependencia en SHCP; nadie revisó lo que contienen. Se omiten los que llevan la cuenta de correo de quien los subió.',
+      'fu.docs.nota': 'Enlaces tal como los publicó la dependencia en SHCP; nadie revisó lo que contienen y algunos ya no responden: para esos, Internet Archive puede tener una copia guardada. Se omiten los que llevan la cuenta de correo de quien los subió.',
+      'fu.archivo': 'copia en Internet Archive',
       'fu.sindocs': 'La dependencia no publicó enlaces para este proyecto.', 'fu.imagen': 'Imagen publicada por la dependencia',
-      'sat.boton': 'Comparar en imagen de satélite: antes y ahora',
-      'sat.nota': 'Imágenes del archivo histórico de Esri (World Imagery Wayback).',
-      'sat.sin': 'Sin imagen de antes: el proyecto empezó antes de la primera versión del archivo de Esri o no trae fecha.',
-      'cmp.cerrar': 'Cerrar', 'cmp.cargando': 'Cargando…', 'cmp.error': 'No se pudo consultar el historial de Esri.',
+      'sat.boton': 'Ver el lugar antes y ahora: satélite y Street View',
+      'sat.nota': 'Imagen de satélite del archivo histórico de Esri (World Imagery Wayback) y panoramas de Google Street View.',
+      'sat.sin': 'Sin imagen de satélite de antes: el proyecto empezó antes de la primera versión del archivo de Esri o no trae fecha.',
+      'cmp.cerrar': 'Cerrar', 'cmp.cargando': 'Cargando…',
+      'cmp.error': 'No se pudo consultar el archivo de Esri. Cierra y vuelve a intentarlo.',
+      'cmp.satelite': 'Satélite: Esri World Imagery Wayback', 'cmp.sv': 'A nivel de calle: Google Street View',
       'cmp.antes': 'Antes: versión publicada el {fecha}, previa al inicio del proyecto ({inicio}).',
+      'cmp.antes.toma': 'Antes: toma del {toma} en el punto, en la versión del {version}, previa al inicio del proyecto ({inicio}).',
       'cmp.sinantes': 'Esri no tiene una versión publicada antes del inicio del proyecto ({inicio}).',
-      'cmp.reciente': 'Ahora: versión más reciente, publicada el {fecha}. Término reportado: {termino}.',
-      'cmp.nota': 'Esri fecha cada versión al publicarla; la toma de cada lugar puede ser anterior y repetirse entre versiones. El círculo amarillo es el punto que reportó la dependencia. Las imágenes enseñan el lugar; no prueban la obra.',
+      'cmp.reciente': 'Ahora: versión más reciente, publicada el {fecha}.',
+      'cmp.ahora.toma': 'Ahora: toma del {toma} en el punto, en la versión del {version}.',
+      'cmp.igual': 'Ahora: la misma toma del {toma}; Esri no tiene una imagen más reciente de este punto.',
+      'cmp.termino': 'Término reportado: {termino}.', 'cmp.previa': 'La toma es anterior al término reportado.',
+      'cmp.nota': 'Cada fecha es la de la toma en el punto del proyecto, según los metadatos de Esri; si no se pudieron leer, va la de la versión. El círculo amarillo es el punto que reportó la dependencia. Las imágenes enseñan el lugar; no prueban la obra.',
+      'sv.antes': 'Antes: panorama de {fecha}.', 'sv.despues': 'Después: panorama de {fecha}.',
+      'sv.ejemplo': 'Panoramas que los autores eligieron en Google Maps para el ejemplo del artículo; Google fecha cada toma por mes.',
+      'sv.cerca': 'El panorama más cercano al punto, si Google tiene uno.',
+      'sv.nota': 'Sin clave, Google no deja listar las fechas anteriores de un lugar; se pueden recorrer al abrirlo en Google Maps.',
+      'sv.abrir': 'Abrir en Google Maps',
     },
     en: {
       titulo: 'Federally funded public works in Mexico, 2020-2025',
@@ -115,16 +127,28 @@
       'fu.pob': 'Population: INEGI, 2020 Census', 'fu.rezago': 'Social deprivation: CONEVAL 2020',
       'fu.shcp': 'Projects and amounts: SHCP', 'fu.cngmd': 'Contracts 2022: INEGI, CNGMD 2023',
       'fu.docs': 'Documents reported by the agency ({n})', 'fu.mas': 'and {n} more.',
-      'fu.docs.nota': "Links as the agency published them with SHCP; nobody has reviewed what they contain. Links that carry the uploader's e-mail account are left out.",
+      'fu.docs.nota': "Links as the agency published them with SHCP; nobody has reviewed what they contain, and some no longer answer: for those, the Internet Archive may hold a saved copy. Links that carry the uploader's e-mail account are left out.",
+      'fu.archivo': 'Internet Archive copy',
       'fu.sindocs': 'The agency published no links for this project.', 'fu.imagen': 'Image published by the agency',
-      'sat.boton': 'Compare in satellite imagery: before and now',
-      'sat.nota': "Imagery from Esri's archive (World Imagery Wayback).",
-      'sat.sin': "No before image: the project started before Esri's first archived release, or has no start date.",
-      'cmp.cerrar': 'Close', 'cmp.cargando': 'Loading…', 'cmp.error': "Esri's archive could not be reached.",
+      'sat.boton': 'See the place before and now: satellite and Street View',
+      'sat.nota': "Satellite imagery from Esri's archive (World Imagery Wayback) and Google Street View panoramas.",
+      'sat.sin': "No satellite image from before: the project started before Esri's first archived release, or has no start date.",
+      'cmp.cerrar': 'Close', 'cmp.cargando': 'Loading…',
+      'cmp.error': "Esri's archive could not be reached. Close and try again.",
+      'cmp.satelite': 'Satellite: Esri World Imagery Wayback', 'cmp.sv': 'Street level: Google Street View',
       'cmp.antes': 'Before: release published on {fecha}, prior to the project start ({inicio}).',
+      'cmp.antes.toma': 'Before: captured on {toma} at the point, in the release of {version}, prior to the project start ({inicio}).',
       'cmp.sinantes': 'Esri has no release published before the project start ({inicio}).',
-      'cmp.reciente': 'Now: latest release, published on {fecha}. Reported end: {termino}.',
-      'cmp.nota': 'Esri dates each release when it is published; the capture of a given place may be older and repeat across releases. The yellow circle is the point the agency reported. The images show the place; they do not prove the work.',
+      'cmp.reciente': 'Now: latest release, published on {fecha}.',
+      'cmp.ahora.toma': 'Now: captured on {toma} at the point, in the release of {version}.',
+      'cmp.igual': 'Now: the same capture of {toma}; Esri has no newer image of this point.',
+      'cmp.termino': 'Reported end: {termino}.', 'cmp.previa': 'The capture predates the reported end.',
+      'cmp.nota': "Each date is the capture date at the project point, from Esri's metadata; when it could not be read, the release date is shown. The yellow circle is the point the agency reported. The images show the place; they do not prove the work.",
+      'sv.antes': 'Before: panorama of {fecha}.', 'sv.despues': 'After: panorama of {fecha}.',
+      'sv.ejemplo': "Panoramas chosen by the authors in Google Maps for the article's example; Google dates each capture by month.",
+      'sv.cerca': 'The panorama closest to the point, if Google has one.',
+      'sv.nota': "Without a key, Google does not list a place's earlier dates; they can be browsed by opening it in Google Maps.",
+      'sv.abrir': 'Open in Google Maps',
     },
   };
   const t = (k, v) => S.t(TXT, k, v);
@@ -210,6 +234,8 @@
     poner('estatus', estado.estatus.size < 4 ? [...estado.estatus].join(',') : null);
     poner('evidencia', estado.evidencia.size ? [...estado.evidencia].join(',') : null);
     poner('marcas', estado.soloMarcas ? '1' : null);
+    poner('folio', abierto && abierto.folio ? abierto.folio : null);
+    poner('comparar', sitio('comparar').hidden ? null : '1');
     if (mapa) {
       const c = mapa.getCenter();
       poner('c', `${c.lat.toFixed(4)},${c.lng.toFixed(4)},${mapa.getZoom()}`);
@@ -518,6 +544,7 @@
     abierto = null;
     resaltar(null);
     origen();
+    setUrl();
   }
 
   function archivoOficial(id) {
@@ -557,6 +584,7 @@
       + ids.map(([i, k]) => `<li>${S.esc(t(k))}: ${archivoOficial(i)}</li>`).join('') + '</ul></div>';
     abrirCajon(html);
     origen();
+    setUrl();
   }
 
   function detallesDe(cvemun) {
@@ -629,15 +657,14 @@
       html += '<div class="miniaturas">' + fotos.map(u => `<a href="${S.esc(u)}" target="_blank" rel="noopener noreferrer nofollow">`
         + `<img src="${S.esc(u)}" alt="${S.esc(t('fu.imagen'))}" loading="lazy" referrerpolicy="no-referrer"></a>`).join('') + '</div>';
     }
-    if (p.evidencia & 8) {
-      html += `<button type="button" class="boton-principal" data-comparar="${S.esc(p.folio)}">${S.esc(t('sat.boton'))}</button>`
-        + `<p class="nota">${S.esc(t('sat.nota'))}</p>`;
-    } else {
-      html += `<p class="nota">${S.esc(t('sat.sin'))}</p>`;
-    }
+    html += `<button type="button" class="boton-principal" data-comparar="${S.esc(p.folio)}">${S.esc(t('sat.boton'))}</button>`
+      + `<p class="nota">${S.esc(t(p.evidencia & 8 ? 'sat.nota' : 'sat.sin'))}</p>`;
+    /* Muchos enlaces de las dependencias ya no responden; Internet Archive guarda copias de una parte. */
+    const archivada = u => `https://web.archive.org/web/2024/${u}`;
     if (docs.length) {
       html += `<p><b>${S.esc(t('fu.docs', { n: S.numero(docs.length) }))}</b></p><ul class="docs">`
-        + docs.slice(0, 8).map(u => `<li><a href="${S.esc(u)}" target="_blank" rel="noopener noreferrer nofollow">${S.esc(etiquetaEnlace(u))}</a></li>`).join('')
+        + docs.slice(0, 8).map(u => `<li><a href="${S.esc(u)}" target="_blank" rel="noopener noreferrer nofollow">${S.esc(etiquetaEnlace(u))}</a>`
+          + ` · <a class="archivada" href="${S.esc(archivada(u))}" target="_blank" rel="noopener noreferrer nofollow">${S.esc(t('fu.archivo'))}</a></li>`).join('')
         + '</ul>' + (docs.length > 8 ? `<p class="nota">${S.esc(t('fu.mas', { n: S.numero(docs.length - 8) }))}</p>` : '')
         + `<p class="nota">${S.esc(t('fu.docs.nota'))}</p>`;
     } else {
@@ -651,19 +678,31 @@
     abierto.p = p;
     abierto.d = d;
     abrirCajon(html);
+    setUrl();
   }
 
   /* ------------------------------------------------------------- antes y ahora (Esri Wayback) */
 
   /* "Antes" es la última versión publicada antes de la fecha de inicio: su toma es, a lo sumo, de
-     ese día, así que es anterior a la obra. */
+     ese día, así que es anterior a la obra. Cada versión repite el mosaico de la última que cambió
+     ese lugar: el servicio tilemap de Esri dice de cuál viene, y los metadatos de esa versión dan la
+     fecha de la toma en el punto (una capa por nivel de zoom; la 0 es el nivel 23). Así cada imagen
+     lleva su fecha real, y si antes y ahora son la misma toma, se dice. */
   const WAYBACK = 'https://s3-us-west-2.amazonaws.com/config.maptiles.arcgis.com/waybackconfig.json';
-  let versionesWayback = null, comparacion = null;
+  const TILEMAP = 'https://wayback.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tilemap';
+  let versionesWayback = null, comparacion = null, pedidoComparar = 0;
+  /* Con plazo: un servicio que no contesta no deja la comparación esperando para siempre. */
+  function leerJson(u, ms = 20000) {
+    const ctl = new AbortController();
+    const reloj = setTimeout(() => ctl.abort(), ms);
+    return fetch(u, { signal: ctl.signal }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .finally(() => clearTimeout(reloj));
+  }
 
   function wayback() {
     if (!versionesWayback) {
-      versionesWayback = fetch(WAYBACK).then(r => r.json()).then(d => Object.entries(d).map(([num, v]) => ({
-        num, fecha: ((v.itemTitle || '').match(/\d{4}-\d{2}-\d{2}/) || [])[0],
+      versionesWayback = leerJson(WAYBACK).then(d => Object.entries(d).map(([num, v]) => ({
+        num, item: v.itemID, meta: v.metadataLayerUrl, fecha: ((v.itemTitle || '').match(/\d{4}-\d{2}-\d{2}/) || [])[0],
         url: (v.itemURL || '').replace('{level}', '{z}').replace('{row}', '{y}').replace('{col}', '{x}'),
       })).filter(v => v.fecha && v.url.startsWith('https://')).sort((a, b) => a.fecha.localeCompare(b.fecha)));
       versionesWayback.catch(() => { versionesWayback = null; });
@@ -671,21 +710,51 @@
     return versionesWayback;
   }
 
+  /* La versión de la que sale el mosaico del punto en el nivel z, o null si ahí no hay imagen. */
+  async function origenTesela(v, lat, lon, z) {
+    const n = 2 ** z, rad = lat * Math.PI / 180;
+    const x = Math.floor((lon + 180) / 360 * n);
+    const y = Math.floor((1 - Math.log(Math.tan(rad) + 1 / Math.cos(rad)) / Math.PI) / 2 * n);
+    const d = await leerJson(`${TILEMAP}/${v.num}/${z}/${y}/${x}`);
+    if (!d.data || !d.data[0]) return null;
+    return d.select && d.select[0] != null ? String(d.select[0]) : v.num;
+  }
+
+  async function fechaToma(v, lat, lon, z) {
+    const punto = encodeURIComponent(JSON.stringify({ x: lon, y: lat, spatialReference: { wkid: 4326 } }));
+    const d = await leerJson(`${v.meta}/${23 - z}/query?f=json&geometry=${punto}&geometryType=esriGeometryPoint`
+      + '&spatialRel=esriSpatialRelIntersects&outFields=SRC_DATE2&returnGeometry=false');
+    const ms = d.features && d.features.length ? d.features[0].attributes.SRC_DATE2 : null;
+    return ms ? new Date(ms).toISOString().slice(0, 10) : null;
+  }
+
+  /* El crédito de cada versión, como lo publica Esri en su ficha. */
+  const creditos = v => leerJson(`https://www.arcgis.com/sharing/rest/content/items/${v.item}?f=json`)
+    .then(d => d.accessInformation || '').catch(() => '');
+
   function cerrarComparar() {
     const caja = sitio('comparar');
     if (caja.hidden) return false;
     caja.hidden = true;
+    pedidoComparar++;
     if (comparacion) comparacion.forEach(m => m.remove());
     comparacion = null;
+    sitio('svMapas').innerHTML = sitio('svNota').innerHTML = '';
+    setUrl();
     return true;
   }
 
   async function comparar(p, d) {
     const caja = sitio('comparar');
-    const [pieAntes, pieAhora] = caja.querySelectorAll('figcaption');
+    const [pieAntes, pieAhora] = caja.querySelectorAll('.comparar__satelite figcaption');
+    const mio = ++pedidoComparar;
     sitio('compararTitulo').textContent = p.nombre;
     pieAntes.textContent = pieAhora.textContent = t('cmp.cargando');
     caja.hidden = false;
+    setUrl();
+    if (comparacion) comparacion.forEach(m => m.remove());
+    comparacion = null;
+    if (!document.body.classList.contains('figura')) streetView(p, mio);
     let vs;
     try {
       vs = await wayback();
@@ -694,13 +763,20 @@
       pieAhora.textContent = '';
       return;
     }
+    const porNum = new Map(vs.map(v => [v.num, v]));
     const ahora = vs[vs.length - 1];
     const antes = d.fecha_inicio ? [...vs].reverse().find(v => v.fecha < d.fecha_inicio) : null;
-    if (comparacion) comparacion.forEach(m => m.remove());
+    if (mio !== pedidoComparar) return;
+
+    /* Las imágenes salen en cuanto se sabe qué versiones comparar, con la fecha de la versión; la de la
+       toma y el crédito se agregan cuando Esri responde, que a veces tarda. En la vista de figura se
+       acerca un nivel, ampliando los mosaicos, para que en papel se distinga la obra. */
+    const figura = document.body.classList.contains('figura');
     const crear = (id, v) => {
-      const m = L.map(id, { zoomControl: false }).setView([p.lat, p.lon], 17);
-      if (v) L.tileLayer(v.url, { maxZoom: 19, attribution: 'Esri World Imagery Wayback' }).addTo(m);
+      const m = L.map(id, { zoomControl: false }).setView([p.lat, p.lon], figura ? 18 : 17);
+      m.capa = v ? L.tileLayer(v.url, { maxZoom: 19, maxNativeZoom: figura ? 17 : 19, attribution: 'Esri World Imagery Wayback' }).addTo(m) : null;
       L.circleMarker([p.lat, p.lon], { radius: 9, color: '#ffeb3b', weight: 3, fill: false }).addTo(m);
+      if (v) creditos(v).then(c => { if (c && m._loaded) m.attributionControl.addAttribution(S.esc(c)); });
       return m;
     };
     comparacion = [crear('mapaAntes', antes), crear('mapaAhora', ahora)];
@@ -711,9 +787,73 @@
       comparacion[1 - i].setView(m.getCenter(), m.getZoom(), { animate: false });
       moviendo = false;
     }));
-    pieAntes.textContent = antes ? t('cmp.antes', { fecha: antes.fecha, inicio: d.fecha_inicio })
-      : t('cmp.sinantes', { inicio: d.fecha_inicio || t('sindato') });
-    pieAhora.textContent = t('cmp.reciente', { fecha: ahora.fecha, termino: d.fecha_termino || t('sindato') });
+    const pies = (tAntes, tAhora, igual) => {
+      pieAntes.textContent = !antes ? t('cmp.sinantes', { inicio: d.fecha_inicio || t('sindato') })
+        : tAntes ? t('cmp.antes.toma', { toma: tAntes, version: antes.fecha, inicio: d.fecha_inicio })
+          : t('cmp.antes', { fecha: antes.fecha, inicio: d.fecha_inicio });
+      let txt = igual ? t('cmp.igual', { toma: tAhora || ahora.fecha })
+        : tAhora ? t('cmp.ahora.toma', { toma: tAhora, version: ahora.fecha }) : t('cmp.reciente', { fecha: ahora.fecha });
+      txt += ' ' + t('cmp.termino', { termino: d.fecha_termino || t('sindato') });
+      if (tAhora && d.fecha_termino && tAhora < d.fecha_termino) txt += ' ' + t('cmp.previa');
+      pieAhora.textContent = txt;
+    };
+    pies(null, null, false);
+
+    /* El nivel más cercano en que las dos versiones tienen imagen del punto; si Esri no responde, se
+       quedan el nivel 17 y las fechas de las versiones. */
+    let z = 17, oAhora = null, oAntes = null;
+    try {
+      for (z = 17; z >= 14; z--) {
+        [oAhora, oAntes] = await Promise.all([origenTesela(ahora, p.lat, p.lon, z),
+          antes ? origenTesela(antes, p.lat, p.lon, z) : null]);
+        if (oAhora && (!antes || oAntes)) break;
+      }
+      if (z < 14) { z = 17; oAhora = oAntes = null; }
+    } catch (e) {
+      z = 17;
+      oAhora = oAntes = null;
+    }
+    if (mio !== pedidoComparar) return;
+    if (z !== 17) {
+      comparacion.forEach(m => {
+        if (m.capa && figura) { m.capa.options.maxNativeZoom = z; m.capa.redraw(); }
+        m.setView([p.lat, p.lon], figura ? z + 1 : z, { animate: false });
+      });
+    }
+    const toma = (o, v) => (o ? fechaToma(porNum.get(o) || v, p.lat, p.lon, z).catch(() => null) : null);
+    const [tAhora, tAntes] = await Promise.all([toma(oAhora, ahora), toma(oAntes, antes)]);
+    if (mio !== pedidoComparar) return;
+    pies(tAntes, tAhora, !!oAntes && oAntes === oAhora);
+  }
+
+  /* ------------------------------------------------------------- Street View (Google) */
+
+  /* Street View se incrusta como Google lo permite en un sitio web; sus reglas no dejan imprimirlo
+     ni capturarlo, por eso no va en la vista de figura. ejemplos.json guarda los panoramas de antes y
+     después que los autores eligieron en Google Maps para el ejemplo del artículo; en los demás
+     proyectos va el panorama más cercano al punto, si hay, y un enlace para recorrer sus fechas. */
+  let ejemplos = null;
+  const leerEjemplos = () => (ejemplos = ejemplos || S.json('ejemplos.json').catch(() => ({})));
+  const mesAnio = f => new Date(f + '-15T12:00:00Z').toLocaleDateString(S.locale, { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+  async function streetView(p, mio) {
+    const marco = (src, pie) => `<figure><iframe class="comparar__mapa" src="${S.esc(src)}" title="Google Street View" `
+      + `loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe><figcaption>${S.esc(pie)}</figcaption></figure>`;
+    const panorama = s => `https://www.google.com/maps/embed?pb=!4v1730000000000!6m8!1m7!1s${encodeURIComponent(s.pano)}`
+      + `!2m2!1d${s.lat}!2d${s.lon}!3f${s.rumbo}!4f${s.inclinacion}!5f0.78`;
+    const enlace = `<a href="https://www.google.com/maps/@?api=1&amp;map_action=pano&amp;viewpoint=${p.lat},${p.lon}" `
+      + `target="_blank" rel="noopener noreferrer">${S.esc(t('sv.abrir'))}</a>`;
+    const ej = ((await leerEjemplos()).streetview || {})[p.folio];
+    if (mio !== pedidoComparar) return;
+    if (ej) {
+      sitio('svMapas').innerHTML = marco(panorama(ej.antes), t('sv.antes', { fecha: mesAnio(ej.antes.fecha) }))
+        + marco(panorama(ej.despues), t('sv.despues', { fecha: mesAnio(ej.despues.fecha) }));
+      sitio('svNota').innerHTML = `${S.esc(t('sv.ejemplo'))} ${enlace}`;
+    } else {
+      sitio('svMapas').innerHTML = marco(`https://maps.google.com/maps?layer=c&cbll=${p.lat},${p.lon}&cbp=11,0,0,0,0&output=svembed&hl=${S.idioma}`,
+        t('sv.cerca'));
+      sitio('svNota').innerHTML = `${S.esc(t('sv.nota'))} ${enlace}`;
+    }
   }
 
   /* ------------------------------------------------------------- buscador */
@@ -1010,6 +1150,18 @@
     controles();
     pintarMunicipios();
     if (estado.entidad) cargarEstado(estado.entidad, !q.get('c'));
+    /* ?folio= abre la ficha de un proyecto del estado cargado, para compartirlo; ?comparar=1 abre
+       además su antes y ahora (así se capturan las figuras del artículo). */
+    const folio = q.get('folio');
+    if (folio && estado.entidad) {
+      puntosDe(estado.entidad).then(async lista => {
+        const p = lista.find(x => x.folio === folio);
+        if (!p) return;
+        await abrirProyecto(p);
+        if (!q.get('c')) ir([p.lat, p.lon], 16);
+        if (q.get('comparar') === '1' && abierto && abierto.p === p) comparar(p, abierto.d);
+      }).catch(() => {});
+    }
     MapaTeselas.montar(mapa, { maxZoom: 19 });
   }
 

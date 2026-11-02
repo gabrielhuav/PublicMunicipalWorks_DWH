@@ -109,6 +109,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 | `paper/ijcopi/cifras_extension.py` | Cada cifra de la v1 con su archivo de evidencia, y las comprobaciones del texto |
 | `paper/ijcopi/word_a_pdf.ps1`, `verificar_amarillo.py`, `capturar_mapa.ps1` | Páginas y palabras en Word, amarillo completo y figura |
 | `scripts/cifras_capitulo.py` | Mide las tres cifras del capítulo que la v1 corrige |
+| `lakehouse/verificacion/ejemplo_esri.py` | Evidencia del ejemplo de las figuras 4 y 5: el proyecto y las tomas de Esri en su punto |
+| `lakehouse/sitio/ejemplos.json` | Panoramas de Street View elegidos a mano para el ejemplo; no salen de ninguna consulta |
 
 ## Hechos establecidos (no volver a investigar)
 
@@ -247,6 +249,33 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - El puerto 55432 puede estar tomado como puerto efímero por otro programa: usa un override de
   Compose con `ports: !override` y otro puerto, y pasa `LAGO_PG` con ese puerto.
 
+### Ejemplo de las figuras 4 y 5 (2 nov)
+
+- **Pedido de Gabriel:** usar como figura el caso de su URL (Naucalpan, `estado=15`, `c=19.5114,-99.2774,15`)
+  en lugar del mapa nacional, "más imágenes", y Street View de antes y después.
+- **Proyecto:** `MEX17170401001337`, tanque de agua potable en Praderas de San Mateo, Naucalpan de Juárez.
+  Inicio 2017-11-21, término 2017-12-29; en 2024 sigue "En ejecución" con 0 % físico y 99.84 %
+  financiero; marcas C2, C3 y C4 (14). Esri: toma del 2016-01-21 en la versión 2017-11-16 y del
+  2025-02-10 en la 2026-10-29 (`verificacion/evidencia_ejemplo.json`). En la toma de 2025 se ve una
+  estructura redonda junto al punto que en la de 2016 no está.
+- **Street View:** Gabriel eligió los panoramas de julio de 2015 (sin tanque) y agosto de 2024 (con
+  tanque). Claude no pudo verlos: en sus capturas el panorama sale negro (WebGL). El texto del artículo
+  se apoya en lo que vio Gabriel.
+- **Reglas de Google (leídas el 2 nov, about.google, geo-guidelines):** Street View se puede
+  incrustar en un sitio web sin permiso, pero no se puede imprimir (libros, revistas) ni capturar.
+  Por eso va en el sitio y no en las figuras. El iframe sin clave funciona: `maps/embed?pb=...` con el
+  id del panorama, y `maps.google.com/maps?layer=c&cbll=...&output=svembed` para el más cercano.
+  Sin clave no hay forma de listar las fechas anteriores de un lugar.
+- **Reglas de Esri (resources.esri.ca, leído el 2 nov):** capturas estáticas en publicaciones
+  académicas sin pedir permiso, con el crédito junto al mapa y una referencia con la URL de la ficha.
+  El artículo suma tres referencias de Esri (Light Gray Canvas y las dos versiones de Wayback).
+- **"La Wayback a veces no sirve":** el servicio de metadatos de Esri llegó a tardar 15 s. Ahora las
+  imágenes salen primero con la fecha de la versión, la de la toma se agrega después y cada consulta
+  tiene un plazo de 20 s.
+- **v1 con las figuras nuevas:** 15 páginas, 10,172 palabras y 0 sin amarillo. Se capturaron del sitio
+  local con `capturar_mapa.ps1 -Base http://localhost:8948/`; tras publicar, se pueden repetir desde
+  el sitio en vivo.
+
 ### Interoperabilidad (entrega 5, 2 nov, Estado de México)
 
 - **OC4IDS:** 78,826 proyectos validados contra el esquema 0.9.5, con 0 errores. SHCP llena 15 de los
@@ -314,6 +343,9 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   tardan más de 30 s y el verificador de enlaces da `fallos: 1`. Resuelven; espera y vuelve a
   correrlo, sin tocar el script.
 - En PowerShell 5.1, `git commit -F -` con un here-string no lee el mensaje: escríbelo en un archivo.
+- Con `python -m http.server`, el navegador puede seguir usando un `mapa.js` viejo de su caché: antes
+  de probar, pide cada archivo con `fetch(f, { cache: 'reload' })`. `capturar_mapa.ps1` usa un
+  perfil de Edge nuevo en cada captura por lo mismo.
 - Actions avisa que Node 20 está obsoleto en `checkout@v4`, `configure-pages@v5`,
   `upload-pages-artifact@v3` y `deploy-pages@v4`; el 2 nov corrían forzadas en Node 24 y publicaban bien.
 - La plantilla de IJCOPI no está en este repositorio: está en
@@ -375,6 +407,10 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   - Los saltos del mapa van sin animación: con la pestaña oculta, Leaflet aplicaba al volver una
     animación pendiente y llevaba el mapa a otro estado.
 - La v1 del artículo describe esto en 9.4: 15 páginas, 9,969 palabras, 0 sin amarillo (2 nov).
+- **Pedidos del 2 nov, cuarta tanda, hechos y SIN publicar:** copia en Internet Archive junto a cada
+  enlace de la dependencia; fechas reales de toma en el antes y ahora de Esri; Street View incrustado;
+  `?folio=` y `?comparar=1`; figuras 4 y 5 nuevas con el ejemplo del tanque (ver Ejemplo). Falta que
+  Gabriel confirme lo que el texto dice de los panoramas de Street View.
 - Decidir si los alumnos de los repositorios de referencia van en agradecimientos.
 - Revisar la v1 completa, sobre todo la declaración de IA, que dice que los autores revisaron y
   aprobaron el texto nuevo.
@@ -419,3 +455,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-02, Claude (Claude Code, Opus 5.5): con autorización de Gabriel, enlaces de Springer con
   `fallos: 0` y rediseño publicado (`0064ca3`); los 2,544 archivos del sitio, iguales en vivo. La rama
   `ijcopi-obras` sigue sin subirse.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): ejemplo del tanque de Naucalpan como figuras 4 y 5,
+  fechas de toma de Esri, Street View en el sitio (no en el artículo, por las reglas de Google), copias
+  en Internet Archive y enlaces por folio. v1: 15 páginas, 10,172 palabras. Sin publicar.

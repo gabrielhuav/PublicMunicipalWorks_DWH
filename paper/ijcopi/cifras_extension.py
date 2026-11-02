@@ -246,6 +246,40 @@ def cifras():
     pon("docs_proy", ent(con_enlaces), "sitio/datos/06_detalle_2024/*.json")
     pon("pdf_proy", ent(sum(1 for e in evidencia if e & 2)), "sitio/datos/05_puntos_2024/*.json")
     pon("foto_proy", ent(sum(1 for e in evidencia if e & 4)), "sitio/datos/05_puntos_2024/*.json")
+    # Ejemplo de las figuras 4 y 5: un proyecto de las capas y lo que Esri publica de su punto
+    def fila(capa, folio):
+        c = leer(capa)
+        i = c["columnas"].index("folio")
+        return next(dict(zip(c["columnas"], x)) for x in c["filas"] if x[i] == folio)
+
+    def larga(iso):
+        return dt.date.fromisoformat(iso).strftime("%#d %B %Y" if sys.platform == "win32" else "%-d %B %Y")
+
+    ej = leer(V / "evidencia_ejemplo.json")
+    pt = fila(datos_sitio / "05_puntos_2024" / f"{ej['cvemun'][:2].lstrip('0')}.json", ej["folio"])
+    de = fila(datos_sitio / "06_detalle_2024" / f"{ej['cvemun']}.json", ej["folio"])
+    assert (pt["marcas"], de["pct_fisico"], de["pct_financiero"], de["fecha_inicio"], de["fecha_termino"]) == (
+        ej["marcas"], ej["pct_fisico"], ej["pct_financiero"], ej["fecha_inicio"], ej["fecha_termino"])
+    assert ej["marcas"] == 2 + 4 + 8, "el texto dice que lo marcan C2, C3 y C4"
+    assert ej["antes"]["toma"] < ej["fecha_inicio"] < ej["ahora"]["toma"]
+    assert ej["antes"]["mosaico_de"] != ej["ahora"]["mosaico_de"]
+    fu = "verificacion/evidencia_ejemplo.json"
+    pon("ej_municipio", ej["municipio"], fu)
+    pon("ej_inicio", larga(ej["fecha_inicio"]), fu)
+    pon("ej_termino", larga(ej["fecha_termino"]), fu)
+    pon("ej_fisico", f"{ej['pct_fisico']:g}", fu)
+    pon("ej_financiero", dec(ej["pct_financiero"]), fu)
+    for lado in ("antes", "ahora"):
+        pon(f"ej_toma_{lado}", larga(ej[lado]["toma"]), fu)
+        pon(f"ej_titulo_{lado}", ej[lado]["titulo"], fu)
+        pon(f"ej_anio_{lado}", ej[lado]["publicada"][:4], fu)
+        pon(f"ej_item_{lado}", ej[lado]["item"], fu)
+    pon("esri_consultado", dt.date.fromisoformat(ej["consultado"]).strftime(
+        "%B %#d, %Y" if sys.platform == "win32" else "%B %-d, %Y"), fu)
+    sv = leer(LAGO / "sitio" / "ejemplos.json")["streetview"][ej["folio"]]
+    for lado in ("antes", "despues"):
+        pon(f"ej_sv_{lado}", dt.date.fromisoformat(sv[lado]["fecha"] + "-01").strftime("%B %Y"), "sitio/ejemplos.json")
+
     res = leer(LAGO / "sitio" / "datos" / "01_resumen.json")
     por_ciclo = {f[0]: dict(zip(res["columnas"], f)) for f in res["filas"]}
     pon("p2024", ent(por_ciclo[2024]["proyectos"]), "sitio/datos/01_resumen.json")

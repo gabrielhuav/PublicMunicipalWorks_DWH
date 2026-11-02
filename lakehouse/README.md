@@ -87,7 +87,17 @@ compara cada archivo. Los proyectos se filtran por estatus, por marcas C1 a C4 y
 El buscador encuentra estados, municipios, proyectos y folios del sitio y, por OpenStreetMap
 (Photon, y Nominatim si no responde), cualquier lugar. Cada proyecto se compara en dos versiones del
 archivo histórico de imágenes de Esri (World Imagery Wayback): la última publicada antes de su
-inicio y la más reciente. El sitio tiene tema guinda y azul, cada uno claro u oscuro.
+inicio y la más reciente. Cada imagen lleva la fecha de su toma en el punto, que el sitio lee del
+servicio tilemap de Esri (de qué versión sale el mosaico) y de sus metadatos; si antes y ahora son
+la misma toma, lo dice. Junto va Google Street View, incrustado como Google lo permite en un sitio
+web: el panorama más cercano al punto o, para el ejemplo del artículo, los de antes y después que los
+autores eligieron (`sitio/ejemplos.json`). Las reglas de Google no permiten imprimirlo ni
+capturarlo, así que no va en las figuras. Cada enlace de la dependencia tiene al lado su copia en
+Internet Archive, porque muchos ya no responden. `?folio=` abre la ficha de un proyecto y
+`?comparar=1` su antes y ahora. El sitio tiene tema guinda y azul, cada uno claro u oscuro.
+
+`verificacion/ejemplo_esri.py` deja en `verificacion/evidencia_ejemplo.json` el proyecto del ejemplo
+del artículo y lo que Esri publica de su punto: versiones, fechas de toma y créditos.
 
 ## Interoperabilidad
 

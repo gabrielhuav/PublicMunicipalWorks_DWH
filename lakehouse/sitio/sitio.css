@@ -208,10 +208,13 @@ body.app { height: 100vh; height: 100dvh; display: flex; flex-direction: column;
   width: min(1100px, 100%); max-height: 100%; overflow: auto; padding: 1rem; box-shadow: var(--sombra-3); }
 .comparar__cabecera { display: flex; gap: 1rem; align-items: flex-start; justify-content: space-between; }
 .comparar__cabecera h2 { margin: 0; font-size: 1rem; }
-.comparar__mapas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: .8rem; }
-.comparar__mapas figure { margin: 0; }
-.comparar__mapa { height: 380px; border-radius: 8px; border: 1px solid var(--borde); }
+.comparar__seccion { margin: 1rem 0 0; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--marca); }
+.comparar__mapas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: .5rem; }
+.comparar__mapas figure { margin: 0; min-width: 0; }
+.comparar__mapa { display: block; width: 100%; height: 340px; border-radius: 8px; border: 1px solid var(--borde); }
 .comparar__mapas figcaption { font-size: .8rem; color: var(--texto-2); margin-top: .35rem; }
+.comparar__mapa .leaflet-control-attribution { font-size: 9.5px; line-height: 1.25; }
+.docs .archivada { color: var(--texto-3); font-size: .78rem; }
 
 /* ---------- teléfono y pantallas angostas ---------- */
 @media (max-width: 760px) {
@@ -260,6 +263,15 @@ body.figura .panel-lateral > :not(#seccionLeyenda) { display: none; }
 body.figura #seccionLeyenda { border: 0; margin: 0; padding: 0; }
 body.figura #seccionLeyenda h2 { font-size: 1rem; text-transform: none; letter-spacing: 0; color: var(--texto); }
 body.figura .ley { font-size: 1rem; }
+/* Antes y ahora en la vista de figura: solo el satélite, a toda la ventana. Street View no va, porque
+   las reglas de Google no permiten imprimirlo ni capturarlo. */
+body.figura .comparar { padding: 0; background: var(--superficie); }
+body.figura .comparar__caja { width: 100%; height: 100%; border-radius: 0; box-shadow: none; padding: 10px 12px; }
+body.figura .comparar__cabecera, body.figura .comparar__seccion, body.figura .comparar__nota,
+body.figura .comparar__sv { display: none; }
+body.figura .comparar__mapas { margin-top: 0; }
+body.figura .comparar__mapa { height: calc(100vh - 92px); }
+body.figura .comparar__mapas figcaption { font-size: 1.05rem; color: var(--texto); }
 
 /* ---------- mapa base: control del trabajo 38 (assets/estilo.css) ---------- */
 .leaflet-layer.teselas-invertidas { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.55); }

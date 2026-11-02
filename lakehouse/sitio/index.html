@@ -107,11 +107,17 @@
             <h2 id="compararTitulo"></h2>
             <button type="button" id="cerrarComparar" class="cerrar" data-t-aria="cmp.cerrar">×</button>
         </div>
-        <div class="comparar__mapas">
+        <h3 class="comparar__seccion" data-t="cmp.satelite"></h3>
+        <div class="comparar__mapas comparar__satelite">
             <figure><div id="mapaAntes" class="comparar__mapa"></div><figcaption></figcaption></figure>
             <figure><div id="mapaAhora" class="comparar__mapa"></div><figcaption></figcaption></figure>
         </div>
-        <p class="nota" data-t="cmp.nota"></p>
+        <p class="nota comparar__nota" data-t="cmp.nota"></p>
+        <div class="comparar__sv">
+            <h3 class="comparar__seccion" data-t="cmp.sv"></h3>
+            <div class="comparar__mapas" id="svMapas"></div>
+            <p class="nota" id="svNota"></p>
+        </div>
     </div>
 </div>
 

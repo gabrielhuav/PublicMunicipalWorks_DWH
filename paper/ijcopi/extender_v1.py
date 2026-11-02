@@ -29,8 +29,9 @@ from cifras_extension import cifras  # noqa: E402
 
 BASE = AQUI / "Paper37_IJCOPI_v0_fiel.docx"
 SALIDA = AQUI / "Paper37_IJCOPI_v1_extendida.docx"
-FIGURA = AQUI / "figura_mapa_lago.png"
-ALTO_FIGURA = int(2.9 * 914400)  # EMU: la figura no pasa de 2.9 pulgadas de alto
+# Figuras 4 y 5, de capturar_mapa.ps1: el mapa con la ficha del ejemplo y su antes y ahora
+FIGURAS = [AQUI / "figura_ejemplo_mapa.png", AQUI / "figura_ejemplo_satelite.jpg"]
+ALTO_FIGURA = int(2.9 * 914400)  # EMU: ninguna figura pasa de 2.9 pulgadas de alto
 
 C, _ = cifras()
 doc = Document(str(BASE))
@@ -209,7 +210,7 @@ def fila(tr_plantilla, valores):
     return tr
 
 
-def figura(plantilla, ruta):
+def figura(plantilla, ruta, numero):
     p = copy.deepcopy(plantilla)
     rid, img = doc.part.get_or_add_image(str(ruta))
     p.find(".//" + qn("a:blip")).set(qn("r:embed"), rid)
@@ -225,8 +226,8 @@ def figura(plantilla, ruta):
             e.set("cx", str(cx))
             e.set("cy", str(cy))
     docpr = p.find(".//" + qn("wp:docPr"))
-    docpr.set("id", "4004")
-    docpr.set("name", "Figure 4")
+    docpr.set("id", str(4000 + numero))
+    docpr.set("name", f"Figure {numero}")
     sppr = p.find(".//" + qn("pic:spPr"))
     for ln in sppr.findall(qn("a:ln")):
         sppr.remove(ln)
@@ -492,14 +493,29 @@ SITIO = (
     "kind of evidence; a search box finds municipalities, projects and, through an OpenStreetMap "
     "geocoder, any place; and each project can be compared in two releases of Esri's public "
     "satellite-imagery archive: the last one published before the project started and the latest. "
-    "The base map tries a chain of key-free tile providers, each checked before use, lets the reader "
-    "switch provider by hand and, when none answers, falls back to a national outline with state "
-    "limits served by the site itself.")
+    "The base map tries a chain of key-free tile providers, each checked before use, and falls back "
+    "to an outline of the country served by the site itself.")
+
+EJEMPLO = (
+    "Fig. 4 opens one flagged project: a drinking-water tank in {ej_municipio}, State of Mexico, "
+    "scheduled from {ej_inicio} to {ej_termino}, which the 2024 report still lists as in progress with "
+    "{ej_fisico}% physical and {ej_financiero}% financial progress, so C2, C3 and C4 all mark it. "
+    "Fig. 5 shows its point in two releases of Esri's archive (Esri, {ej_anio_antes}, {ej_anio_ahora}), "
+    "dated by the capture there as Esri's metadata records it: {ej_toma_antes} and {ej_toma_ahora}. "
+    "Only the later one shows a round structure beside the point, and the Google Street View panoramas "
+    "that the site embeds, from {ej_sv_antes} and {ej_sv_despues}, show the corner without and with a "
+    "tank (Google does not allow printing them). The images do not prove that this contract built it; "
+    "they turn three flags into one question for the agency: whether the record of a finished work was "
+    "never updated.")
 
 LEYENDA_F4 = (
-    "Fig. 4. The public map of the lakehouse layer: amount paid per inhabitant in 2024 by "
-    "municipality, drawn at the municipal seat. Official records; every layer is the verified result "
-    "of one query.")
+    "Fig. 4. The public map opened on the example project: nearby projects of 2024, coloured by "
+    "status, and its record with amounts, progress, flags and evidence. Basemap by Esri (n.d.).")
+
+LEYENDA_F5 = (
+    "Fig. 5. The example project in two releases of Esri's World Imagery Wayback (Esri, "
+    "{ej_anio_antes}, {ej_anio_ahora}), point circled: captures of {ej_toma_antes} (left) and "
+    "{ej_toma_ahora} (right).")
 
 CONCLUSION = (
     "RQ4 is answered in Sections 8 and 9. The warehouse evolved into a lakehouse over {filas_hechos} "
@@ -553,6 +569,13 @@ REFERENCIAS = [
         "social por municipio, 2020* [Social deprivation index by municipality, 2020] [Data set]. "
         "datos.gob.mx. Retrieved {consultado}, from <{url_coneval}>",
         "DuckDB Foundation. (2025). *DuckDB* (Version 1.3.2) [Computer software]. <https://duckdb.org/>"]),
+    (125, "Espinoza-Arias", [
+        "Esri. (n.d.). *Light Gray Canvas Base* [Basemap]. ArcGIS Online. Retrieved {esri_consultado}, "
+        "from <https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer>",
+        "Esri. ({ej_anio_antes}). *{ej_titulo_antes}* [Satellite imagery]. ArcGIS Online. "
+        "<https://www.arcgis.com/home/item.html?id={ej_item_antes}>",
+        "Esri. ({ej_anio_ahora}). *{ej_titulo_ahora}* [Satellite imagery]. ArcGIS Online. "
+        "<https://www.arcgis.com/home/item.html?id={ej_item_ahora}>"]),
     (128, "Hogan", [
         "Instituto Nacional de Estadística y Geografía. (n.d.-a). *Censo de Población y Vivienda 2020: "
         "Principales resultados por localidad (ITER)* [2020 Population and Housing Census: Main results "
@@ -612,7 +635,7 @@ def autores():
 # ---------------------------------------------------------------- cambios
 
 def main():
-    con_figura = "--sin-figura" not in sys.argv and FIGURA.exists()
+    con_figura = "--sin-figura" not in sys.argv and all(r.exists() for r in FIGURAS)
     C["ref_figura"] = " (Fig. 4)" if con_figura else ""
     resumen = f(RESUMEN)
     n_resumen = len(resumen.split())
@@ -738,7 +761,8 @@ def main():
         h2("9.4 A Public Site Verified against the Databases"), cuerpo(SITIO),
     ]
     if con_figura:
-        nuevos += [figura(FIG_P, FIGURA), parrafo(LEYENDA_FIG, LEYENDA_F4)]
+        nuevos += [cuerpo(EJEMPLO), figura(FIG_P, FIGURAS[0], 4), parrafo(LEYENDA_FIG, LEYENDA_F4),
+                   figura(FIG_P, FIGURAS[1], 5), parrafo(LEYENDA_FIG, f(LEYENDA_F5))]
     despues(ancla(110, "The warehouse answers questions"), *nuevos)
 
     # 10 Conclusiones (antes 8)

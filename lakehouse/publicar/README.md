@@ -54,7 +54,17 @@ and compares every file. Projects can be filtered by status, by flags C1 to C4 a
 box finds states, municipalities, projects and folios on the site, and any place through OpenStreetMap
 (Photon, or Nominatim when Photon does not answer). Each project can be compared in two releases of
 Esri's public satellite-imagery archive (World Imagery Wayback): the last one published before the
-project started and the latest.
+project started and the latest. Each image carries the date it was captured at the project point,
+read from Esri's tilemap service (which release the tile comes from) and its metadata; when before and
+now are the same capture, the site says so. Next to them, Google Street View is embedded the way Google
+allows on a website: the panorama closest to the point or, for the article's example, the before and
+after panoramas the authors chose (`lakehouse/sitio/ejemplos.json`). Google's terms do not allow
+printing or capturing Street View, so it is not in the article's figures. Every link from the agency
+comes with its Internet Archive copy, because many no longer answer. `?folio=` opens a project and
+`?comparar=1` its before and after.
+
+`lakehouse/verificacion/ejemplo_esri.py` records the article's example project and what Esri publishes
+about its point (releases, capture dates and credits) in `lakehouse/verificacion/evidencia_ejemplo.json`.
 
 ## Rebuilding it
 
