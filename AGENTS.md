@@ -333,7 +333,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 - **Título aprobado por Gabriel el 2 nov:** "From Synthetic Seeds to Federal Records: An Extended
   Dimensional Data Warehouse for Municipal Public Works with a Measured Lakehouse Layer".
-- **Mapa del sitio, pedidos del 2 nov, hechos y probados en local, sin publicar:**
+- **Mapa del sitio, pedidos del 2 nov, publicados con autorización (`cd6a606` en el repositorio
+  público; los 20 archivos del sitio dan en vivo el mismo SHA-256 que en local):**
   - Mapa base como el del artículo de agua: `lakehouse/sitio/mapa-teselas.js` es el módulo del 38,
     con su control. La copia local sale de Natural Earth 5.1.2 (permiso de Gabriel el 2 nov; tres
     archivos fijados por SHA-256 en `lakehouse/etl/mapa_base.py`).
@@ -379,3 +380,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-02, Claude (Claude Code, Opus 5.5): con autorización de Gabriel subió al repositorio público
   el script de las correcciones y la vista de figura (`8f259e0`). Corrigió los autores de la v1 como
   en el trabajo 38: 15 páginas, 9,795 palabras, 0 sin amarillo. La rama sigue sin subirse.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): mapa base del trabajo 38 con copia local de Natural Earth,
+  filtro por estatus y marcas, fuente oficial y enlaces de la dependencia en cada ficha, y botón de
+  satélite. Publicado con autorización (`cd6a606`) y verificado en vivo. La v1 queda en 9,877 palabras.
