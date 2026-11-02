@@ -407,7 +407,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   - Los saltos del mapa van sin animación: con la pestaña oculta, Leaflet aplicaba al volver una
     animación pendiente y llevaba el mapa a otro estado.
 - La v1 del artículo describe esto en 9.4: 15 páginas, 9,969 palabras, 0 sin amarillo (2 nov).
-- **Pedidos del 2 nov, cuarta tanda, hechos y SIN publicar:** copia en Internet Archive junto a cada
+- **Pedidos del 2 nov, cuarta tanda, publicados con autorización (`e16d6a4` en el repositorio
+  público; los 2,545 archivos del sitio dan en vivo el mismo SHA-256 que en local):** copia en Internet Archive junto a cada
   enlace de la dependencia; fechas reales de toma en el antes y ahora de Esri; Street View incrustado;
   `?folio=` y `?comparar=1`; figuras 4 y 5 nuevas con el ejemplo del tanque (ver Ejemplo). Falta que
   Gabriel confirme lo que el texto dice de los panoramas de Street View.
@@ -457,4 +458,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   `ijcopi-obras` sigue sin subirse.
 - 2026-11-02, Claude (Claude Code, Opus 5.5): ejemplo del tanque de Naucalpan como figuras 4 y 5,
   fechas de toma de Esri, Street View en el sitio (no en el artículo, por las reglas de Google), copias
-  en Internet Archive y enlaces por folio. v1: 15 páginas, 10,172 palabras. Sin publicar.
+  en Internet Archive y enlaces por folio. v1: 15 páginas, 10,172 palabras.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): con autorización de Gabriel, enlaces de Springer con
+  `fallos: 0` y cuarta tanda publicada (`e16d6a4`); 2,545 archivos iguales en vivo. La rama sigue sin subirse.
