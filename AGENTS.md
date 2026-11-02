@@ -310,8 +310,10 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - En Python 3.10, `platform.release()` dice "10" en Windows 11: usa `platform.version()`.
 - CARTO sigue sin pasar la prueba de dos teselas; el sitio cae en Esri Canvas.
 - Windows PowerShell 5.1 lee como ANSI un `.ps1` sin BOM: no pongas acentos en los scripts.
-- El DOI de Cambridge `10.1017/S0007123417000461` a veces tarda más de 30 s y el verificador de
-  enlaces da `fallos: 1`. El DOI resuelve; espera y vuelve a correrlo, sin tocar el script.
+- El DOI de Cambridge `10.1017/S0007123417000461` y el de la UAM `10.24275/AZC2026E1004` a veces
+  tardan más de 30 s y el verificador de enlaces da `fallos: 1`. Resuelven; espera y vuelve a
+  correrlo, sin tocar el script.
+- En PowerShell 5.1, `git commit -F -` con un here-string no lee el mensaje: escríbelo en un archivo.
 - Actions avisa que Node 20 está obsoleto en `checkout@v4`, `configure-pages@v5`,
   `upload-pages-artifact@v3` y `deploy-pages@v4`; el 2 nov corrían forzadas en Node 24 y publicaban bien.
 - La plantilla de IJCOPI no está en este repositorio: está en
@@ -358,7 +360,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   - Respaldos del mapa base, comprobados: con `?teselas=carto` el módulo detecta la marca de agua y usa
     Esri Canvas. Son siete mecanismos: prueba de dos teselas, vigilancia de errores y atascos, copia
     provisional, copia local, contorno incrustado, elección manual y reintento al volver la red.
-- **Pedidos del 2 nov, tercera tanda (rediseño del mapa), hechos y SIN publicar:**
+- **Pedidos del 2 nov, tercera tanda (rediseño del mapa), publicados con autorización (`0064ca3` en
+  el repositorio público; los 2,544 archivos del sitio dan en vivo el mismo SHA-256 que en local):**
   - Las capas `05_obras_2024`/`06_enlaces_2024` con `{entidad}` se cambiaron por `05_puntos_2024` y
     `06_detalle_2024`, repartidas por la consulta (ver Capas). El detalle se baja al abrir un proyecto.
   - Filtro por evidencia, sobre 253,346 proyectos con coordenadas: con documentos 158,919, con PDF
@@ -412,4 +415,7 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   satélite. Publicado con autorización (`cd6a606`) y verificado en vivo. La v1 queda en 9,877 palabras.
 - 2026-11-02, Claude (Claude Code, Opus 5.5): rediseñó el mapa a pedido de Gabriel: capas repartidas
   por estado y municipio, filtros de evidencia, buscador de lugares, temas guinda y azul con claro y
-  oscuro, y diseño para teléfono. Probado en el navegador; v1 en 9,969 palabras. Sin publicar.
+  oscuro, y diseño para teléfono. Probado en el navegador; v1 en 9,969 palabras.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): con autorización de Gabriel, enlaces de Springer con
+  `fallos: 0` y rediseño publicado (`0064ca3`); los 2,544 archivos del sitio, iguales en vivo. La rama
+  `ijcopi-obras` sigue sin subirse.
