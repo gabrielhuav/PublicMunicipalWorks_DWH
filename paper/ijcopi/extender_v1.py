@@ -563,6 +563,41 @@ REFERENCIAS = [
 ]
 
 
+# ---------------------------------------------------------------- autores
+
+# Como en el trabajo 38: Gabriel primero, el Dr. Zagal segundo y después los autores de la versión de
+# congreso en su orden. Lo movido o nuevo va en amarillo, también las comas que lo separan.
+CORREOS_ALUMNOS = "{ugonzalezc2400, mmaldonadom2200}@alumno.ipn.mx"
+CORREOS_IPN = "ghurtadoa@ipn.mx, rzagalf@ipn.mx"
+CORREOS_GMAIL = "gonzalezcasianouriel@gmail.com, marcotuliomm.s45@gmail.com"
+
+
+def autores():
+    p = ancla(1, "Uriel González Casiano")
+    rs = runs_directos(p)
+    assert [texto(r) for r in rs[1:]] == ["Uriel González Casiano", "1", ", ", "Marco Tulio Maldonado Mejía",
+                                           "1", ", ", "Gabriel Hurtado Avilés", "1"]
+    nombre, sup, coma = rs[1], rs[2], rs[3]
+    for r in rs[6:]:
+        p.remove(r)
+    nuevos = []
+    for n in ("Gabriel Hurtado Avilés", "Roberto Eswart Zagal Flores"):
+        nuevos += [amarillo(clon(nombre, n)), amarillo(clon(sup, "1")), amarillo(clon(coma, ", "))]
+    despues(rs[0], *nuevos)
+
+    p = ancla(3, CORREOS_ALUMNOS)
+    linea1, salto, linea2 = runs_directos(p)
+    assert texto(linea1) == CORREOS_ALUMNOS + ", ghurtadoa@ipn.mx" and texto(salto) == ""
+    assert texto(linea2) == CORREOS_GMAIL + ", gabrielhuav@gmail.com"
+    nuevos = [amarillo(clon(linea1, CORREOS_IPN)), amarillo(copy.deepcopy(salto)),
+              clon(linea1, CORREOS_ALUMNOS), copy.deepcopy(salto),
+              amarillo(clon(linea2, "gabrielhuav@gmail.com, ")), clon(linea2, CORREOS_GMAIL)]
+    for r in (linea1, salto, linea2):
+        p.remove(r)
+    for x in nuevos:
+        p.append(x)
+
+
 # ---------------------------------------------------------------- cambios
 
 def main():
@@ -574,6 +609,7 @@ def main():
 
     # Título, resumen y palabras clave
     reemplazar(ancla(0, "A Dimensional Data Warehouse"), texto(B[0]), TITULO)
+    autores()
     celda = list(B[6].iter(qn("w:p")))
     p_resumen = next(p for p in celda if texto(p).startswith("Abstract. "))
     reemplazar(p_resumen, texto(p_resumen)[len("Abstract. "):], resumen)

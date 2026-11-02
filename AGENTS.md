@@ -203,6 +203,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Publicado el 2 nov con su autorización:** commit `53b9c9d` en `main`. Los 16 archivos del sitio
   dan en vivo el mismo SHA-256 que en local, y la página de consultas muestra las 7 comparaciones.
   Cuando el artículo imprima estas URL, quedan tan inmutables como las del capítulo.
+- **Segunda subida, 2 nov, autorizada:** commit `8f259e0` con `scripts/cifras_capitulo.py`, su
+  evidencia y la vista de figura. Los 17 archivos del sitio dan en vivo el mismo SHA-256 que en local.
 - **Para actualizarlo:** commit en la rama, `lakehouse/publicar/publicar.ps1`, revisar la copia en
   `Documents/GitHub Desktop/PublicMunicipalWorks_Lakehouse` (remoto `origin`), commit ahí y push
   solo con autorización.
@@ -225,13 +227,15 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Estructura nueva:** RQ4; 7.5 criterio de costo por tipo (filas nuevas en la tabla 2); 7.7
   correcciones; 8 capa lakehouse sobre registros oficiales; 9 evaluación medida (tabla 3, siete
   consultas); 10 conclusiones (antes 8). Título propuesto y autores sin tocar hasta que Gabriel decida.
-- **Hecho el 2 nov: `paper/ijcopi/Paper37_IJCOPI_v1_extendida.docx` y su PDF.** 15 páginas, 9,790
+- **Hecho el 2 nov: `paper/ijcopi/Paper37_IJCOPI_v1_extendida.docx` y su PDF.** 15 páginas, 9,795
   palabras (meta 9,582), resumen de 140, seis palabras clave y 0 palabras agregadas sin amarillo
   según `verificar_amarillo.py` (ajustado para separar párrafos). La última página queda a la mitad.
   Revisado a ojo en el PDF.
-- **Figura 4** (`figura_mapa_lago.png`, marco amarillo) se capturó con `capturar_mapa.ps1` del sitio
-  local, con la vista de figura nueva de `sitio.css` (leyenda encima, sin botones). Esa vista aún no
-  está publicada.
+- **Figura 4** (`figura_mapa_lago.png`, marco amarillo) se capturó con `capturar_mapa.ps1`, con la
+  vista de figura de `sitio.css` (leyenda encima, sin botones), ya publicada.
+- **Autores (2 nov):** Gabriel dijo que estaban mal. Quedaron como en el trabajo 38: Gabriel Hurtado
+  Avilés, Roberto Eswart Zagal Flores, Uriel González Casiano y Marco Tulio Maldonado Mejía, todos con
+  afiliación 1, y los correos reordenados igual que en el 38. Lo movido o nuevo va en amarillo.
 - **Correcciones medidas con `scripts/cifras_capitulo.py`:** 35,014 habitantes (no 64,844),
   55,740 eventos de auditoría (no "about 28,000"; 8,723 votos dejan 17,993 eventos de voto) y
   765,748 bytes en `/api/public/obras` (no 753 kB).
@@ -301,6 +305,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - En Python 3.10, `platform.release()` dice "10" en Windows 11: usa `platform.version()`.
 - CARTO sigue sin pasar la prueba de dos teselas; el sitio cae en Esri Canvas.
 - Windows PowerShell 5.1 lee como ANSI un `.ps1` sin BOM: no pongas acentos en los scripts.
+- El DOI de Cambridge `10.1017/S0007123417000461` a veces tarda más de 30 s y el verificador de
+  enlaces da `fallos: 1`. El DOI resuelve; espera y vuelve a correrlo, sin tocar el script.
 - Actions avisa que Node 20 está obsoleto en `checkout@v4`, `configure-pages@v5`,
   `upload-pages-artifact@v3` y `deploy-pages@v4`; el 2 nov corrían forzadas en Node 24 y publicaban bien.
 - La plantilla de IJCOPI no está en este repositorio: está en
@@ -315,7 +321,7 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   en el repositorio. Otra sesión debe volver a bajarlos.
 - **Hecho (2 nov):** las cinco entregas del plan: lago, auditoría, criterio de costo, OC4IDS y grafo.
 - **Recalculado el 2 nov con `word_a_pdf.ps1`:** la base tiene 11 páginas y 6,844 palabras.
-- **Hecho (2 nov):** la v1 extendida, con 15 páginas y 9,790 palabras. Quedan media página y unas 200
+- **Hecho (2 nov):** la v1 extendida, con 15 páginas y 9,795 palabras. Quedan media página y unas 200
   palabras de margen: un cambio grande en autores o título cabe, una figura más no.
 
 - **Hecho (2 nov):** el sitio del lago, verificado contra las bases y publicado en
@@ -325,12 +331,9 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 - Aprobar el título. El 2 nov dijo "el nombre te lo confirmo" al autorizar la subida; se tomó como el
   nombre del repositorio, no como el título. La v1 ya trae el título propuesto, en amarillo.
-- Confirmar el bloque de autores y si los alumnos van en agradecimientos o como autores. La v1 deja
-  los autores de la base sin tocar.
+- Decidir si los alumnos de los repositorios de referencia van en agradecimientos.
 - Revisar la v1 completa, sobre todo la declaración de IA, que dice que los autores revisaron y
   aprobaron el texto nuevo.
-- Autorizar otra subida al repositorio público: falta `scripts/cifras_capitulo.py`, su evidencia y la
-  vista de figura, que el artículo cita.
 
 ## Siguiente paso
 
@@ -360,3 +363,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-02, Claude (Claude Code, Opus 5.5): midió la base en Word (11 páginas, 6,844 palabras) y armó
   la v1 extendida con `extender_v1.py`: 15 páginas, 9,790 palabras, todo lo nuevo en amarillo. Midió
   las tres correcciones del capítulo con `scripts/cifras_capitulo.py`. Sin push.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): con autorización de Gabriel subió al repositorio público
+  el script de las correcciones y la vista de figura (`8f259e0`). Corrigió los autores de la v1 como
+  en el trabajo 38: 15 páginas, 9,795 palabras, 0 sin amarillo. La rama sigue sin subirse.
