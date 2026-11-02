@@ -10,7 +10,7 @@ $edge = "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"
 $perfil = Join-Path $env:TEMP "captura_mapa_lago_edge"
 $ejemplo = "estado=15&folio=MEX17170401001337"
 $figuras = [ordered]@{
-    "figura_ejemplo_mapa.png"     = @("?lang=en&ind=pagado_hab&ciclo=2025&estatus=0,1,2&$ejemplo&c=19.5114,-99.2774,15&teselas=esri-gris", "1440,640")
+    "figura_ejemplo_mapa.png"     = @("?lang=en&ind=pagado_hab&ciclo=2025&evidencia=8&$ejemplo&c=19.33,-99.55,8&teselas=esri-gris", "1440,640")
     "figura_ejemplo_satelite.jpg" = @("?vista=figura&lang=en&$ejemplo&comparar=1&c=19.5083,-99.2750,17", "1200,400")
 }
 foreach ($nombre in $figuras.Keys) {

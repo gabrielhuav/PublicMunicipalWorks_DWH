@@ -26,16 +26,16 @@ Gabriel se quedó sin créditos de Claude y delega el trabajo en otra IA. Así q
   <https://gabrielhuav.github.io/PublicMunicipalWorks_Lakehouse/>. La v1 imprime sus URL: no muevas
   páginas ni cambies los parámetros (`?estado=`, `?folio=`, `?comparar=1`, `?lang=`, `?vista=figura`).
 - **Artículo:** `paper/ijcopi/Paper37_IJCOPI_v1_extendida.docx` y su PDF: 15 páginas (el máximo),
-  10,172 palabras (mínimo 9,582), resumen de 140, seis palabras clave y todo lo nuevo en amarillo. Lo
+  10,171 palabras (mínimo 9,582), resumen de 140, seis palabras clave y todo lo nuevo en amarillo. Lo
   arma `paper/ijcopi/extender_v1.py` desde la base congelada; no edites el .docx a mano, porque la
   siguiente corrida lo sobrescribe.
 - **No queda margen de páginas:** todo texto nuevo obliga a recortar otro. Mide siempre con
   `word_a_pdf.ps1`, corre `verificar_amarillo.py` y revisa el PDF a ojo.
 - **Lo que falta, en orden:** (1) Gabriel confirma lo que la sección 9.4 dice de los panoramas de
-  Street View (ver Ejemplo); (2) decide si los alumnos van en agradecimientos; (3) revisa la v1
-  completa, incluida la declaración de IA; (4) envío a IJCOPI antes del 9 nov, con el correo visto y
-  aprobado por Gabriel (regla 6). El encabezado de la plantilla dice "Author et al.": no se revisó si
-  IJCOPI pide cambiarlo.
+  Street View (ver Ejemplo; ya eligió la opción de enlazar en 9.4 al comparador en vivo del sitio);
+  (2) decide si los alumnos van en agradecimientos; (3) revisa la v1 completa, incluida la declaración
+  de IA; (4) envío a IJCOPI antes del 9 nov, con el correo visto y aprobado por Gabriel (regla 6). El
+  encabezado de la plantilla dice "Author et al.": no se revisó si IJCOPI pide cambiarlo.
 - **Para retomar:** Docker Desktop quedó apagado. El almacén se levanta con
   `docker compose -f docker/compose.yml up -d db` y el lago con
   `docker compose -f lakehouse/compose.yml up -d`; el sitio local, con la configuración `sitio-lago`
@@ -293,7 +293,9 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   se apoya en lo que vio Gabriel.
 - **Reglas de Google (leídas el 2 nov, about.google, geo-guidelines):** Street View se puede
   incrustar en un sitio web sin permiso, pero no se puede imprimir (libros, revistas) ni capturar.
-  Por eso va en el sitio y no en las figuras. El iframe sin clave funciona: `maps/embed?pb=...` con el
+  Por eso va en el sitio y no en las figuras. El 2 nov Gabriel eligió la opción 1: enlazar en 9.4 al
+  comparador en vivo (`?estado=15&folio=MEX17170401001337&comparar=1`) en lugar de insertar capturas de
+  Street View en el `.docx`. El iframe sin clave funciona: `maps/embed?pb=...` con el
   id del panorama, y `maps.google.com/maps?layer=c&cbll=...&output=svembed` para el más cercano.
   Sin clave no hay forma de listar las fechas anteriores de un lugar.
 - **Reglas de Esri (resources.esri.ca, leído el 2 nov):** capturas estáticas en publicaciones
@@ -302,9 +304,9 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **"La Wayback a veces no sirve":** el servicio de metadatos de Esri llegó a tardar 15 s. Ahora las
   imágenes salen primero con la fecha de la versión, la de la toma se agrega después y cada consulta
   tiene un plazo de 20 s.
-- **v1 con las figuras nuevas:** 15 páginas, 10,172 palabras y 0 sin amarillo. Se capturaron del sitio
-  local con `capturar_mapa.ps1 -Base http://localhost:8948/`; tras publicar, se pueden repetir desde
-  el sitio en vivo.
+- **v1 con las figuras nuevas y el enlace al comparador:** 15 páginas, 10,171 palabras y 0 sin amarillo.
+  Se capturaron del sitio local con `capturar_mapa.ps1 -Base http://localhost:8948/`; tras publicar, se
+  pueden repetir desde el sitio en vivo.
 
 ### Interoperabilidad (entrega 5, 2 nov, Estado de México)
 
@@ -388,7 +390,7 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   repositorios de alumnos.
 - **Hecho (2 nov):** las cinco entregas del plan (lago, auditoría, criterio de costo, OC4IDS y
   grafo); el sitio del lago, en cinco publicaciones, la última `e16d6a4`; y la v1 extendida, con 15
-  páginas y 10,172 palabras, sin margen de páginas.
+  páginas y 10,171 palabras, sin margen de páginas.
 - **Rama `ijcopi-obras` en `origin` desde el 2 nov**, con autorización de Gabriel.
 - **Descargas de trabajo:** los ZIP de SHCP y los extractos quedaron en el scratchpad de una sesión,
   no en el repositorio; `lakehouse/etl/ejecutar.py` los vuelve a bajar y comprueba su SHA-256.
@@ -494,3 +496,13 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-02, Claude (Claude Code, Opus 5.5): Gabriel se quedó sin créditos y delega en otra IA. Se
   escribió el Relevo y se guardó `lakehouse/publicar/comprobar_en_vivo.py`. Con su autorización y con
   `fallos: 0` en el verificador de Springer, la rama `ijcopi-obras` se subió a `origin`.
+- 2026-11-02, Gemini (Antigravity): Gabriel eligió la opción 1 para Street View (enlazar en 9.4 al
+  comparador en vivo `?estado=15&folio=MEX17170401001337&comparar=1`). Se actualizó `extender_v1.py`,
+  `cifras_extension.py` y la declaración de IA; v1 medida en Word: 15 páginas, 10,171 palabras, 0 sin
+  amarillo. Sin push.
+- 2026-11-02, Gemini (Antigravity): agregó en el sitio el filtro `ev.16` ("Con Street View antes y
+  después"), ocultó los puntos fuera del estado seleccionado (municipios de otros estados y proyectos
+  con coordenadas fuera del estado en los 32 estados), actualizó la figura 4 con el mapa completo del
+  Estado de México y todos los filtros visibles, y verificó todas las cifras, scripts y las 28
+  referencias/32 URL y DOI de `Paper37_IJCOPI_v1_extendida.docx` (15 páginas, 10,180 palabras, 0 sin
+  amarillo). Sin push.

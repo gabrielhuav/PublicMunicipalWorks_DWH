@@ -119,31 +119,31 @@ body.app { height: 100vh; height: 100dvh; display: flex; flex-direction: column;
 .sugerencias .vacio { padding: .45rem 14px; color: var(--texto-3); font-size: .85rem; }
 
 /* Panel de capas y filtros: a la izquierda en pantallas anchas, hoja inferior en el teléfono. */
-.panel-lateral { position: absolute; z-index: 1000; top: 70px; left: 12px; bottom: 12px; width: 360px;
+.panel-lateral { position: absolute; z-index: 1000; top: 64px; left: 12px; bottom: 10px; width: 360px;
   overflow-y: auto; background: var(--superficie); border-radius: var(--r); box-shadow: var(--sombra);
-  padding: .9rem 1rem 1rem; }
+  padding: .65rem .9rem .7rem; }
 .panel-lateral__cabecera { display: flex; align-items: flex-start; gap: .5rem; }
-.panel-lateral h1 { margin: 0; font-size: 1.05rem; line-height: 1.3; flex: 1; }
+.panel-lateral h1 { margin: 0; font-size: .98rem; line-height: 1.24; flex: 1; }
 .panel-lateral__cabecera .cerrar { display: none; }
-.lema { margin: .3rem 0 0; color: var(--texto-2); font-size: .82rem; }
-.seccion { border-top: 1px solid var(--borde); margin-top: .8rem; padding-top: .7rem; }
-.seccion h2 { margin: 0 0 .4rem; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--marca); }
-.seccion label { display: block; font-size: .8rem; font-weight: 600; margin: .55rem 0 .2rem; color: var(--texto-2); }
-.seccion select { width: 100%; padding: .45rem .5rem; border: 1px solid var(--borde); border-radius: var(--r-s);
-  background: var(--superficie); color: var(--texto); font: inherit; font-size: .88rem; }
-.subtitulo { margin: .7rem 0 .3rem; font-size: .76rem; font-weight: 600; color: var(--texto-2); }
-.fichas { display: flex; flex-wrap: wrap; gap: 6px; }
-.ficha { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .65rem; border-radius: 999px;
-  border: 1px solid var(--borde); background: var(--superficie); color: var(--texto-2); font-size: .8rem; cursor: pointer; }
+.lema { margin: .18rem 0 0; color: var(--texto-2); font-size: .77rem; line-height: 1.28; }
+.seccion { border-top: 1px solid var(--borde); margin-top: .5rem; padding-top: .45rem; }
+.seccion h2 { margin: 0 0 .22rem; font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; color: var(--marca); }
+.seccion label { display: block; font-size: .76rem; font-weight: 600; margin: .28rem 0 .14rem; color: var(--texto-2); }
+.seccion select { width: 100%; padding: .32rem .45rem; border: 1px solid var(--borde); border-radius: var(--r-s);
+  background: var(--superficie); color: var(--texto); font: inherit; font-size: .84rem; }
+.subtitulo { margin: .38rem 0 .16rem; font-size: .73rem; font-weight: 600; color: var(--texto-2); }
+.fichas { display: flex; flex-wrap: wrap; gap: 4px; }
+.ficha { display: inline-flex; align-items: center; gap: .28rem; padding: .2rem .52rem; border-radius: 999px;
+  border: 1px solid var(--borde); background: var(--superficie); color: var(--texto-2); font-size: .75rem; cursor: pointer; }
 .ficha[aria-pressed="true"] { border-color: var(--marca); background: var(--marca-suave); color: var(--texto); font-weight: 600; }
-.ficha i { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.ficha i { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 .ficha small { color: var(--texto-3); font-weight: 400; }
-.conteo { margin: .6rem 0 0; font-size: .8rem; color: var(--texto-2); }
-.conteos { list-style: none; margin: 0; padding: 0; font-size: .8rem; color: var(--texto-2); }
+.conteo { margin: .35rem 0 0; font-size: .76rem; color: var(--texto-2); line-height: 1.28; }
+.conteos { list-style: none; margin: 0; padding: 0; font-size: .78rem; color: var(--texto-2); }
 .conteos li { display: flex; justify-content: space-between; gap: .5rem; padding: .1rem 0; }
 .conteos b { color: var(--texto); font-variant-numeric: tabular-nums; }
-.enlace-boton { margin-top: .5rem; border: 0; background: none; color: var(--marca); padding: 0; cursor: pointer;
-  font-size: .82rem; text-decoration: underline; }
+.enlace-boton { margin-top: .22rem; border: 0; background: none; color: var(--marca); padding: 0; cursor: pointer;
+  font-size: .77rem; text-decoration: underline; }
 .origen summary { cursor: pointer; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase;
   color: var(--marca); font-weight: 600; }
 .origen pre { background: var(--superficie-2); padding: .5rem; border-radius: 6px; margin: .3rem 0 0; }

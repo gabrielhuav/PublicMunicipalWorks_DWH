@@ -30,6 +30,7 @@
       'f.ver': 'Acercar el mapa a estos proyectos',
       'e.0': 'Terminado', 'e.1': 'En ejecución', 'e.2': 'Cancelado', 'e.3': 'Otro estatus',
       'ev.1': 'Con documentos', 'ev.2': 'Con PDF', 'ev.4': 'Con imagen', 'ev.8': 'Con antes y después',
+      'ev.16': 'Con Street View antes y después',
       cargandoEstado: 'Cargando los proyectos de {estado}…',
       'n.entidades': 'Entidades', 'n.municipios': 'Municipios con proyectos', 'n.proyectos': 'Proyectos',
       'n.aprobado': 'Aprobado', 'n.pagado': 'Pagado', 'n.evaluados': 'Proyectos de inversión', 'n.ciclo': 'Ciclo {c}',
@@ -99,6 +100,7 @@
       'f.ver': 'Zoom the map to these projects',
       'e.0': 'Completed', 'e.1': 'In progress', 'e.2': 'Cancelled', 'e.3': 'Other status',
       'ev.1': 'With documents', 'ev.2': 'With PDF', 'ev.4': 'With image', 'ev.8': 'With before and after',
+      'ev.16': 'With Street View before and after',
       cargandoEstado: 'Loading the projects of {estado}…',
       'n.entidades': 'States', 'n.municipios': 'Municipalities with projects', 'n.proyectos': 'Projects',
       'n.aprobado': 'Approved', 'n.pagado': 'Paid', 'n.evaluados': 'Investment projects', 'n.ciclo': 'Fiscal year {c}',
@@ -164,7 +166,7 @@
     ['ambas en cero', 'both at zero', '#b5a99f'],
   ];
   const ESTATUS = ['#2e7d32', '#1565c0', '#c62828', '#7a7a7a'];
-  const EVIDENCIAS = [1, 2, 4, 8];
+  const EVIDENCIAS = [1, 2, 4, 8, 16];
   const IMAGEN = /\.(jpe?g|png|gif|webp)(\?|$)/i;
   const seq = () => [1, 2, 3, 4, 5].map(i => S.color(`--seq-${i}`));
 
@@ -285,9 +287,13 @@
     /* Con un estado cargado, los municipios pasan a segundo plano para que se vean los proyectos. */
     const opacidad = estado.entidad ? 0.3 : 0.85;
     capaMunicipios.eachLayer(m => {
+      if (estado.entidad && Number(m.cvemun.slice(0, 2)) !== estado.entidad) {
+        m.setStyle({ fillOpacity: 0, opacity: 0 });
+        return;
+      }
       const c = color(ind, valor(ind, m.cvemun), b);
-      m.setStyle(c ? { fillColor: c, fillOpacity: opacidad, color: borde, weight: 0.6 }
-                   : { fillOpacity: 0, color: S.color('--texto-3'), weight: 1.2 });
+      m.setStyle(c ? { fillColor: c, fillOpacity: opacidad, color: borde, weight: 0.6, opacity: 1 }
+                   : { fillOpacity: 0, color: S.color('--texto-3'), weight: 1.2, opacity: 1 });
     });
     leyenda(b);
     nota();
@@ -389,13 +395,13 @@
 
   /* El estado de un punto: el de la cabecera municipal más cercana. */
   function estadoEn(lat, lon) {
-    let mejor = null, d = Infinity;
-    for (const m of datos.municipios.values()) {
-      if (m.lat == null) continue;
-      const x = (m.lat - lat) ** 2 + ((m.lon - lon) * Math.cos(lat * Math.PI / 180)) ** 2;
-      if (x < d) { d = x; mejor = m; }
+    let mejor = 0, d = Infinity;
+    const c = Math.cos(lat * Math.PI / 180);
+    for (const m of datos.listaMunicipios) {
+      const x = (m.lat - lat) ** 2 + ((m.lon - lon) * c) ** 2;
+      if (x < d) { d = x; mejor = m.e; }
     }
-    return mejor ? Number(mejor.cvemun.slice(0, 2)) : 0;
+    return mejor;
   }
 
   function cargando(texto) {
@@ -418,14 +424,19 @@
 
   function puntosDe(id) {
     if (!puntosPorEstado.has(id)) {
-      const promesa = S.json(`datos/05_puntos_2024/${id}.json`).then(capa => S.objetos(capa).map(p => {
-        p.entidad = id;
-        p.m = L.circleMarker([p.lat, p.lon], { pane: 'obras', radius: radioPuntos(), weight: 0.8, color: S.oscuro() ? '#111' : '#fff',
-          fillColor: ESTATUS[p.g], fillOpacity: 0.92 });
-        p.m.on('click', () => abrirProyecto(p));
-        p.busqueda = normal(`${p.nombre} ${p.folio} ${(datos.municipios.get(p.cvemun) || {}).municipio || ''}`);
-        return p;
-      }).sort((a, b) => CAPA_ESTATUS[a.g] - CAPA_ESTATUS[b.g]));
+      const promesa = Promise.all([S.json(`datos/05_puntos_2024/${id}.json`), leerEjemplos()]).then(([capa, ej]) => {
+        const sv = ej.streetview || {};
+        return S.objetos(capa).map(p => {
+          p.entidad = id;
+          if (sv[p.folio]) p.evidencia |= 16;
+          p.fuera = estadoEn(p.lat, p.lon) !== id;
+          p.m = L.circleMarker([p.lat, p.lon], { pane: 'obras', radius: radioPuntos(), weight: 0.8, color: S.oscuro() ? '#111' : '#fff',
+            fillColor: ESTATUS[p.g], fillOpacity: 0.92 });
+          p.m.on('click', () => abrirProyecto(p));
+          p.busqueda = normal(`${p.nombre} ${p.folio} ${(datos.municipios.get(p.cvemun) || {}).municipio || ''}`);
+          return p;
+        }).sort((a, b) => CAPA_ESTATUS[a.g] - CAPA_ESTATUS[b.g]);
+      });
       promesa.catch(() => puntosPorEstado.delete(id));
       puntosPorEstado.set(id, promesa);
     }
@@ -482,7 +493,7 @@
     if (!capaPuntos) return;
     capaPuntos.clearLayers();
     let n = 0;
-    puntos.forEach(p => { if (visible(p)) { p.m.addTo(capaPuntos); n++; } });
+    puntos.forEach(p => { if (visible(p)) { if (!p.fuera) p.m.addTo(capaPuntos); n++; } });
     sitio('filtroConteo').textContent = t('f.conteo', { n: S.numero(n), total: S.numero(puntos.length), estado: nombreEstado(estado.entidad) });
     sitio('verFiltrados').hidden = !n;
     setUrl();
@@ -490,7 +501,7 @@
 
   /* Encuadra los proyectos que dejan los filtros: con pocos, sueltos en el estado, cuesta hallarlos. */
   function verFiltrados() {
-    const vistos = puntos.filter(visible).map(p => [p.lat, p.lon]);
+    const vistos = puntos.filter(p => !p.fuera && visible(p)).map(p => [p.lat, p.lon]);
     if (!vistos.length) return;
     cerrarPanel();
     if (vistos.length === 1) ir(vistos[0], 15);
@@ -503,7 +514,7 @@
   }
 
   function pintarFiltros() {
-    const porEstatus = [0, 0, 0, 0], porEvidencia = { 1: 0, 2: 0, 4: 0, 8: 0 };
+    const porEstatus = [0, 0, 0, 0], porEvidencia = { 1: 0, 2: 0, 4: 0, 8: 0, 16: 0 };
     let conMarca = 0;
     puntos.forEach(p => {
       porEstatus[p.g]++;
@@ -1113,6 +1124,8 @@
       e.sur = Math.min(e.sur, m.lat); e.norte = Math.max(e.norte, m.lat);
       e.oeste = Math.min(e.oeste, m.lon); e.este = Math.max(e.este, m.lon);
     }
+    datos.listaMunicipios = [...datos.municipios.values()].filter(m => m.lat != null)
+      .map(m => ({ e: Number(m.cvemun.slice(0, 2)), lat: m.lat, lon: m.lon }));
     datos.indiceMunicipios = [...datos.municipios.values()].filter(m => m.lat != null)
       .map(m => [normal(`${m.municipio} ${m.entidad} ${m.cvemun}`), m]);
 

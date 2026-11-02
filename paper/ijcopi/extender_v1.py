@@ -472,10 +472,9 @@ CRITERIOS_REALES = (
     "of the {al_con_ambos_avances} with both progress figures, and C4 {al_c4}: review lists to rank "
     "for an oversight office, not detections. Spending follows need: in 2023 the median amount paid "
     "per inhabitant on investment projects rises from {rez_bajo} pesos in municipalities of very low "
-    "deprivation to {rez_alto} pesos in those of very high deprivation, and the Spearman correlation "
-    "between deprivation index and amount paid per inhabitant lies between {sp_min} and {sp_max} "
-    "across years. Direct award accounts for {ad_pct}% of the works contracts of 2023–2025, but for "
-    "only {ad_monto_pct}% of their amount.")
+    "deprivation to {rez_alto} pesos in those of very high deprivation, with a Spearman correlation "
+    "of {sp_min} to {sp_max} across years. Direct award accounts for {ad_pct}% of the works contracts "
+    "of 2023–2025, but for only {ad_monto_pct}% of their amount.")
 
 SITIO = (
     "The results are published as a static map with a query page{ref_figura}, apart from the "
@@ -506,11 +505,13 @@ EJEMPLO = (
     "that the site embeds, from {ej_sv_antes} and {ej_sv_despues}, show the corner without and with a "
     "tank (Google does not allow printing them). The images do not prove that this contract built it; "
     "they turn three flags into one question for the agency: whether the record of a finished work was "
-    "never updated.")
+    "never updated. Both views open at "
+    "<https://gabrielhuav.github.io/PublicMunicipalWorks_Lakehouse/?estado={ej_estado}&folio={ej_folio}&comparar=1>.")
 
 LEYENDA_F4 = (
-    "Fig. 4. The public map opened on the example project: nearby projects of 2024, coloured by "
-    "status, and its record with amounts, progress, flags and evidence. Basemap by Esri (n.d.).")
+    "Fig. 4. The public map filtered to the State of Mexico and opened on the example project: "
+    "2024 projects coloured by status, evidence and review filters, and its record with amounts, "
+    "progress, flags and evidence. Basemap by Esri (n.d.).")
 
 LEYENDA_F5 = (
     "Fig. 5. The example project in two releases of Esri's World Imagery Wayback (Esri, "
@@ -553,10 +554,10 @@ DISPONIBILIDAD = (
     "`scripts/evaluacion/eval_criterio_costo.py` and the corrections of Section 7.7 by "
     "`scripts/cifras_capitulo.py`.")
 
-IA = (" For this extended version they used Claude (Anthropic), under the same direction, to write "
-      "and run the code of the lakehouse layer, the projections and the verification scripts, to "
-      "trace each new figure to the script that produces it, and to draft the new sections, which the "
-      "authors revised and approved.")
+IA = (" For this extended version they used Claude (Anthropic) and Gemini (Google), under the same "
+      "direction, to write and run the code of the lakehouse layer, the projections and the "
+      "verification scripts, to trace each new figure to the script that produces it, and to draft "
+      "the new sections, which the authors revised and approved.")
 
 REFERENCIAS = [
     (122, "Ambituuni", [

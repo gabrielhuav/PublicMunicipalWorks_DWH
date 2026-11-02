@@ -264,6 +264,8 @@ def cifras():
     assert ej["antes"]["toma"] < ej["fecha_inicio"] < ej["ahora"]["toma"]
     assert ej["antes"]["mosaico_de"] != ej["ahora"]["mosaico_de"]
     fu = "verificacion/evidencia_ejemplo.json"
+    pon("ej_folio", ej["folio"], fu)
+    pon("ej_estado", ej["cvemun"][:2].lstrip("0"), fu)
     pon("ej_municipio", ej["municipio"], fu)
     pon("ej_inicio", larga(ej["fecha_inicio"]), fu)
     pon("ej_termino", larga(ej["fecha_termino"]), fu)
