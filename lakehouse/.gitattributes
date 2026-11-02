@@ -2,3 +2,6 @@
 # core.autocrlf=true los cambiaría en esta PC.
 snapshots/** binary
 verificacion/*.csv binary
+# El sitio publica una copia exacta de evidencia_lago.json y verificar_capas.py lo comprueba.
+verificacion/*.json -text
+sitio/datos/** -text

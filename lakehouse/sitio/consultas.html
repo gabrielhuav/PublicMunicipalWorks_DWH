@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultas al lago</title>
+    <meta name="description" content="Las consultas SQL detrás del mapa del lago de obra pública y la comparación por hash entre el almacén PostgreSQL y el lago.">
+    <link rel="stylesheet" href="sitio.css">
+</head>
+<body>
+<header class="barra">
+    <div>
+        <h1 data-t="titulo"></h1>
+        <p data-t="lema"></p>
+    </div>
+    <nav>
+        <a href="./" data-t="nav.mapa"></a>
+        <a href="consultas.html" aria-current="page" data-t="nav.consultas"></a>
+        <a href="https://github.com/gabrielhuav/PublicMunicipalWorks_Lakehouse" data-t="nav.repo"></a>
+        <button type="button" id="idioma"></button>
+    </nav>
+</header>
+<p class="aviso" data-t="aviso" data-html></p>
+
+<main class="contenido">
+    <p id="estado" data-t="cargando"></p>
+    <section class="panel tarjeta">
+        <h2 data-t="lago.titulo"></h2>
+        <p data-t="lago.texto"></p>
+        <div class="tabla" id="lago"></div>
+        <p class="nota" id="lagoNota"></p>
+    </section>
+    <h2 data-t="capas.titulo"></h2>
+    <p data-t="capas.texto"></p>
+    <pre id="pasos"></pre>
+    <div id="lista"></div>
+</main>
+
+<script src="comun.js"></script>
+<script src="consultas.js"></script>
+</body>
+</html>

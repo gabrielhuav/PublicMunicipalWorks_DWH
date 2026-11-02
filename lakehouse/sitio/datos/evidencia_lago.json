@@ -1,0 +1,174 @@
+{
+ "entorno": {
+  "anfitrion": "Windows 10.0.26300",
+  "duckdb": "v1.3.2",
+  "postgresql": "16.14",
+  "hilos_duckdb": 12,
+  "repeticiones": 20
+ },
+ "consultas": {
+  "01_totales_por_ciclo": {
+   "filas": 6,
+   "sha256": "aa525717ee06bf5daec3df8553838c10562ff72a456f196a87fc4f136c9452a2",
+   "igual": true,
+   "pg_ms": 123.8,
+   "pg_p95": 144.9,
+   "lago_ms": 36.1,
+   "lago_p95": 54.0
+  },
+  "02_clasificacion_2024": {
+   "filas": 435,
+   "sha256": "1d7f26429a7472e24e0f715646c39e5909d90b600680c76bceece6dad03e94b0",
+   "igual": true,
+   "pg_ms": 240.9,
+   "pg_p95": 381.0,
+   "lago_ms": 40.4,
+   "lago_p95": 50.7
+  },
+  "03_estado_de_mexico_2024": {
+   "filas": 125,
+   "sha256": "5f17ab75b05385a9354d6b09d7db0c1350f46da05010460dfb579ea6b1cda4ff",
+   "igual": true,
+   "pg_ms": 12.0,
+   "pg_p95": 13.4,
+   "lago_ms": 17.4,
+   "lago_p95": 40.0
+  },
+  "04_rezago_2023": {
+   "filas": 5,
+   "sha256": "3bb872b1fd41d266b57f912be98ae3c137475cce54dcb2a2437beca1fe6571cc",
+   "igual": true,
+   "pg_ms": 285.3,
+   "pg_p95": 326.0,
+   "lago_ms": 12.1,
+   "lago_p95": 29.7
+  },
+  "05_alertas_por_ciclo": {
+   "filas": 6,
+   "sha256": "3a0ac7871591a3adb588031db3d3c957e1044408f70d0c2d346cce37353edf09",
+   "igual": true,
+   "pg_ms": 552.9,
+   "pg_p95": 594.3,
+   "lago_ms": 21.2,
+   "lago_p95": 36.0
+  },
+  "06_historial_de_un_folio": {
+   "filas": 5,
+   "sha256": "1d93a7ed00c17ff649ddffe4fbb6f742ddbfc97aaad036d5dee7bda4721ee97a",
+   "igual": true,
+   "pg_ms": 61.8,
+   "pg_p95": 66.7,
+   "lago_ms": 35.1,
+   "lago_p95": 53.9
+  },
+  "07_temascaltepec": {
+   "filas": 6,
+   "sha256": "3bbb5bb5ae299edbd47c56819384326407e75a90cb2f1ea4c2fece606b9e79b6",
+   "igual": true,
+   "pg_ms": 2.4,
+   "pg_p95": 4.4,
+   "lago_ms": 33.0,
+   "lago_p95": 52.1
+  }
+ },
+ "poda": {
+  "archivos_total": 192,
+  "archivos_filtro": 1,
+  "bytes_total": 109214600,
+  "bytes_filtro": 1348732
+ },
+ "viaje": [
+  {
+   "ciclo": 2020,
+   "instantanea": "6179021937207052191",
+   "filas": 457755,
+   "esperadas": 457755,
+   "fuente_sha256": "bbbe4792bacad3d3"
+  },
+  {
+   "ciclo": 2021,
+   "instantanea": "7994684074270731619",
+   "filas": 886699,
+   "esperadas": 886699,
+   "fuente_sha256": "6170b51d3df49f60"
+  },
+  {
+   "ciclo": 2022,
+   "instantanea": "1055803359555509839",
+   "filas": 1283367,
+   "esperadas": 1283367,
+   "fuente_sha256": "812ce8960096c8c8"
+  },
+  {
+   "ciclo": 2023,
+   "instantanea": "1658473670602038433",
+   "filas": 1664182,
+   "esperadas": 1664182,
+   "fuente_sha256": "354f2a4a8560b0be"
+  },
+  {
+   "ciclo": 2024,
+   "instantanea": "7460306936580086324",
+   "filas": 1917676,
+   "esperadas": 1917676,
+   "fuente_sha256": "63656106a607d59f"
+  },
+  {
+   "ciclo": 2025,
+   "instantanea": "6745622793270099506",
+   "filas": 2008738,
+   "esperadas": 2008738,
+   "fuente_sha256": "8ea8f91a96760332"
+  }
+ ],
+ "evolucion": {
+  "archivos_iguales": true,
+  "archivos": 1,
+  "milisegundos": 113.9
+ },
+ "almacenamiento": {
+  "capas": {
+   "bronce": {
+    "objetos": 9,
+    "bytes": 2136267871
+   },
+   "oro": {
+    "objetos": 5,
+    "bytes": 139130533
+   },
+   "plata": {
+    "objetos": 2160,
+    "bytes": 297654462
+   }
+  },
+  "csv_seis_ciclos_bytes": 2802951644,
+  "postgresql_bytes": 752984064,
+  "postgresql_tablas": {
+   "dim_municipio": {
+    "bytes": 425984,
+    "filas": 2469
+   },
+   "dim_proyecto_federal": {
+    "bytes": 469475328,
+    "filas": 1157395
+   },
+   "fact_proyecto_ciclo": {
+    "bytes": 283082752,
+    "filas": 1537019
+   }
+  },
+  "filas_plata": {
+   "proyectos": 2008738,
+   "contratos": 1103568,
+   "georreferencias": 1702131,
+   "metas_avances": 2017205,
+   "financiamiento": 2171892,
+   "observaciones": 1811806,
+   "localidades": 189432,
+   "municipios": 2469,
+   "rezago_municipal": 2469,
+   "cngmd_contratos": 4950
+  }
+ },
+ "fallos": 0
+}

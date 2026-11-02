@@ -111,7 +111,7 @@ def main():
                  "bytes_gz": ruta.stat().st_size, "clases": clases, "consultas": consultas,
                  "fallos": fallos}
     (RAIZ / "verificacion" / "evidencia_grafo.json").write_text(
-        json.dumps(evidencia, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        json.dumps(evidencia, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"{ruta.stat().st_size / 1e6:.1f} MB; fallos: {fallos}")
     return 1 if fallos else 0
 

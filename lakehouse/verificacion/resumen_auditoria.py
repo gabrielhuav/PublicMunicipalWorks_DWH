@@ -94,5 +94,5 @@ s["temascaltepec_ultimo"] = filas("""
            count(*) FILTER (WHERE estatus = 'Cancelado') AS cancelados FROM u""")[0]
 
 (VERIFICACION / "evidencia_auditoria.json").write_text(
-    json.dumps(s, ensure_ascii=False, indent=1, default=str) + "\n", encoding="utf-8")
+    json.dumps(s, ensure_ascii=False, indent=1, default=str) + "\n", encoding="utf-8", newline="\n")
 print(json.dumps(s, ensure_ascii=False, indent=0, default=str))

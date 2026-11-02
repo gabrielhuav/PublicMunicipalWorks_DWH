@@ -74,10 +74,12 @@ def main():
         return con.execute(sql).fetchall()
 
     salida = {"entorno": {
-        "anfitrion": f"{platform.system()} {platform.release()}",
+        # La versión y no release(): en Python 3.10, release() dice "10" también en Windows 11.
+        "anfitrion": f"{platform.system()} {platform.version()}",
         "duckdb": con.execute("SELECT version()").fetchone()[0],
         "postgresql": en_pg("SHOW server_version")[0][0],
         "hilos_duckdb": con.execute("SELECT current_setting('threads')").fetchone()[0],
+        "repeticiones": 0 if args.sin_latencia else args.repeticiones,
     }}
     fallos = 0
 
@@ -162,10 +164,10 @@ def main():
             c = capas.setdefault(capa, {"objetos": 0, "bytes": 0})
             c["objetos"] += 1
             c["bytes"] += o["Size"]
-    tablas_pg = en_pg("""SELECT c.relname, pg_total_relation_size(c.oid), c.reltuples::BIGINT
-        FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
-        WHERE n.nspname = 'warehouse' AND c.relname IN
-              ('fact_proyecto_ciclo', 'dim_proyecto_federal', 'dim_municipio')""")
+    # count(*) y no reltuples: reltuples es una estimación de ANALYZE.
+    tablas_pg = [(t, *en_pg(f"SELECT pg_total_relation_size('warehouse.{t}'), count(*) "
+                            f"FROM warehouse.{t}")[0])
+                 for t in ("dim_municipio", "dim_proyecto_federal", "fact_proyecto_ciclo")]
     plata = json.loads((VERIFICACION / "evidencia_plata.json").read_text(encoding="utf-8"))
     csv_total = sum(t["bytes"] for c in plata["ciclos"].values() for t in c.values())
     salida["almacenamiento"] = {
@@ -183,7 +185,7 @@ def main():
 
     salida["fallos"] = fallos
     (VERIFICACION / "evidencia_lago.json").write_text(
-        json.dumps(salida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        json.dumps(salida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"fallos: {fallos}")
     return 1 if fallos else 0
 

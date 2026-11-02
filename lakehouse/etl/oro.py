@@ -30,7 +30,7 @@ def main():
               f"{evidencia[nombre]['segundos']:>6} s", flush=True)
     VERIFICACION.mkdir(exist_ok=True)
     (VERIFICACION / "evidencia_oro.json").write_text(
-        json.dumps(evidencia, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        json.dumps(evidencia, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     return 0
 
 

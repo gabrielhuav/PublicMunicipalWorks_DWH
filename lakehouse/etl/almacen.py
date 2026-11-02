@@ -125,7 +125,7 @@ def main():
     identicas = antes == despues
     (VERIFICACION / "evidencia_aditiva.json").write_text(json.dumps(
         {"identicas": identicas, "tablas": despues}, ensure_ascii=False, indent=1) + "\n",
-        encoding="utf-8")
+        encoding="utf-8", newline="\n")
     print(f"tablas originales: {len(antes)}, idénticas: {identicas}")
     print(f"almacén cargado en {time.time() - inicio:.1f} s")
     return 0 if identicas else 1

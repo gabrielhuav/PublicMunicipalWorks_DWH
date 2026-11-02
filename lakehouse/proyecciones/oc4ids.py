@@ -172,7 +172,7 @@ def main():
         "fuentes": [f["sha256"][:16] for f in fuentes() if f["id"].startswith("shcp")],
     }
     (VERIFICACION / "evidencia_oc4ids.json").write_text(
-        json.dumps(evidencia, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        json.dumps(evidencia, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     paquete = {
         "uri": "https://github.com/gabrielhuav/PublicMunicipalWorks_DWH",
         "publisher": {"name": "Proyección de investigación sobre datos abiertos de SHCP"},

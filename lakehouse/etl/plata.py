@@ -432,7 +432,7 @@ def main():
     evidencia["segundos"] = round(time.time() - inicio, 1)
     VERIFICACION.mkdir(exist_ok=True)
     (VERIFICACION / "evidencia_plata.json").write_text(
-        json.dumps(evidencia, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        json.dumps(evidencia, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"plata lista en {evidencia['segundos']} s")
     return 0
 

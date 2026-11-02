@@ -51,8 +51,23 @@ Los archivos oficiales no se guardan en Git, porque suman 2.1 GB: se bajan de su
 | `resumen_auditoria.py` | Las cifras de la auditoría sobre datos reales |
 | `evidencia_aditiva.json` | Filas y md5 de las 34 tablas originales, idénticas antes y después de cargar |
 | `evidencia_plata.json` | Por archivo: SHA-256, filas, líneas descartadas, huérfanos y valores no convertidos |
+| `verificar_capas.py` | Cada capa del sitio es, byte por byte, lo que devuelve su consulta (`evidencia_capas.txt`) |
 
 Las consultas y los comandos para verlas están en [`consultas/README.md`](consultas/README.md).
+
+## Sitio
+
+`sitio/` es un mapa estático con su página de consultas, y se publica aparte, en un repositorio
+propio, con `publicar/publicar.ps1`. Cada capa es el resultado de una consulta de `capas/`: las
+`.pg.sql` corren en PostgreSQL y las `.duck.sql` en el lago. Para regenerarlas y comprobarlas:
+
+```bash
+lakehouse/.venv/Scripts/python lakehouse/etl/exportar_capas.py
+lakehouse/.venv/Scripts/python lakehouse/verificacion/verificar_capas.py
+```
+
+El mapa base prueba una cadena de proveedores sin clave y, si ninguno responde, dibuja los datos
+sin fondo. Leaflet va copiado en `sitio/vendor/` para no depender de una CDN.
 
 ## Interoperabilidad
 

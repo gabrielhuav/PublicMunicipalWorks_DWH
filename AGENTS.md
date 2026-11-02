@@ -100,6 +100,9 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 | `lakehouse/proyecciones/oc4ids.py` | Proyección a OC4IDS 0.9.5 validada con el esquema oficial, copiado en `esquema/` |
 | `lakehouse/grafo/` | Grafo RDF: mapeo R2RML, vocabulario, consultas `.rq` con gemelo `.sql` y entorno propio |
 | `scripts/evaluacion/eval_criterio_costo.py` | Entrega 3: criterio de costo por tipo y brecha de pago |
+| `lakehouse/capas/` | Una consulta por capa del sitio: `.pg.sql` en PostgreSQL, `.duck.sql` en el lago |
+| `lakehouse/sitio/` | **Sitio público nuevo** (mapa y consultas). Sus datos los escribe `etl/exportar_capas.py` |
+| `lakehouse/publicar/` | `publicar.ps1` arma la copia pública; `README.md` y `pages.yml` van a su raíz |
 
 ## Hechos establecidos (no volver a investigar)
 
@@ -164,8 +167,11 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   en `plata.proyectos`. Plata suma 11.0 millones de filas en 10 tablas. Bronce 2,136 MB; plata 291.5 MB (contra 2,803 MB
   de CSV); oro 139.5 MB; las tablas nuevas de PostgreSQL 753 MB, medidos en el clon limpio. Plata se construye en unos 200 s.
 - **Las 7 consultas dan el mismo SHA-256 en PostgreSQL y en el lago.** El lago gana en barridos
-  (566 contra 25 ms, 291 contra 14 ms) y PostgreSQL en búsquedas con índice (1.5 contra 30 ms).
-  PostgreSQL corre con la configuración por omisión de la pila de referencia.
+  (553 contra 21 ms, 285 contra 12 ms) y PostgreSQL en búsquedas con índice (2.4 contra 33 ms).
+  Media de 20 repeticiones; las cifras vigentes son las de `evidencia_lago.json`, que cambian un poco
+  en cada corrida. PostgreSQL corre con la configuración por omisión de la pila de referencia.
+- **Almacén, conteo exacto:** `dim_municipio` 2,469, `dim_proyecto_federal` 1,157,395 y
+  `fact_proyecto_ciclo` 1,537,019. Antes la evidencia traía `reltuples`, una estimación.
 - **Poda:** el filtro por ciclo y entidad planea 1 de 192 archivos. **Viaje en el tiempo:** 6
   instantáneas, cada una con sus filas acumuladas. **Evolución:** agregar una columna no reescribe datos.
 - **Aditivo:** las 34 tablas originales quedan idénticas por md5 (`evidencia_aditiva.json`).
@@ -185,6 +191,19 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   Spearman de .39 a .57 entre ciclos.
 - **Modalidad, contratos de obra 2023-2025:** adjudicación directa 49.9 % de los contratos y 23.7 %
   del monto.
+
+### Sitio público (paso 5, 2 nov)
+
+- **Repositorio aprobado por Gabriel el 2 nov:** `gabrielhuav/PublicMunicipalWorks_Lakehouse`, con
+  Pages por Actions desde `lakehouse/sitio/`. URL: `https://gabrielhuav.github.io/PublicMunicipalWorks_Lakehouse/`.
+- **Capas:** 5 consultas, de 6 a 21,335 filas; `verificar_capas.py` las da iguales byte por byte, y
+  falla si se altera un archivo (probado). La capa de obras del Estado de México 2024 pesa 5 MB.
+- **2 municipios sin cabecera en ITER** (Francisco León, Chiapas, y Villa de Arista, San Luis Potosí):
+  no se dibujan.
+- **2025 es el informe definitivo de SHCP, pero trae 91,062 proyectos contra 253,494 de 2024.** No
+  se sabe por qué; el mapa lo advierte.
+- **Temascaltepec en INEGI:** 35,014 habitantes. CNGMD declara 0 contratos de obra en 2022 y SHCP 16.
+- El sitio no copia la demostración sintética del capítulo: enlaza a ella.
 
 ### Interoperabilidad (entrega 5, 2 nov, Estado de México)
 
@@ -244,6 +263,11 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - Clona en una ruta corta: con rutas largas, como el scratchpad de una sesión, `git clone` y las DLL
   de `shapely` pueden fallar en Windows.
 - Si `paper/ijcopi/` tiene un archivo `~$...`, Word tiene ese `.docx` abierto: no lo sobrescribas.
+- La evidencia JSON se escribe con LF y `lakehouse/.gitattributes` la marca `-text`: el sitio copia
+  `evidencia_lago.json` byte por byte. Con `write_text` sin `newline="\n"`, Windows escribe CRLF.
+- En Python 3.10, `platform.release()` dice "10" en Windows 11: usa `platform.version()`.
+- CARTO sigue sin pasar la prueba de dos teselas; el sitio cae en Esri Canvas.
+- Windows PowerShell 5.1 lee como ANSI un `.ps1` sin BOM: no pongas acentos en los scripts.
 
 ## Estado actual
 
@@ -258,9 +282,14 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Riesgo de páginas:** faltan 2,738 palabras en 4 páginas, 684 por página contra 622 de la base.
   Cabe, como mucho, una figura nueva.
 
+- **Hecho (2 nov):** el sitio del lago, verificado contra las bases, y la copia pública lista en
+  `Documents/GitHub Desktop/PublicMunicipalWorks_Lakehouse`, con commit local. El repositorio aún no
+  existe en GitHub.
+
 ### Pendientes para Gabriel
 
-- Aprobar el nombre del repositorio nuevo y el título.
+- Autorizar que se cree `gabrielhuav/PublicMunicipalWorks_Lakehouse` y se suba la copia pública.
+- Aprobar el título.
 - Confirmar el bloque de autores y si los alumnos van en agradecimientos o como autores.
 
 ## Siguiente paso
@@ -270,7 +299,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 3. [x] ETL completo y reproducible. Probado desde un clon limpio (`verificacion/evidencia_clon_limpio.txt`), con los
    archivos oficiales tomados de la caché porque SHCP estaba lento; se comprobó su SHA-256.
 4. [x] Consultas SQL y comandos para verlas en la base de datos (`lakehouse/consultas/`).
-5. [ ] Páginas nuevas en el repositorio nuevo, verificadas contra la base.
+5. [ ] Páginas nuevas en el repositorio nuevo, verificadas contra la base. Hechas y verificadas en
+   local; falta crear el repositorio, subirlo, activar Pages y revisar las URL en vivo.
 6. [ ] Extensión en `paper/ijcopi/`, con la plantilla, amarillo y revisión del PDF a ojo.
 
 ## Bitácora
@@ -281,3 +311,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-02, Claude (Claude Code, Opus 5.5): con el plan aprobado, implementó `lakehouse/` con datos
   nacionales: SeaweedFS, Iceberg, DuckDB y carga aditiva a PostgreSQL. Evaluó el criterio de costo,
   proyectó a OC4IDS y materializó el grafo RDF. Sin push.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): Gabriel aprobó el nombre `PublicMunicipalWorks_Lakehouse`.
+  Hizo el sitio (5 capas verificadas byte por byte) y la copia pública local. Corrigió la evidencia
+  del lago: conteos exactos, oro al día, sistema operativo y saltos de línea. Sin push.

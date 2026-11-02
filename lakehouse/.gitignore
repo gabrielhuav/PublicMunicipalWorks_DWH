@@ -1,2 +1,3 @@
-datos/
+# Solo la caché del lago; sitio/datos/ sí se versiona porque es lo que se publica.
+/datos/
 .venv/
