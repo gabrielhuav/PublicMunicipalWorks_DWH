@@ -14,6 +14,7 @@
       'capas.titulo': 'Las consultas detrás de cada capa',
       'capas.texto': 'Con el almacén y el lago levantados, estos comandos repiten cada consulta y comparan el sitio con las bases de datos.',
       consulta: 'Consulta', filas: 'Filas', igual: 'Igual', si: 'sí', no: 'NO',
+      archivos: '{n} archivos, uno por estado; la muestra y el hash son del Estado de México',
       'filas.n': '{n} filas', primeras: 'Ver las primeras {n} filas', sql: 'Ver SQL', comando: 'Comando',
       'motor.pg': 'PostgreSQL (almacén)', 'motor.duck': 'DuckDB sobre el lago',
     },
@@ -26,6 +27,7 @@
       'capas.titulo': 'The queries behind each layer',
       'capas.texto': 'With the warehouse and the lake running, these commands repeat every query and compare the site with the databases.',
       consulta: 'Query', filas: 'Rows', igual: 'Equal', si: 'yes', no: 'NO',
+      archivos: '{n} files, one per state; the sample and the hash are from the State of Mexico',
       'filas.n': '{n} rows', primeras: 'Show the first {n} rows', sql: 'Show SQL', comando: 'Command',
       'motor.pg': 'PostgreSQL (warehouse)', 'motor.duck': 'DuckDB over the lake',
     },
@@ -37,7 +39,8 @@
     '02_municipios.duck.sql': 'The municipalities of the 2020 Census at the point of their seat (ITER locality 0001), with their population and CONEVAL\'s 2020 social deprivation level. The lake has no municipal polygons, so the map draws one point per municipality.',
     '03_municipio_ciclo.pg.sql': 'By municipality and fiscal year: projects, amounts and how many each criterion flags. Paid per inhabitant divides by the 2020 population. `evaluados` counts investment projects, the only ones the criteria apply to.',
     '04_cruce_cngmd_2022.duck.sql': 'Works contracts in 2022 according to two official sources: what each municipality declared to INEGI in the 2023 CNGMD, and the works contracts SHCP records with a municipality as the contracting party. A difference does not prove an irregularity: the CNGMD covers all municipal resources and SHCP only federally funded spending.',
-    '06_enlaces_edomex_2024.duck.sql': 'Links that the agency published with SHCP for the contracts of each project in the State of Mexico in 2024: case files, documents or photographs. They are shown as reported; nobody has reviewed what they contain.',
+    '06_enlaces_2024.duck.sql': 'Links that the agency published with SHCP for the contracts of each project of a state in 2024: case files, documents or photographs. They are shown as reported; nobody has reviewed what they contain. Links to personal OneDrive sites are left out, because their path carries the uploader’s e-mail account. Run once per state.',
+    '05_obras_2024.duck.sql': 'Projects of a state in fiscal year 2024, at the point the reporting agency gave (the mean of its coordinates inside the country), with their start and end dates. Flags C1 to C4 ask for a review; they do not prove an irregularity. Contractor names are not included. Run once per state.',
     '05_obras_edomex_2024.pg.sql':'Projects in the State of Mexico in fiscal year 2024, at the point the reporting agency gave (the mean of its coordinates inside the country). Flags C1 to C4 ask for a review; they do not prove an irregularity. Contractor names are not included.',
   };
   const PASOS = [
@@ -64,16 +67,30 @@
       duck: e.duckdb, hilos: e.hilos_duckdb, anfitrion: e.anfitrion });
   }
 
+  /* Las consultas que se corren por estado dan un archivo por estado: una tarjeta por consulta. */
+  function agrupar(consultas) {
+    const grupos = new Map();
+    consultas.forEach(c => {
+      if (!grupos.has(c.consulta)) grupos.set(c.consulta, []);
+      grupos.get(c.consulta).push(c);
+    });
+    return [...grupos.values()].map(g => {
+      if (g.length === 1) return g[0];
+      const muestra = g.find(c => c.entidad === 15) || g[0];
+      return { ...muestra, filas: g.reduce((s, c) => s + c.filas, 0), archivos: g.length };
+    });
+  }
+
   function tarjeta(c, man) {
     const cmd = c.motor === 'pg'
       ? `docker exec -i obras-publicas-db-1 psql -U obras -d obras_publicas < lakehouse/capas/${c.consulta}`
-      : `lakehouse/.venv/Scripts/python lakehouse/consultas/lago.py lakehouse/capas/${c.consulta}`;
+      : `lakehouse/.venv/Scripts/python lakehouse/consultas/lago.py lakehouse/capas/${c.consulta}${c.entidad != null ? ` --entidad ${c.entidad}` : ''}`;
     const resumen = (S.idioma === 'en' && RESUMEN_EN[c.consulta])
       || c.sql.split('\n').filter(l => l.startsWith('--')).map(l => l.replace(/^--\s?/, '')).join(' ');
     return `<section class="panel tarjeta">
       <h2 class="mono">${S.esc(c.consulta)}</h2>
       <p>${S.esc(resumen)}</p>
-      <p class="meta">${S.esc(t('motor.' + c.motor))} · ${S.esc(t('filas.n', { n: S.numero(c.filas) }))} · ${S.esc(man.generado_en)} · SHA-256 <code>${c.sha256_datos.slice(0, 16)}…</code></p>
+      <p class="meta">${S.esc(t('motor.' + c.motor))} · ${S.esc(t('filas.n', { n: S.numero(c.filas) }))}${c.archivos ? ' · ' + S.esc(t('archivos', { n: c.archivos })) : ''} · ${S.esc(man.generado_en)} · SHA-256 <code>${c.sha256_datos.slice(0, 16)}…</code></p>
       <pre>${S.esc(cmd)}</pre>
       <details data-datos="${S.esc(c.datos)}"><summary>${S.esc(t('primeras', { n: Math.min(10, c.filas) }))}</summary><div class="tabla"></div></details>
       <details><summary>${S.esc(t('sql'))}</summary><pre>${S.esc(c.sql)}</pre></details>
@@ -100,7 +117,7 @@
     try {
       const man = await S.json('datos/manifiesto.json');
       lago(await S.json('datos/' + man.evidencia.datos));
-      document.getElementById('lista').innerHTML = man.consultas.map(c => tarjeta(c, man)).join('');
+      document.getElementById('lista').innerHTML = agrupar(man.consultas).map(c => tarjeta(c, man)).join('');
       document.querySelectorAll('details[data-datos]').forEach(alAbrir);
       status.hidden = true;
     } catch (e) {

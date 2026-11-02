@@ -342,9 +342,19 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   - Fuente en cada ficha: el archivo oficial con su SHA-256, y en los proyectos los enlaces que la
     dependencia publicó con sus contratos (`lakehouse/etl/enlaces.py` → `anexo.enlaces_contratos`,
     capa 06). 10,878 de 21,335 proyectos de 2024 tienen enlaces; se omiten 67 de OneDrive personal.
-  - Botón "Ver el lugar en imagen de satélite" (Esri, sin fecha de toma): enseña el lugar, no prueba.
-  - SHCP no publica fotos de las obras; no hay "antes y después" verificable en las fuentes.
-- La v1 del artículo ya describe esto en 9.4: 15 páginas, 9,877 palabras, 0 sin amarillo.
+  - SHCP no publica fotos de las obras. Los enlaces que apuntan directo a una imagen son muy pocos (4
+    distintos en 2024); el sitio los enseña en miniatura.
+- **Pedidos del 2 nov, segunda tanda, hechos y probados en local, sin publicar:**
+  - Proyectos de 2024 de los 32 estados, uno a la vez: `capas/05_obras_2024.duck.sql` y
+    `06_enlaces_2024.duck.sql` llevan `{entidad}` y el exportador las corre por estado (253,346
+    proyectos, 210,384 enlaces, 68 archivos verificados). Botón en cada municipio para cargar su estado.
+  - Búsqueda por palabras: municipios del país y proyectos del estado cargado.
+  - Antes y después: Esri World Imagery Wayback (público, sin clave, CORS abierto). "Antes" es la última
+    versión publicada antes del inicio del proyecto; Esri fecha la publicación, no la toma.
+  - Respaldos del mapa base, comprobados: con `?teselas=carto` el módulo detecta la marca de agua y usa
+    Esri Canvas. Son siete mecanismos: prueba de dos teselas, vigilancia de errores y atascos, copia
+    provisional, copia local, contorno incrustado, elección manual y reintento al volver la red.
+- La v1 del artículo describe esto en 9.4: 15 páginas, 9,928 palabras, 0 sin amarillo.
 - Decidir si los alumnos de los repositorios de referencia van en agradecimientos.
 - Revisar la v1 completa, sobre todo la declaración de IA, que dice que los autores revisaron y
   aprobaron el texto nuevo.

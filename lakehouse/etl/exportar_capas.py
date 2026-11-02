@@ -44,8 +44,8 @@ class Bases:
     def __init__(self):
         self.pg = self.lago = None
 
-    def correr(self, ruta):
-        sql = texto(ruta).decode("utf-8")
+    def correr(self, ruta, sql=None):
+        sql = sql if sql is not None else texto(ruta).decode("utf-8")
         if motor(ruta) == "pg":
             if self.pg is None:
                 self.pg = psycopg2.connect(PG_DSN)
@@ -87,6 +87,20 @@ def nombre(ruta):
     return ruta.name.split(".", 1)[0]
 
 
+ENTIDADES = range(1, 33)
+
+
+def corridas(ruta):
+    """Una corrida por consulta, o una por estado si la consulta lleva {entidad}.
+
+    Devuelve (archivo de salida sin extensión, SQL, entidad o None).
+    """
+    sql = texto(ruta).decode("utf-8")
+    if "{entidad}" not in sql:
+        return [(nombre(ruta), sql, None)]
+    return [(f"{nombre(ruta)}_{e:02d}", sql.replace("{entidad}", str(e)), e) for e in ENTIDADES]
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     SALIDA.mkdir(parents=True, exist_ok=True)
@@ -94,14 +108,17 @@ def main():
     resumen = []
     try:
         for q in consultas():
-            columnas, filas = bases.correr(q)
-            datos = canonico(columnas, filas)
-            (SALIDA / f"{nombre(q)}.json").write_bytes(datos)
-            resumen.append({"consulta": q.name, "motor": motor(q), "datos": f"{nombre(q)}.json",
-                            "filas": len(filas), "columnas": columnas,
-                            "sha256_consulta": sha(texto(q)), "sha256_datos": sha(datos),
-                            "sql": texto(q).decode("utf-8")})
-            print(f"{nombre(q):<24}{motor(q):>5}{len(filas):>9,} filas {len(datos) / 1024:>8,.0f} KB")
+            for salida, sql, entidad in corridas(q):
+                columnas, filas = bases.correr(q, sql)
+                datos = canonico(columnas, filas)
+                (SALIDA / f"{salida}.json").write_bytes(datos)
+                resumen.append({"consulta": q.name, "motor": motor(q), "datos": f"{salida}.json",
+                                "entidad": entidad, "filas": len(filas), "columnas": columnas,
+                                "sha256_consulta": sha(texto(q)), "sha256_datos": sha(datos),
+                                "sql": texto(q).decode("utf-8")})
+                if entidad is None or entidad == ENTIDADES[-1]:
+                    total = sum(r["filas"] for r in resumen if r["consulta"] == q.name)
+                    print(f"{nombre(q):<24}{motor(q):>5}{total:>9,} filas")
     finally:
         bases.cerrar()
     # Se copian sin cambiar un byte: la comparación lago contra almacén, tal como la escribió

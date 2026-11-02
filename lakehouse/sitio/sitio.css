@@ -71,6 +71,40 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 details summary { cursor: pointer; color: var(--marca); margin-top: .4rem; }
 .estado { margin: 0 0 .5rem; color: var(--texto-2); }
 
+/* Búsqueda */
+.buscar { width: 100%; padding: .4rem; border: 1px solid var(--borde); border-radius: 6px;
+  background: var(--superficie); color: var(--texto); font: inherit; }
+.resultados { list-style: none; margin: .3rem 0 0; padding: 0; max-height: 260px; overflow-y: auto;
+  border: 1px solid var(--borde); border-radius: 6px; }
+.resultados li { border-bottom: 1px solid var(--borde); }
+.resultados li:last-child { border-bottom: 0; }
+.resultados li.nota { padding: .4rem .5rem; }
+.resultados button { display: block; width: 100%; text-align: left; padding: .35rem .5rem; border: 0;
+  background: none; color: var(--texto); font: inherit; font-size: .8rem; cursor: pointer; }
+.resultados button:hover { background: var(--marca-suave); }
+#estadoObras { margin-top: .3rem; }
+
+/* Antes y ahora en imagen de satélite */
+.comparar { position: fixed; inset: 0; z-index: 2000; background: rgba(10, 14, 20, .55);
+  display: flex; align-items: center; justify-content: center; padding: 16px; }
+.comparar[hidden] { display: none; }
+.comparar__caja { background: var(--superficie); color: var(--texto); border-radius: var(--r);
+  width: min(1100px, 100%); max-height: 100%; overflow: auto; padding: 1rem; }
+.comparar__cabecera { display: flex; gap: 1rem; align-items: flex-start; justify-content: space-between; }
+.comparar__cabecera h2 { margin: 0; font-size: 1rem; }
+.comparar__cabecera button { flex: none; padding: .35rem .8rem; border: 1px solid var(--borde); border-radius: 6px;
+  background: var(--marca-suave); color: var(--texto); font: inherit; cursor: pointer; }
+.comparar__mapas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: .8rem; }
+@media (max-width: 760px) { .comparar__mapas { grid-template-columns: 1fr; } }
+.comparar__mapas figure { margin: 0; }
+.comparar__mapa { height: 380px; border-radius: 6px; border: 1px solid var(--borde); }
+@media (max-width: 760px) { .comparar__mapa { height: 260px; } }
+.comparar__mapas figcaption { font-size: .8rem; color: var(--texto-2); margin-top: .35rem; }
+.miniaturas { display: flex; gap: 6px; flex-wrap: wrap; margin: .3rem 0; }
+.miniaturas img { width: 92px; height: 70px; object-fit: cover; border-radius: 4px; border: 1px solid #d9dee5; }
+.boton-estado { margin-top: .4rem; padding: .3rem .6rem; border: 1px solid #d9dee5; border-radius: 6px;
+  background: #e3f0f1; color: #1d232b; font: inherit; font-size: .78rem; cursor: pointer; }
+
 /* Filtro de proyectos y fuentes de cada ficha */
 .filtros { border: 0; padding: 0; margin: .6rem 0 0; }
 .filtros legend { font-weight: 600; margin-bottom: .25rem; padding: 0; }

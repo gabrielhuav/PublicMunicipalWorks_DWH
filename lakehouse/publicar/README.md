@@ -43,7 +43,10 @@ and compares the result byte by byte with the published file
 Each municipality and project on the map names the official file it comes from, with its SHA-256,
 so a reader can find the record in the source. Projects also list the links that the reporting
 agency published with their contracts, shown as reported and kept apart from the measured silver
-layer, in `anexo.enlaces_contratos`.
+layer, in `anexo.enlaces_contratos`. The 2024 projects of every state load one state at a time: a
+query that carries `{entidad}` runs once per state. They can be filtered by status or flag, found by
+keyword, and compared in two releases of Esri's public satellite-imagery archive (World Imagery
+Wayback), the last one published before the project started and the latest.
 
 ## Rebuilding it
 

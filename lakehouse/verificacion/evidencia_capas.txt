@@ -1,13 +1,13 @@
-Evidencia de las capas del sitio, generada 2026-11-02 11:52 UTC
-Exportación comprobada: 2026-11-02 11:52 UTC
+Evidencia de las capas del sitio, generada 2026-11-02 12:17 UTC
+Exportación comprobada: 2026-11-02 12:17 UTC
 
-[OK ] 6 consultas, las mismas del manifiesto
-[OK ] 01_resumen             pg         6 filas  sha256 d0cdd2d786fcc275
-[OK ] 02_municipios          duck   2,469 filas  sha256 25dcf9bb86068cc1
-[OK ] 03_municipio_ciclo     pg    14,579 filas  sha256 c2aaeab3905fb820
-[OK ] 04_cruce_cngmd_2022    duck   2,469 filas  sha256 c7af95e4711f66db
-[OK ] 05_obras_edomex_2024   pg    21,335 filas  sha256 107f3ef2c9d73521
-[OK ] 06_enlaces_edomex_2024 duck  11,348 filas  sha256 ad70551a004d33f2
+[OK ] 6 consultas y 68 archivos, los mismos del manifiesto
+[OK ] 01_resumen             pg    1 archivo(s)         6 filas
+[OK ] 02_municipios          duck  1 archivo(s)     2,469 filas
+[OK ] 03_municipio_ciclo     pg    1 archivo(s)    14,579 filas
+[OK ] 04_cruce_cngmd_2022    duck  1 archivo(s)     2,469 filas
+[OK ] 05_obras_2024          duck 32 archivo(s)   253,346 filas
+[OK ] 06_enlaces_2024        duck 32 archivo(s)   210,384 filas
 [OK ] evidencia_lago.json es copia exacta de verificacion/evidencia_lago.json
 [OK ] fuentes.json es copia exacta de fuentes.json
 

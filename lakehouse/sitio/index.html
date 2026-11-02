@@ -25,12 +25,17 @@
 
 <main class="rejilla">
     <aside class="panel control">
+        <label for="buscar" data-t="b.titulo"></label>
+        <input type="search" id="buscar" class="buscar" autocomplete="off">
+        <ul id="resultados" class="resultados" hidden></ul>
+        <p class="nota" data-t="b.nota"></p>
         <label for="indicador" data-t="c.indicador"></label>
         <select id="indicador"></select>
         <label for="ciclo" data-t="c.ciclo"></label>
         <select id="ciclo"></select>
         <p id="notaIndicador" class="nota"></p>
         <label class="casilla"><input type="checkbox" id="obras"> <span data-t="c.obras"></span></label>
+        <select id="estadoObras"></select>
         <p class="nota" data-t="c.obras.nota"></p>
         <fieldset id="filtros" class="filtros" hidden>
             <legend data-t="f.titulo"></legend>
@@ -54,6 +59,20 @@
         <div class="origen" id="origen"></div>
     </aside>
 </main>
+
+<div id="comparar" class="comparar" hidden role="dialog" aria-modal="true" aria-labelledby="compararTitulo">
+    <div class="comparar__caja">
+        <div class="comparar__cabecera">
+            <h2 id="compararTitulo"></h2>
+            <button type="button" id="cerrarComparar" data-t="cmp.cerrar"></button>
+        </div>
+        <div class="comparar__mapas">
+            <figure><div id="mapaAntes" class="comparar__mapa"></div><figcaption></figcaption></figure>
+            <figure><div id="mapaAhora" class="comparar__mapa"></div><figcaption></figcaption></figure>
+        </div>
+        <p class="nota" data-t="cmp.nota"></p>
+    </div>
+</div>
 
 <script src="vendor/leaflet-1.9.4.js"></script>
 <script src="comun.js"></script>

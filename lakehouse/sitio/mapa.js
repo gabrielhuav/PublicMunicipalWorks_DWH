@@ -15,8 +15,18 @@
       titulo: 'Obra pública federalizada en México, 2020-2025',
       lema: 'Lago de datos con registros oficiales de SHCP, INEGI y CONEVAL. Cada capa es el resultado de una consulta a la base de datos, no una copia aparte.',
       'c.indicador': 'Indicador por municipio', 'c.ciclo': 'Ciclo',
-      'c.obras': 'Proyectos del Estado de México, 2024',
-      'c.obras.nota': 'Un punto por proyecto, donde lo ubicó la dependencia que lo reporta.',
+      'c.obras': 'Proyectos de 2024', 'c.estado': 'Estado de los proyectos',
+      'c.obras.nota': 'Un punto por proyecto, donde lo ubicó la dependencia que lo reporta. Se carga un estado a la vez.',
+      'd.verestado': 'Ver los proyectos de 2024 de {estado}',
+      'b.titulo': 'Buscar', 'b.placeholder': 'Municipio, proyecto o folio', 'b.nada': 'Sin resultados.',
+      'b.nota': 'Busca municipios de todo el país y proyectos del estado cargado, por nombre, folio o clasificación.',
+      'fu.imagen': 'Imagen publicada por la dependencia',
+      'cmp.cerrar': 'Cerrar', 'cmp.cargando': 'Cargando…', 'cmp.error': 'No se pudo consultar el historial de Esri.',
+      'cmp.antes': 'Antes: versión publicada el {fecha}, previa al inicio del proyecto ({inicio}).',
+      'cmp.sinantes': 'Esri no tiene una versión publicada antes del inicio del proyecto ({inicio}).',
+      'cmp.sinfecha': 'El proyecto no trae fecha de inicio.',
+      'cmp.reciente': 'Ahora: versión más reciente, publicada el {fecha}. Término reportado: {termino}.',
+      'cmp.nota': 'Esri fecha cada versión al publicarla; la toma de cada lugar puede ser anterior y repetirse entre versiones. El círculo amarillo es el punto que reportó la dependencia. Las imágenes enseñan el lugar; no prueban la obra.',
       'c.temascaltepec': 'Ir a Temascaltepec',
       'n.entidades': 'Entidades', 'n.municipios': 'Municipios con proyectos', 'n.proyectos': 'Proyectos',
       'n.aprobado': 'Aprobado', 'n.pagado': 'Pagado', 'n.evaluados': 'Proyectos de inversión',
@@ -28,7 +38,7 @@
       'nota.sincab': '{n} municipios no tienen cabecera en ITER y no se dibujan.',
       'ley.cero': '0', 'ley.hasta': 'hasta {b}', 'ley.entre': '{a} a {b}', 'ley.mas': 'más de {a}',
       'ley.tam': 'El tamaño del círculo crece con la población.',
-      'ley.obras': 'Proyectos del Estado de México, 2024',
+      'ley.obras': 'Proyectos de {estado}, 2024',
       'o.titulo': 'De dónde sale esta capa', 'o.texto': '{sql}, en {motor}: {filas} filas, exportadas el {fecha}. SHA-256 {hash}…',
       'o.sql': 'Ver la consulta', 'o.cmd': 'Para ver lo mismo en la base de datos:',
       'o.verif': 'lakehouse/verificacion/verificar_capas.py repite la consulta y compara el resultado con este archivo, byte por byte.',
@@ -51,15 +61,25 @@
       'fu.docs': 'Documentos que reportó la dependencia ({n})', 'fu.mas': 'y {n} más.',
       'fu.docs.nota': 'Enlaces tal como los publicó la dependencia en SHCP; nadie revisó lo que contienen. Se omiten los que llevan la cuenta de correo de quien los subió.',
       'fu.sindocs': 'No hay enlaces publicables de la dependencia para este proyecto.', 'fu.cargando': 'Cargando enlaces…',
-      'sat.boton': 'Ver el lugar en imagen de satélite',
-      'sat.nota': 'Imagen actual de Esri, sin fecha de toma: enseña el lugar, no prueba la obra.',
+      'sat.boton': 'Comparar en imagen de satélite: antes y ahora',
+      'sat.nota': 'Imágenes de Esri Wayback, con la fecha en que Esri publicó cada versión.',
     },
     en: {
       titulo: 'Federally funded public works in Mexico, 2020-2025',
       lema: 'A data lake of official records from SHCP, INEGI and CONEVAL. Every layer is the result of a query to the database, not a separate copy.',
       'c.indicador': 'Indicator by municipality', 'c.ciclo': 'Fiscal year',
-      'c.obras': 'Projects in the State of Mexico, 2024',
-      'c.obras.nota': 'One point per project, where the reporting agency placed it.',
+      'c.obras': 'Projects in 2024', 'c.estado': 'State of the projects',
+      'c.obras.nota': 'One point per project, where the reporting agency placed it. One state is loaded at a time.',
+      'd.verestado': 'See the 2024 projects of {estado}',
+      'b.titulo': 'Search', 'b.placeholder': 'Municipality, project or folio', 'b.nada': 'No results.',
+      'b.nota': 'Searches municipalities across the country and projects of the loaded state, by name, folio or classification.',
+      'fu.imagen': 'Image published by the agency',
+      'cmp.cerrar': 'Close', 'cmp.cargando': 'Loading…', 'cmp.error': "Esri's archive could not be reached.",
+      'cmp.antes': 'Before: release published on {fecha}, prior to the project start ({inicio}).',
+      'cmp.sinantes': 'Esri has no release published before the project start ({inicio}).',
+      'cmp.sinfecha': 'The project has no start date.',
+      'cmp.reciente': 'Now: latest release, published on {fecha}. Reported end: {termino}.',
+      'cmp.nota': 'Esri dates each release when it is published; the capture of a given place may be older and repeat across releases. The yellow circle is the point the agency reported. The images show the place; they do not prove the work.',
       'c.temascaltepec': 'Go to Temascaltepec',
       'n.entidades': 'States', 'n.municipios': 'Municipalities with projects', 'n.proyectos': 'Projects',
       'n.aprobado': 'Approved', 'n.pagado': 'Paid', 'n.evaluados': 'Investment projects',
@@ -71,7 +91,7 @@
       'nota.sincab': '{n} municipalities have no seat in ITER and are not drawn.',
       'ley.cero': '0', 'ley.hasta': 'up to {b}', 'ley.entre': '{a} to {b}', 'ley.mas': 'over {a}',
       'ley.tam': 'Circle size grows with population.',
-      'ley.obras': 'Projects in the State of Mexico, 2024',
+      'ley.obras': 'Projects in {estado}, 2024',
       'o.titulo': 'Where this layer comes from', 'o.texto': '{sql}, on {motor}: {filas} rows, exported on {fecha}. SHA-256 {hash}…',
       'o.sql': 'Show the query', 'o.cmd': 'To see the same result in the database:',
       'o.verif': 'lakehouse/verificacion/verificar_capas.py repeats the query and compares the result with this file, byte by byte.',
@@ -94,8 +114,8 @@
       'fu.docs': 'Documents reported by the agency ({n})', 'fu.mas': 'and {n} more.',
       'fu.docs.nota': "Links as the agency published them with SHCP; nobody has reviewed what they contain. Links that carry the uploader's e-mail account are left out.",
       'fu.sindocs': 'There are no publishable links from the agency for this project.', 'fu.cargando': 'Loading links…',
-      'sat.boton': 'See the place in satellite imagery',
-      'sat.nota': 'Current Esri imagery with no capture date: it shows the place, not the work.',
+      'sat.boton': 'Compare in satellite imagery: before and now',
+      'sat.nota': 'Esri Wayback imagery, dated by when Esri published each release.',
     },
   };
   const t = (k, v) => S.t(TXT, k, v);
@@ -168,9 +188,14 @@
     obras: q.get('obras') === '1',
     estatus: new Set((q.get('estatus') || GRUPOS.join(',')).split(',').filter(g => GRUPOS.includes(g))),
     soloMarcas: q.get('marcas') === '1',
+    entidadObras: Math.min(32, Math.max(1, Number(q.get('estado')) || 15)),
   };
   const datos = {};
   let manifiesto, mapa, capaMunicipios, capaObras, marcadores = [], promesaEnlaces = null;
+  let obraPorFolio = new Map(), indiceObras = [], indiceMunicipios = [], resultados = [], pedidoObras = 0;
+  const dosCifras = n => String(n).padStart(2, '0');
+  const normal = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const IMAGEN = /\.(jpe?g|png|gif|webp)(\?|$)/i;
 
   if (q.get('vista') === 'figura') document.body.classList.add('figura');
 
@@ -179,6 +204,7 @@
     u.searchParams.set('ind', estado.ind.id);
     u.searchParams.set('ciclo', estado.ciclo);
     if (estado.obras) u.searchParams.set('obras', '1'); else u.searchParams.delete('obras');
+    if (estado.obras) u.searchParams.set('estado', estado.entidadObras); else u.searchParams.delete('estado');
     if (estado.obras && estado.estatus.size < GRUPOS.length) u.searchParams.set('estatus', [...estado.estatus].join(','));
     else u.searchParams.delete('estatus');
     if (estado.obras && estado.soloMarcas) u.searchParams.set('marcas', '1'); else u.searchParams.delete('marcas');
@@ -253,7 +279,7 @@
     filas.push(`<div class="ley"><i class="hueco"></i>${S.esc(t('sindato'))}</div>`);
     filas.push(`<p class="nota">${S.esc(t('ley.tam'))}</p>`);
     if (estado.obras) {
-      filas.push(`<p class="nota"><b>${S.esc(t('ley.obras'))}</b></p>`);
+      filas.push(`<p class="nota"><b>${S.esc(t('ley.obras', { estado: datos.estados.get(estado.entidadObras) }))}</b></p>`);
       Object.entries(ESTATUS).forEach(([k, c]) => item(c, t('e.' + k)));
       item(OTRO, t('e.otro'));
     }
@@ -279,7 +305,7 @@
     if (!c) return '';
     const cmd = c.motor === 'pg'
       ? `docker exec -i obras-publicas-db-1 psql -U obras -d obras_publicas < lakehouse/capas/${c.consulta}`
-      : `lakehouse/.venv/Scripts/python lakehouse/consultas/lago.py lakehouse/capas/${c.consulta}`;
+      : `lakehouse/.venv/Scripts/python lakehouse/consultas/lago.py lakehouse/capas/${c.consulta}${c.entidad != null ? ` --entidad ${c.entidad}` : ''}`;
     return `<p>${S.esc(t('o.texto', { sql: c.consulta, motor: t('motor.' + c.motor), filas: S.numero(c.filas),
       fecha: manifiesto.generado_en, hash: c.sha256_datos.slice(0, 16) }))}</p>
       <details><summary>${S.esc(t('o.sql'))}</summary><pre>${S.esc(c.sql)}</pre></details>
@@ -288,7 +314,7 @@
 
   function origen() {
     const capas = [estado.ind.capa, '02_municipios'].filter((x, i, a) => a.indexOf(x) === i);
-    if (estado.obras) capas.push('05_obras_edomex_2024', '06_enlaces_edomex_2024');
+    if (estado.obras) capas.push(`05_obras_2024_${dosCifras(estado.entidadObras)}`, `06_enlaces_2024_${dosCifras(estado.entidadObras)}`);
     document.getElementById('origen').innerHTML = `<h2>${S.esc(t('o.titulo'))}</h2>`
       + capas.map(bloqueOrigen).join('') + `<p class="nota">${S.esc(t('o.verif'))}</p>`;
   }
@@ -323,7 +349,7 @@
       b: S.numero(x.contratos_shcp) })]);
     let html = `<b>${S.esc(m.municipio)}</b> <span class="nota">${S.esc(cvemun)}</span>` + tabla(filas);
     html += `<p><b>${S.esc(t('d.ciclo', { c: estado.ciclo }))}</b></p>`;
-    if (!r) return html + `<p>${S.esc(t('d.sinciclo'))}</p>` + fuentesMunicipio(cvemun);
+    if (!r) return html + `<p>${S.esc(t('d.sinciclo'))}</p>` + botonEstado(cvemun) + fuentesMunicipio(cvemun);
     const de = (a, b) => `${S.numero(a)} / ${S.numero(b)}`;
     return html + tabla([
       [t('d.proyectos'), S.numero(r.proyectos)], [t('d.aprobado'), S.pesos(r.aprobado)],
@@ -331,13 +357,19 @@
       [t('d.fais'), de(r.fais, r.proyectos)], [t('d.evaluados'), S.numero(r.evaluados)],
       [t('d.c1'), de(r.c1, r.evaluados)], [t('d.c2'), de(r.c2, r.evaluados)],
       [t('d.c3'), de(r.c3, r.evaluados)], [t('d.c4'), de(r.c4, r.evaluados)],
-    ]) + fuentesMunicipio(cvemun);
+    ]) + botonEstado(cvemun) + fuentesMunicipio(cvemun);
   }
 
   /* Enlace a un archivo oficial del manifiesto de fuentes, que el sitio publica copiado. */
   function archivoOficial(id) {
     const f = datos.fuentes.get(id);
     return f ? `<a href="${S.esc(f.url)}" target="_blank" rel="noopener noreferrer">${S.esc(f.url.split('/').pop())}</a>` : '';
+  }
+
+  function botonEstado(cvemun) {
+    const id = Number(cvemun.slice(0, 2));
+    return `<button type="button" class="boton-estado" data-entidad="${id}">`
+      + `${S.esc(t('d.verestado', { estado: datos.estados.get(id) }))}</button>`;
   }
 
   function fuentesMunicipio(cvemun) {
@@ -372,14 +404,124 @@
       if (!docs.length) {
         html += `<p class="nota">${S.esc(t('fu.sindocs'))}</p>`;
       } else {
-        html += `<p><b>${S.esc(t('fu.docs', { n: S.numero(docs.length) }))}</b></p><ul class="docs">`
+        /* Las pocas fotos que la dependencia enlazó directamente se enseñan en miniatura. */
+        const fotos = docs.filter(u => IMAGEN.test(u)).slice(0, 3);
+        html += `<p><b>${S.esc(t('fu.docs', { n: S.numero(docs.length) }))}</b></p>`
+          + (fotos.length ? '<div class="miniaturas">' + fotos.map(u => `<a href="${S.esc(u)}" target="_blank" rel="noopener noreferrer nofollow">`
+            + `<img src="${S.esc(u)}" alt="${S.esc(t('fu.imagen'))}" loading="lazy" referrerpolicy="no-referrer"></a>`).join('') + '</div>' : '')
+          + '<ul class="docs">'
           + docs.slice(0, 6).map(u => `<li><a href="${S.esc(u)}" target="_blank" rel="noopener noreferrer nofollow">${S.esc(etiquetaEnlace(u))}</a></li>`).join('')
           + '</ul>' + (docs.length > 6 ? `<p class="nota">${S.esc(t('fu.mas', { n: S.numero(docs.length - 6) }))}</p>` : '')
           + `<p class="nota">${S.esc(t('fu.docs.nota'))}</p>`;
       }
     }
-    return html + `<button type="button" class="boton-sat" data-lat="${o.lat}" data-lon="${o.lon}">${S.esc(t('sat.boton'))}</button>`
+    return html + `<button type="button" class="boton-sat" data-folio="${S.esc(o.folio)}">${S.esc(t('sat.boton'))}</button>`
       + `<p class="nota">${S.esc(t('sat.nota'))}</p></div>`;
+  }
+
+  /* Antes y ahora en el archivo histórico de imágenes de Esri (World Imagery Wayback), público
+     y sin clave. "Antes" es la última versión publicada antes de la fecha de inicio del proyecto:
+     su toma es, a lo sumo, de ese día, así que es anterior a la obra. */
+  const WAYBACK = 'https://s3-us-west-2.amazonaws.com/config.maptiles.arcgis.com/waybackconfig.json';
+  let versionesWayback = null, comparacion = null;
+
+  function wayback() {
+    if (!versionesWayback) {
+      versionesWayback = fetch(WAYBACK).then(r => r.json()).then(d => Object.entries(d).map(([num, v]) => ({
+        num, fecha: ((v.itemTitle || '').match(/\d{4}-\d{2}-\d{2}/) || [])[0],
+        url: (v.itemURL || '').replace('{level}', '{z}').replace('{row}', '{y}').replace('{col}', '{x}'),
+      })).filter(v => v.fecha && v.url.startsWith('https://')).sort((a, b) => a.fecha.localeCompare(b.fecha)));
+      versionesWayback.catch(() => { versionesWayback = null; });
+    }
+    return versionesWayback;
+  }
+
+  function cerrarComparar() {
+    const caja = document.getElementById('comparar');
+    if (caja.hidden) return;
+    caja.hidden = true;
+    if (comparacion) comparacion.forEach(m => m.remove());
+    comparacion = null;
+  }
+
+  async function comparar(o) {
+    const caja = document.getElementById('comparar');
+    const [pieAntes, pieAhora] = caja.querySelectorAll('figcaption');
+    caja.querySelector('h2').textContent = o.nombre;
+    pieAntes.textContent = pieAhora.textContent = t('cmp.cargando');
+    caja.hidden = false;
+    let vs;
+    try {
+      vs = await wayback();
+    } catch (e) {
+      pieAntes.textContent = t('cmp.error');
+      pieAhora.textContent = '';
+      return;
+    }
+    const ahora = vs[vs.length - 1];
+    const antes = o.fecha_inicio ? [...vs].reverse().find(v => v.fecha < o.fecha_inicio) : null;
+    if (comparacion) comparacion.forEach(m => m.remove());
+    const crear = (id, v) => {
+      const m = L.map(id, { zoomControl: false }).setView([o.lat, o.lon], 17);
+      if (v) L.tileLayer(v.url, { maxZoom: 19, attribution: 'Esri World Imagery Wayback' }).addTo(m);
+      L.circleMarker([o.lat, o.lon], { radius: 9, color: '#ffeb3b', weight: 3, fill: false }).addTo(m);
+      return m;
+    };
+    comparacion = [crear('mapaAntes', antes), crear('mapaAhora', ahora)];
+    let moviendo = false;
+    comparacion.forEach((m, i) => m.on('move', () => {
+      if (moviendo) return;
+      moviendo = true;
+      comparacion[1 - i].setView(m.getCenter(), m.getZoom(), { animate: false });
+      moviendo = false;
+    }));
+    pieAntes.textContent = antes ? t('cmp.antes', { fecha: antes.fecha, inicio: o.fecha_inicio })
+      : (o.fecha_inicio ? t('cmp.sinantes', { inicio: o.fecha_inicio }) : t('cmp.sinfecha'));
+    pieAhora.textContent = t('cmp.reciente', { fecha: ahora.fecha, termino: o.fecha_termino || t('sindato') });
+  }
+
+  /* Búsqueda por palabras: todas deben aparecer, sin importar acentos ni mayúsculas. */
+  function buscar(texto) {
+    const lista = document.getElementById('resultados');
+    const palabras = normal(texto).split(/\s+/).filter(Boolean);
+    if (texto.trim().length < 2 || !palabras.length) {
+      lista.hidden = true;
+      lista.innerHTML = '';
+      return;
+    }
+    const coincide = s => palabras.every(p => s.includes(p));
+    resultados = [
+      ...indiceMunicipios.filter(([s]) => coincide(s)).slice(0, 6).map(([, m]) => ({ m })),
+      ...indiceObras.filter(([s]) => coincide(s)).slice(0, 10).map(([, x]) => ({ x })),
+    ];
+    lista.innerHTML = resultados.length ? resultados.map((r, i) => `<li><button type="button" data-i="${i}">`
+      + (r.m ? `<b>${S.esc(r.m.municipio)}</b> <span class="nota">${S.esc(r.m.entidad)}</span>`
+        : `${S.esc(r.x.o.nombre.length > 70 ? r.x.o.nombre.slice(0, 70) + '…' : r.x.o.nombre)} <span class="nota">${S.esc(r.x.o.folio)}</span>`)
+      + '</button></li>').join('') : `<li class="nota">${S.esc(t('b.nada'))}</li>`;
+    lista.hidden = false;
+  }
+
+  function mostrarObra(x) {
+    if (!estado.estatus.has(grupo(x.o))) {
+      estado.estatus.add(grupo(x.o));
+      pintarFiltros();
+    }
+    if (estado.soloMarcas && !conMarca(x.o)) {
+      estado.soloMarcas = false;
+      document.getElementById('soloMarcas').checked = false;
+    }
+    filtrarObras();
+    mapa.setView([x.o.lat, x.o.lon], 16);
+    x.m.openPopup();
+  }
+
+  function verEstado(id) {
+    estado.entidadObras = id;
+    estado.obras = true;
+    document.getElementById('obras').checked = true;
+    document.getElementById('estadoObras').value = id;
+    mapa.closePopup();
+    ponerObras();
   }
 
   function popupObra(o) {
@@ -397,15 +539,17 @@
 
   /* Los enlaces de los contratos se bajan al abrir la primera ficha, no antes. */
   function cargarEnlaces() {
-    if (!promesaEnlaces) {
-      promesaEnlaces = S.json('datos/06_enlaces_edomex_2024.json').then(capa => {
+    const id = estado.entidadObras;
+    if (!promesaEnlaces || promesaEnlaces.id !== id) {
+      promesaEnlaces = S.json(`datos/06_enlaces_2024_${dosCifras(id)}.json`).then(capa => {
         const porFolio = new Map();
         capa.filas.forEach(([folio, enlace]) => {
           if (!porFolio.has(folio)) porFolio.set(folio, []);
           porFolio.get(folio).push(enlace);
         });
-        datos.enlaces = porFolio;
-      }, () => { datos.enlaces = new Map(); });
+        if (estado.entidadObras === id) datos.enlaces = porFolio;
+      }, () => { if (estado.entidadObras === id) datos.enlaces = new Map(); });
+      promesaEnlaces.id = id;
     }
     return promesaEnlaces;
   }
@@ -437,14 +581,20 @@
     }));
   }
 
+  /* Los proyectos se cargan por estado: un archivo por estado, del tamaño que el navegador aguanta. */
   async function ponerObras() {
     document.getElementById('filtros').hidden = !estado.obras;
-    if (!estado.obras) {
-      if (capaObras) mapa.removeLayer(capaObras);
-    } else {
-      if (!capaObras) {
-        const capa = await S.json('datos/05_obras_edomex_2024.json');
+    if (capaObras) mapa.removeLayer(capaObras);
+    if (estado.obras) {
+      if (!capaObras || capaObras.entidad !== estado.entidadObras) {
+        const pedido = ++pedidoObras;
+        const id = estado.entidadObras;
+        const capa = await S.json(`datos/05_obras_2024_${dosCifras(id)}.json`);
+        if (pedido !== pedidoObras) return;
         capaObras = L.layerGroup();
+        capaObras.entidad = id;
+        datos.enlaces = null;
+        obraPorFolio = new Map();
         marcadores = S.objetos(capa).filter(o => o.lat != null).map(o => {
           const m = L.circleMarker([o.lat, o.lon], { pane: 'obras', radius: 3.5, weight: 0.5, color: '#fff',
             fillColor: ESTATUS[o.estatus] || OTRO, fillOpacity: 0.9 });
@@ -452,8 +602,12 @@
           m.on('popupopen', () => {
             if (!datos.enlaces) cargarEnlaces().then(() => m.setPopupContent(popupObra(o)));
           });
-          return { o, m };
+          const x = { o, m };
+          obraPorFolio.set(o.folio, x);
+          return x;
         });
+        indiceObras = marcadores.map(x => [normal([x.o.nombre, x.o.folio, x.o.clasificacion,
+          (datos.municipios.get(x.o.cvemun) || {}).municipio].join(' ')), x]);
         pintarFiltros();
       }
       filtrarObras();
@@ -483,6 +637,39 @@
     marcas.checked = estado.soloMarcas;
     marcas.addEventListener('change', () => { estado.soloMarcas = marcas.checked; if (capaObras) filtrarObras(); });
 
+    const selEstado = document.getElementById('estadoObras');
+    selEstado.setAttribute('aria-label', t('c.estado'));
+    selEstado.innerHTML = [...datos.estados.entries()].sort((a, b) => a[0] - b[0])
+      .map(([id, n]) => `<option value="${id}">${S.esc(n)}</option>`).join('');
+    selEstado.value = estado.entidadObras;
+    selEstado.addEventListener('change', () => {
+      estado.entidadObras = Number(selEstado.value);
+      if (estado.obras) ponerObras(); else setUrl();
+    });
+
+    const caja = document.getElementById('buscar');
+    caja.placeholder = t('b.placeholder');
+    let reloj = null;
+    caja.addEventListener('input', () => {
+      clearTimeout(reloj);
+      reloj = setTimeout(() => buscar(caja.value), 200);
+    });
+    document.getElementById('resultados').addEventListener('click', ev => {
+      const b = ev.target.closest('button[data-i]');
+      if (!b) return;
+      const r = resultados[Number(b.dataset.i)];
+      if (r.m) {
+        const c = capaMunicipios.getLayers().find(x => x.cvemun === r.m.cvemun);
+        if (c) {
+          mapa.setView(c.getLatLng(), 11);
+          c.openPopup();
+        }
+      } else {
+        mostrarObra(r.x);
+      }
+      document.getElementById('resultados').hidden = true;
+    });
+
     document.getElementById('temascaltepec').addEventListener('click', () => {
       const m = capaMunicipios.getLayers().find(x => x.cvemun === '15086');
       mapa.setView(m.getLatLng(), 11);
@@ -510,6 +697,9 @@
       const fuentes = await S.json('datos/fuentes.json');
       datos.fuentes = new Map(fuentes.fuentes.map(f => [f.id, f]));
       datos.consultado = fuentes.consultado;
+      datos.estados = new Map([...datos.municipios.values()].map(m => [Number(m.cvemun.slice(0, 2)), m.entidad]));
+      indiceMunicipios = [...datos.municipios.values()].filter(m => m.lat != null)
+        .map(m => [normal(`${m.municipio} ${m.entidad} ${m.cvemun}`), m]);
     } catch (e) {
       status.textContent = t('error', { msg: e.message });
       return;
@@ -520,13 +710,19 @@
     mapa = L.map('mapa', { preferCanvas: true, minZoom: 4 }).setView(centro, zoom);
     mapa.createPane('obras').style.zIndex = 450;
     mapa.on('moveend', setUrl);
-    /* «Ver el lugar en imagen de satélite», en la ficha de cada proyecto. */
+    /* Botones dentro de las fichas: comparar en satélite y ver los proyectos de un estado. */
     mapa.getContainer().addEventListener('click', ev => {
       const b = ev.target.closest('.boton-sat');
-      if (!b) return;
-      mapa.setView([Number(b.dataset.lat), Number(b.dataset.lon)], 17);
-      if (window.MapaTeselas) MapaTeselas.usar('esri-satelite');
+      if (b) {
+        const x = obraPorFolio.get(b.dataset.folio);
+        if (x) comparar(x.o);
+        return;
+      }
+      const e = ev.target.closest('.boton-estado');
+      if (e) verEstado(Number(e.dataset.entidad));
     });
+    document.getElementById('cerrarComparar').addEventListener('click', cerrarComparar);
+    document.addEventListener('keydown', ev => { if (ev.key === 'Escape') cerrarComparar(); });
 
     const pobMax = Math.max(...[...datos.municipios.values()].map(m => m.pobtot || 0));
     capaMunicipios = L.featureGroup();
