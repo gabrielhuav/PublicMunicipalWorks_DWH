@@ -1,0 +1,97 @@
+{
+  "descripcion": "Fuentes oficiales del lago. Cada archivo se fija por bytes y SHA-256; etl/descargar.py falla si cambian.",
+  "consultado": "2026-11-02",
+  "fuentes": [
+    {
+      "id": "shcp_ef2020",
+      "titulo": "Gasto federalizado: destino del gasto, 2020",
+      "editor": "Secretaría de Hacienda y Crédito Público",
+      "url": "https://www.transparenciapresupuestaria.gob.mx/work/models/PTP/DatosAbiertos/Entidades_Federativas/2020/ef2020.zip",
+      "ruta_bronce": "shcp/gasto_federalizado/ciclo=2020/ef2020.zip",
+      "formato": "ZIP de CSV",
+      "bytes": 213950594,
+      "sha256": "bbbe4792bacad3d34067bfd9396d345fa9b1a7be1011d280d72dfcbc0e3e9bbc"
+    },
+    {
+      "id": "shcp_ef2021",
+      "titulo": "Gasto federalizado: destino del gasto, 2021",
+      "editor": "Secretaría de Hacienda y Crédito Público",
+      "url": "https://www.transparenciapresupuestaria.gob.mx/work/models/PTP/DatosAbiertos/Entidades_Federativas/2021/ef2021.zip",
+      "ruta_bronce": "shcp/gasto_federalizado/ciclo=2021/ef2021.zip",
+      "formato": "ZIP de CSV",
+      "bytes": 1556454258,
+      "sha256": "6170b51d3df49f60e2b1a3ce28b2decd10370c028f267080343df6ceb0afd9c4"
+    },
+    {
+      "id": "shcp_ef2022",
+      "titulo": "Gasto federalizado: destino del gasto, 2022",
+      "editor": "Secretaría de Hacienda y Crédito Público",
+      "url": "https://www.transparenciapresupuestaria.gob.mx/work/models/PTP/DatosAbiertos/Entidades_Federativas/2022/ef2022.zip",
+      "ruta_bronce": "shcp/gasto_federalizado/ciclo=2022/ef2022.zip",
+      "formato": "ZIP de CSV",
+      "bytes": 103837470,
+      "sha256": "812ce8960096c8c80e4a8b496e0bfd84779f28bb6dddda909318c195f7b54b56"
+    },
+    {
+      "id": "shcp_ef2023",
+      "titulo": "Gasto federalizado: destino del gasto, 2023",
+      "editor": "Secretaría de Hacienda y Crédito Público",
+      "url": "https://www.transparenciapresupuestaria.gob.mx/work/models/PTP/DatosAbiertos/Entidades_Federativas/2023/ef2023.zip",
+      "ruta_bronce": "shcp/gasto_federalizado/ciclo=2023/ef2023.zip",
+      "formato": "ZIP de CSV",
+      "bytes": 139189201,
+      "sha256": "354f2a4a8560b0bef3b3718be7bc0d8a2efbd46c1111f94d0b50e25055de1df9"
+    },
+    {
+      "id": "shcp_ef2024",
+      "titulo": "Gasto federalizado: destino del gasto, 2024",
+      "editor": "Secretaría de Hacienda y Crédito Público",
+      "url": "https://www.transparenciapresupuestaria.gob.mx/work/models/PTP/DatosAbiertos/Entidades_Federativas/2024/ef2024.zip",
+      "ruta_bronce": "shcp/gasto_federalizado/ciclo=2024/ef2024.zip",
+      "formato": "ZIP de CSV",
+      "bytes": 58391226,
+      "sha256": "63656106a607d59fcf74e92574a95ac46c44b2beef7d328acf4959e416f39c34"
+    },
+    {
+      "id": "shcp_ef2025",
+      "titulo": "Gasto federalizado: destino del gasto, informe definitivo 2025",
+      "editor": "Secretaría de Hacienda y Crédito Público",
+      "url": "https://www.transparenciapresupuestaria.gob.mx/work/models/PTP/DatosAbiertos/Entidades_Federativas/2025/ef2025.zip",
+      "ruta_bronce": "shcp/gasto_federalizado/ciclo=2025/ef2025.zip",
+      "formato": "ZIP de CSV",
+      "bytes": 23653848,
+      "sha256": "8ea8f91a96760332697a4ef4d1d7c0bd74a919c20fe1a9a58c9eb5bb9b765c2e"
+    },
+    {
+      "id": "inegi_iter2020",
+      "titulo": "Censo de Población y Vivienda 2020: principales resultados por localidad (ITER)",
+      "editor": "INEGI",
+      "url": "https://www.inegi.org.mx/contenidos/programas/ccpv/2020/datosabiertos/iter/iter_00_cpv2020_csv.zip",
+      "ruta_bronce": "inegi/censo2020/iter_00_cpv2020_csv.zip",
+      "formato": "ZIP de CSV",
+      "bytes": 36615814,
+      "sha256": "9342fdbd45bda5897f2b827a12904843b6f8fb85d4e72da299e09e4d2422ab60"
+    },
+    {
+      "id": "inegi_cngmd2023",
+      "titulo": "Censo Nacional de Gobiernos Municipales y Demarcaciones Territoriales 2023: contrataciones públicas",
+      "editor": "INEGI",
+      "url": "https://www.inegi.org.mx/contenidos/programas/cngmd/2023/datosabiertos/m2/contrata_publica_cngmd2023_csv.zip",
+      "ruta_bronce": "inegi/cngmd2023/contrata_publica_cngmd2023_csv.zip",
+      "formato": "ZIP de CSV",
+      "bytes": 3746888,
+      "sha256": "75ebca7c91196ef440749e072dd7a4a6b4b00cbbc1265d3d268870c845d333e7"
+    },
+    {
+      "id": "coneval_irs2020",
+      "titulo": "Índice de rezago social por municipio, 2020",
+      "editor": "CONEVAL",
+      "url": "https://www.datos.gob.mx/dataset/ef697817-92a9-4937-8323-c08dda8bd00f/resource/862d0ad7-3c26-46dd-8e0d-7f2c49c88d1c/download/irs_municipal_2020.csv",
+      "ruta_bronce": "coneval/rezago_social/irs_municipal_2020.csv",
+      "formato": "CSV",
+      "licencia": "CC BY 4.0",
+      "bytes": 428572,
+      "sha256": "0103c1856ec61d9148e1f995b9f4cfebf27c7963749999a9a437e4b4d80491b1"
+    }
+  ]
+}

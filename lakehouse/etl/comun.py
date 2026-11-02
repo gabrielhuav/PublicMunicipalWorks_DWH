@@ -88,4 +88,8 @@ def duck(hilos=None):
             meta = cat.load_table(f"plata.{nombre}").metadata_location
             con.execute(f"CREATE VIEW plata_{nombre} AS "
                         f"SELECT * FROM iceberg_scan('{meta}')")
+    # La tabla anexa de enlaces (etl/enlaces.py) no es parte de plata ni de sus mediciones.
+    if cat.table_exists("anexo.enlaces_contratos"):
+        meta = cat.load_table("anexo.enlaces_contratos").metadata_location
+        con.execute(f"CREATE VIEW anexo_enlaces_contratos AS SELECT * FROM iceberg_scan('{meta}')")
     return con

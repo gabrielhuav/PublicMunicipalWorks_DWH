@@ -37,7 +37,8 @@
     '02_municipios.duck.sql': 'The municipalities of the 2020 Census at the point of their seat (ITER locality 0001), with their population and CONEVAL\'s 2020 social deprivation level. The lake has no municipal polygons, so the map draws one point per municipality.',
     '03_municipio_ciclo.pg.sql': 'By municipality and fiscal year: projects, amounts and how many each criterion flags. Paid per inhabitant divides by the 2020 population. `evaluados` counts investment projects, the only ones the criteria apply to.',
     '04_cruce_cngmd_2022.duck.sql': 'Works contracts in 2022 according to two official sources: what each municipality declared to INEGI in the 2023 CNGMD, and the works contracts SHCP records with a municipality as the contracting party. A difference does not prove an irregularity: the CNGMD covers all municipal resources and SHCP only federally funded spending.',
-    '05_obras_edomex_2024.pg.sql': 'Projects in the State of Mexico in fiscal year 2024, at the point the reporting agency gave (the mean of its coordinates inside the country). Flags C1 to C4 ask for a review; they do not prove an irregularity. Contractor names are not included.',
+    '06_enlaces_edomex_2024.duck.sql': 'Links that the agency published with SHCP for the contracts of each project in the State of Mexico in 2024: case files, documents or photographs. They are shown as reported; nobody has reviewed what they contain.',
+    '05_obras_edomex_2024.pg.sql':'Projects in the State of Mexico in fiscal year 2024, at the point the reporting agency gave (the mean of its coordinates inside the country). Flags C1 to C4 ask for a review; they do not prove an irregularity. Contractor names are not included.',
   };
   const PASOS = [
     'docker compose -f docker/compose.yml up -d db',

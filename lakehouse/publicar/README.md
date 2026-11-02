@@ -40,6 +40,11 @@ and compares the result byte by byte with the published file
 ([evidence](lakehouse/verificacion/evidencia_capas.txt)). The Pages workflow publishes
 `lakehouse/sitio/` exactly as the repository holds it.
 
+Each municipality and project on the map names the official file it comes from, with its SHA-256,
+so a reader can find the record in the source. Projects also list the links that the reporting
+agency published with their contracts, shown as reported and kept apart from the measured silver
+layer, in `anexo.enlaces_contratos`.
+
 ## Rebuilding it
 
 You need Docker, Python 3.10 and at least 6 GB of disk. On Windows, clone into a short path. From the
@@ -109,5 +114,5 @@ Marco Tulio Maldonado Mejía. The extension is `lakehouse/` and two scripts:
 Data keep the terms of their publishers, listed file by file in `lakehouse/fuentes.json`: SHCP under
 its [terms of use](https://www.transparenciapresupuestaria.gob.mx/es/PTP/Terminos_y_Condiciones),
 INEGI as open data and CONEVAL under CC BY 4.0. Leaflet 1.9.4 is included in `lakehouse/sitio/vendor/`
-under its BSD-2-Clause licence. Base maps are © OpenStreetMap contributors (ODbL), with tiles from
-CARTO or Esri as credited on the map.
+under its BSD-2-Clause licence. Base map tiles come from the providers credited on the map; the offline
+copy the map falls back to is made with Natural Earth (public domain) by `lakehouse/etl/mapa_base.py`.

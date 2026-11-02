@@ -1,5 +1,5 @@
 {
- "generado_en": "2026-11-02 09:42 UTC",
+ "generado_en": "2026-11-02 11:52 UTC",
  "consultas": [
   {
    "consulta": "01_resumen.pg.sql",
@@ -109,11 +109,36 @@
    "sha256_consulta": "4c23e4ccac035170335f1aaeaad32488b47d7e467b66780d0de00b704a607e56",
    "sha256_datos": "107f3ef2c9d7352144bcd702597246dd73b60c5e91ef95720c305873c66250c2",
    "sql": "-- Proyectos del Estado de México en el ciclo 2024, en el punto que reportó la dependencia\n-- (el promedio de sus coordenadas dentro del país). Las marcas C1 a C4 piden revisar un\n-- proyecto; no prueban una irregularidad. No incluye nombres de contratistas.\nSELECT p.folio, p.nombre, p.clasificacion, p.estatus, m.cvemun,\n       f.aprobado, f.pagado, f.pct_fisico, f.pct_financiero, f.n_contratos,\n       f.c1_tipo AS c1, f.c2, f.c3, f.c4,\n       round(f.lat::numeric, 5) AS lat, round(f.lon::numeric, 5) AS lon\nFROM warehouse.fact_proyecto_ciclo f\nJOIN warehouse.dim_proyecto_federal p USING (proyecto_key)\nLEFT JOIN warehouse.dim_municipio m USING (municipio_key)\nWHERE f.ciclo = 2024 AND f.id_entidad = 15\nORDER BY p.folio;\n"
+  },
+  {
+   "consulta": "06_enlaces_edomex_2024.duck.sql",
+   "motor": "duck",
+   "datos": "06_enlaces_edomex_2024.json",
+   "filas": 11348,
+   "columnas": [
+    "folio",
+    "enlace"
+   ],
+   "sha256_consulta": "63e4d11ede17d5f838f5737abefc75bf62fd315b8e3f7285f5bd95822b905554",
+   "sha256_datos": "ad70551a004d33f26f33376dca99234343145520297b966b73c40bb57cf5b54b",
+   "sql": "-- Enlaces que la dependencia publicó en SHCP con los contratos de cada proyecto del Estado de\n-- México en 2024: expedientes, documentos o fotografías. Se enseñan tal como los reportó;\n-- nadie revisó lo que contienen. Se omiten los de sitios personales de OneDrive (/personal/),\n-- porque su ruta lleva la cuenta de correo de quien los subió.\nSELECT DISTINCT folio, enlace\nFROM (\n    SELECT folio, trim(url) AS enlace FROM anexo_enlaces_contratos\n    WHERE ciclo = 2024 AND id_entidad = 15\n    UNION ALL\n    SELECT folio, trim(url_documento) FROM anexo_enlaces_contratos\n    WHERE ciclo = 2024 AND id_entidad = 15\n)\nWHERE regexp_matches(enlace, '^https?://[^ ]+$') AND NOT contains(lower(enlace), '/personal/')\nORDER BY folio, enlace;\n"
   }
  ],
  "evidencia": {
   "datos": "evidencia_lago.json",
   "origen": "verificacion/evidencia_lago.json",
   "sha256": "4c29de98eb38480a7fb4891f2b132de88240b7c3cf33a141038513c21e6ce612"
- }
+ },
+ "copias": [
+  {
+   "datos": "evidencia_lago.json",
+   "origen": "verificacion/evidencia_lago.json",
+   "sha256": "4c29de98eb38480a7fb4891f2b132de88240b7c3cf33a141038513c21e6ce612"
+  },
+  {
+   "datos": "fuentes.json",
+   "origen": "fuentes.json",
+   "sha256": "5c228cfbf8856e2f093153534fefb15623c6a987633863ec5b568a3f360d2dfb"
+  }
+ ]
 }

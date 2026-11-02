@@ -482,8 +482,13 @@ SITIO = (
     "{capas_palabra} layers is the stored result of one SQL file run on the warehouse or on the "
     "lake, and a verification script repeats every query and compares the result byte by byte with "
     "the published file, failing if a file is edited by hand or if the databases stop returning the "
-    "same bytes. The base map tries a chain of key-free tile providers and, when none answers, draws "
-    "the data on a blank background.")
+    "same bytes. The details of every municipality and project name the official file they come "
+    "from, with its SHA-256, so that a reader can find the record in the source; {docs_proy} of the "
+    "{obras_2024} projects of 2024 in the State of Mexico also list the links that the reporting agency "
+    "published with their contracts, kept in an annex table of the lake and shown as reported. The "
+    "base map tries a chain of key-free tile providers, each checked before use, lets the reader "
+    "switch provider by hand and, when none answers, falls back to a national outline with state "
+    "limits served by the site itself.")
 
 LEYENDA_F4 = (
     "Fig. 4. The public map of the lakehouse layer: amount paid per inhabitant in 2024 by "

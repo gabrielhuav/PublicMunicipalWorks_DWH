@@ -1,0 +1,29 @@
+{
+ "2023": {
+  "sha256_csv": "a986c364dd293b3af540a8d76e6bf2a0c26f9b2b659a9f4893ad44b8ba76d1f2",
+  "bytes": 127033801,
+  "filas": 185535,
+  "lineas_descartadas": 0,
+  "bytes_sin_definir": 89,
+  "no_convertidos": {},
+  "con_enlace_http": 185535
+ },
+ "2024": {
+  "sha256_csv": "33afb427be3e84daae6f25824d7fed63ca33f60f66e23461825634cd07a583e1",
+  "bytes": 119691320,
+  "filas": 165373,
+  "lineas_descartadas": 0,
+  "bytes_sin_definir": 73,
+  "no_convertidos": {},
+  "con_enlace_http": 165373
+ },
+ "2025": {
+  "sha256_csv": "c38f4d8fdeafb3f27b5bedd87b007e435d89a691b8243fd3be0adfcf28b60cbc",
+  "bytes": 45191264,
+  "filas": 62363,
+  "lineas_descartadas": 0,
+  "bytes_sin_definir": 0,
+  "no_convertidos": {},
+  "con_enlace_http": 62363
+ }
+}

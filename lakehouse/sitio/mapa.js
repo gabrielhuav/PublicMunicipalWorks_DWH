@@ -42,6 +42,17 @@
       'd.fisico': 'Avance físico', 'd.financiero': 'Avance financiero', 'd.contratos': 'Contratos', 'd.marcas': 'Marcas',
       'd.ninguna': 'ninguna', 'd.noaplica': 'no aplica',
       'e.Terminado': 'Terminado', 'e.En Ejecución': 'En ejecución', 'e.Cancelado': 'Cancelado', 'e.otro': 'Otro estatus',
+      'f.titulo': 'Mostrar proyectos', 'f.marcas': 'Solo con alguna marca C1 a C4',
+      'f.conteo': 'Se ven {n} de {total} proyectos.',
+      'fu.titulo': 'Fuente oficial', 'fu.folio': 'Busca el folio {folio} en el archivo {archivo} de SHCP (SHA-256 {sha}…), tal como se descargó el {fecha}.',
+      'fu.mun': 'Busca la clave {cvemun} en estos archivos oficiales:',
+      'fu.pob': 'Población: INEGI, Censo 2020', 'fu.rezago': 'Rezago social: CONEVAL 2020',
+      'fu.shcp': 'Proyectos y montos: SHCP', 'fu.cngmd': 'Contratos 2022: INEGI, CNGMD 2023',
+      'fu.docs': 'Documentos que reportó la dependencia ({n})', 'fu.mas': 'y {n} más.',
+      'fu.docs.nota': 'Enlaces tal como los publicó la dependencia en SHCP; nadie revisó lo que contienen. Se omiten los que llevan la cuenta de correo de quien los subió.',
+      'fu.sindocs': 'No hay enlaces publicables de la dependencia para este proyecto.', 'fu.cargando': 'Cargando enlaces…',
+      'sat.boton': 'Ver el lugar en imagen de satélite',
+      'sat.nota': 'Imagen actual de Esri, sin fecha de toma: enseña el lugar, no prueba la obra.',
     },
     en: {
       titulo: 'Federally funded public works in Mexico, 2020-2025',
@@ -74,6 +85,17 @@
       'd.fisico': 'Physical progress', 'd.financiero': 'Financial progress', 'd.contratos': 'Contracts', 'd.marcas': 'Flags',
       'd.ninguna': 'none', 'd.noaplica': 'not applicable',
       'e.Terminado': 'Completed', 'e.En Ejecución': 'In progress', 'e.Cancelado': 'Cancelled', 'e.otro': 'Other status',
+      'f.titulo': 'Show projects', 'f.marcas': 'Only those with a C1 to C4 flag',
+      'f.conteo': 'Showing {n} of {total} projects.',
+      'fu.titulo': 'Official source', 'fu.folio': "Look up folio {folio} in SHCP's file {archivo} (SHA-256 {sha}…), as downloaded on {fecha}.",
+      'fu.mun': 'Look up code {cvemun} in these official files:',
+      'fu.pob': 'Population: INEGI, 2020 Census', 'fu.rezago': 'Social deprivation: CONEVAL 2020',
+      'fu.shcp': 'Projects and amounts: SHCP', 'fu.cngmd': 'Contracts 2022: INEGI, CNGMD 2023',
+      'fu.docs': 'Documents reported by the agency ({n})', 'fu.mas': 'and {n} more.',
+      'fu.docs.nota': "Links as the agency published them with SHCP; nobody has reviewed what they contain. Links that carry the uploader's e-mail account are left out.",
+      'fu.sindocs': 'There are no publishable links from the agency for this project.', 'fu.cargando': 'Loading links…',
+      'sat.boton': 'See the place in satellite imagery',
+      'sat.nota': 'Current Esri imagery with no capture date: it shows the place, not the work.',
     },
   };
   const t = (k, v) => S.t(TXT, k, v);
@@ -135,13 +157,20 @@
       nen: 'What the municipality declared in the 2023 CNGMD against the works contracts SHCP records with the municipality as the contracting party. A difference does not prove an irregularity: the CNGMD covers all municipal resources and SHCP only federally funded spending.' },
   ];
 
+  /* Grupos del filtro de proyectos: los tres estatus con color propio y el resto juntos. */
+  const GRUPOS = ['Terminado', 'En Ejecución', 'Cancelado', 'otro'];
+  const grupo = o => (ESTATUS[o.estatus] ? o.estatus : 'otro');
+  const conMarca = o => !!(o.c1 || o.c2 || o.c3 || o.c4);
+
   const estado = {
     ind: INDICADORES.find(i => i.id === q.get('ind')) || INDICADORES[0],
     ciclo: Number(q.get('ciclo')) || 2024,
     obras: q.get('obras') === '1',
+    estatus: new Set((q.get('estatus') || GRUPOS.join(',')).split(',').filter(g => GRUPOS.includes(g))),
+    soloMarcas: q.get('marcas') === '1',
   };
   const datos = {};
-  let manifiesto, mapa, capaMunicipios, capaObras, porCvemun = {};
+  let manifiesto, mapa, capaMunicipios, capaObras, marcadores = [], promesaEnlaces = null;
 
   if (q.get('vista') === 'figura') document.body.classList.add('figura');
 
@@ -150,6 +179,9 @@
     u.searchParams.set('ind', estado.ind.id);
     u.searchParams.set('ciclo', estado.ciclo);
     if (estado.obras) u.searchParams.set('obras', '1'); else u.searchParams.delete('obras');
+    if (estado.obras && estado.estatus.size < GRUPOS.length) u.searchParams.set('estatus', [...estado.estatus].join(','));
+    else u.searchParams.delete('estatus');
+    if (estado.obras && estado.soloMarcas) u.searchParams.set('marcas', '1'); else u.searchParams.delete('marcas');
     if (mapa) {
       const c = mapa.getCenter();
       u.searchParams.set('c', `${c.lat.toFixed(4)},${c.lng.toFixed(4)},${mapa.getZoom()}`);
@@ -244,6 +276,7 @@
 
   function bloqueOrigen(nombre) {
     const c = manifiesto.consultas.find(x => x.datos === nombre + '.json');
+    if (!c) return '';
     const cmd = c.motor === 'pg'
       ? `docker exec -i obras-publicas-db-1 psql -U obras -d obras_publicas < lakehouse/capas/${c.consulta}`
       : `lakehouse/.venv/Scripts/python lakehouse/consultas/lago.py lakehouse/capas/${c.consulta}`;
@@ -255,7 +288,7 @@
 
   function origen() {
     const capas = [estado.ind.capa, '02_municipios'].filter((x, i, a) => a.indexOf(x) === i);
-    if (estado.obras) capas.push('05_obras_edomex_2024');
+    if (estado.obras) capas.push('05_obras_edomex_2024', '06_enlaces_edomex_2024');
     document.getElementById('origen').innerHTML = `<h2>${S.esc(t('o.titulo'))}</h2>`
       + capas.map(bloqueOrigen).join('') + `<p class="nota">${S.esc(t('o.verif'))}</p>`;
   }
@@ -290,7 +323,7 @@
       b: S.numero(x.contratos_shcp) })]);
     let html = `<b>${S.esc(m.municipio)}</b> <span class="nota">${S.esc(cvemun)}</span>` + tabla(filas);
     html += `<p><b>${S.esc(t('d.ciclo', { c: estado.ciclo }))}</b></p>`;
-    if (!r) return html + `<p>${S.esc(t('d.sinciclo'))}</p>`;
+    if (!r) return html + `<p>${S.esc(t('d.sinciclo'))}</p>` + fuentesMunicipio(cvemun);
     const de = (a, b) => `${S.numero(a)} / ${S.numero(b)}`;
     return html + tabla([
       [t('d.proyectos'), S.numero(r.proyectos)], [t('d.aprobado'), S.pesos(r.aprobado)],
@@ -298,7 +331,55 @@
       [t('d.fais'), de(r.fais, r.proyectos)], [t('d.evaluados'), S.numero(r.evaluados)],
       [t('d.c1'), de(r.c1, r.evaluados)], [t('d.c2'), de(r.c2, r.evaluados)],
       [t('d.c3'), de(r.c3, r.evaluados)], [t('d.c4'), de(r.c4, r.evaluados)],
-    ]);
+    ]) + fuentesMunicipio(cvemun);
+  }
+
+  /* Enlace a un archivo oficial del manifiesto de fuentes, que el sitio publica copiado. */
+  function archivoOficial(id) {
+    const f = datos.fuentes.get(id);
+    return f ? `<a href="${S.esc(f.url)}" target="_blank" rel="noopener noreferrer">${S.esc(f.url.split('/').pop())}</a>` : '';
+  }
+
+  function fuentesMunicipio(cvemun) {
+    const ids = [['inegi_iter2020', 'fu.pob'], ['coneval_irs2020', 'fu.rezago'],
+                 [`shcp_ef${estado.ciclo}`, 'fu.shcp'], ['inegi_cngmd2023', 'fu.cngmd']];
+    return `<div class="fuentes"><b>${S.esc(t('fu.titulo'))}</b><p>${S.esc(t('fu.mun', { cvemun }))}</p><ul class="docs">`
+      + ids.map(([id, k]) => `<li>${S.esc(t(k))}: ${archivoOficial(id)}</li>`).join('') + '</ul></div>';
+  }
+
+  /* El sitio y el último tramo de la ruta, que suele ser el nombre del archivo: así dos enlaces
+     del mismo portal no se ven iguales. */
+  function etiquetaEnlace(u) {
+    try {
+      const x = new URL(u);
+      let ultimo = x.pathname.split('/').filter(Boolean).pop() || '';
+      try { ultimo = decodeURIComponent(ultimo); } catch (e) { /* se queda codificado */ }
+      return x.hostname + (ultimo ? ' · ' + (ultimo.length > 34 ? ultimo.slice(0, 34) + '…' : ultimo) : '');
+    } catch (e) {
+      return u.slice(0, 40);
+    }
+  }
+
+  function fuentesObra(o) {
+    const f = datos.fuentes.get('shcp_ef2024');
+    let html = `<div class="fuentes"><b>${S.esc(t('fu.titulo'))}</b><p>${t('fu.folio', {
+      folio: `<code>${S.esc(o.folio)}</code>`, archivo: archivoOficial('shcp_ef2024'),
+      sha: S.esc(f.sha256.slice(0, 16)), fecha: S.esc(datos.consultado) })}</p>`;
+    if (!datos.enlaces) {
+      html += `<p class="nota">${S.esc(t('fu.cargando'))}</p>`;
+    } else {
+      const docs = datos.enlaces.get(o.folio) || [];
+      if (!docs.length) {
+        html += `<p class="nota">${S.esc(t('fu.sindocs'))}</p>`;
+      } else {
+        html += `<p><b>${S.esc(t('fu.docs', { n: S.numero(docs.length) }))}</b></p><ul class="docs">`
+          + docs.slice(0, 6).map(u => `<li><a href="${S.esc(u)}" target="_blank" rel="noopener noreferrer nofollow">${S.esc(etiquetaEnlace(u))}</a></li>`).join('')
+          + '</ul>' + (docs.length > 6 ? `<p class="nota">${S.esc(t('fu.mas', { n: S.numero(docs.length - 6) }))}</p>` : '')
+          + `<p class="nota">${S.esc(t('fu.docs.nota'))}</p>`;
+      }
+    }
+    return html + `<button type="button" class="boton-sat" data-lat="${o.lat}" data-lon="${o.lon}">${S.esc(t('sat.boton'))}</button>`
+      + `<p class="nota">${S.esc(t('sat.nota'))}</p></div>`;
   }
 
   function popupObra(o) {
@@ -311,23 +392,71 @@
       [t('d.pagado'), S.pesos(o.pagado)], [t('d.fisico'), o.pct_fisico == null ? t('sindato') : S.numero(o.pct_fisico, 1) + ' %'],
       [t('d.financiero'), o.pct_financiero == null ? t('sindato') : S.numero(o.pct_financiero, 1) + ' %'],
       [t('d.contratos'), S.numero(o.n_contratos)], [t('d.marcas'), marcas],
-    ]);
+    ]) + fuentesObra(o);
+  }
+
+  /* Los enlaces de los contratos se bajan al abrir la primera ficha, no antes. */
+  function cargarEnlaces() {
+    if (!promesaEnlaces) {
+      promesaEnlaces = S.json('datos/06_enlaces_edomex_2024.json').then(capa => {
+        const porFolio = new Map();
+        capa.filas.forEach(([folio, enlace]) => {
+          if (!porFolio.has(folio)) porFolio.set(folio, []);
+          porFolio.get(folio).push(enlace);
+        });
+        datos.enlaces = porFolio;
+      }, () => { datos.enlaces = new Map(); });
+    }
+    return promesaEnlaces;
+  }
+
+  function filtrarObras() {
+    capaObras.clearLayers();
+    let n = 0;
+    marcadores.forEach(({ o, m }) => {
+      if (estado.estatus.has(grupo(o)) && (!estado.soloMarcas || conMarca(o))) {
+        m.addTo(capaObras);
+        n++;
+      }
+    });
+    document.getElementById('filtroConteo').textContent =
+      t('f.conteo', { n: S.numero(n), total: S.numero(marcadores.length) });
+    setUrl();
+  }
+
+  function pintarFiltros() {
+    const cuenta = {};
+    marcadores.forEach(({ o }) => { cuenta[grupo(o)] = (cuenta[grupo(o)] || 0) + 1; });
+    const caja = document.getElementById('filtrosEstatus');
+    caja.innerHTML = GRUPOS.map(g => `<label class="casilla"><input type="checkbox" data-grupo="${S.esc(g)}"`
+      + `${estado.estatus.has(g) ? ' checked' : ''}> <i class="punto" style="background:${ESTATUS[g] || OTRO}"></i>`
+      + `${S.esc(t('e.' + g))} <span class="nota">(${S.numero(cuenta[g] || 0)})</span></label>`).join('');
+    caja.querySelectorAll('input').forEach(i => i.addEventListener('change', () => {
+      if (i.checked) estado.estatus.add(i.dataset.grupo); else estado.estatus.delete(i.dataset.grupo);
+      filtrarObras();
+    }));
   }
 
   async function ponerObras() {
+    document.getElementById('filtros').hidden = !estado.obras;
     if (!estado.obras) {
       if (capaObras) mapa.removeLayer(capaObras);
     } else {
       if (!capaObras) {
         const capa = await S.json('datos/05_obras_edomex_2024.json');
         capaObras = L.layerGroup();
-        S.objetos(capa).forEach(o => {
-          if (o.lat == null) return;
-          L.circleMarker([o.lat, o.lon], { pane: 'obras', radius: 3.5, weight: 0.5, color: '#fff',
-            fillColor: ESTATUS[o.estatus] || OTRO, fillOpacity: 0.9 })
-            .bindPopup(() => popupObra(o), { maxWidth: 320 }).addTo(capaObras);
+        marcadores = S.objetos(capa).filter(o => o.lat != null).map(o => {
+          const m = L.circleMarker([o.lat, o.lon], { pane: 'obras', radius: 3.5, weight: 0.5, color: '#fff',
+            fillColor: ESTATUS[o.estatus] || OTRO, fillOpacity: 0.9 });
+          m.bindPopup(() => popupObra(o), { maxWidth: 340 });
+          m.on('popupopen', () => {
+            if (!datos.enlaces) cargarEnlaces().then(() => m.setPopupContent(popupObra(o)));
+          });
+          return { o, m };
         });
+        pintarFiltros();
       }
+      filtrarObras();
       capaObras.addTo(mapa);
     }
     leyenda(estado.ind, estado.ind.categorias ? [] : cortes([...datos.municipios.keys()].map(k => valor(estado.ind, k))));
@@ -350,6 +479,9 @@
     const obras = document.getElementById('obras');
     obras.checked = estado.obras;
     obras.addEventListener('change', () => { estado.obras = obras.checked; ponerObras(); });
+    const marcas = document.getElementById('soloMarcas');
+    marcas.checked = estado.soloMarcas;
+    marcas.addEventListener('change', () => { estado.soloMarcas = marcas.checked; if (capaObras) filtrarObras(); });
 
     document.getElementById('temascaltepec').addEventListener('click', () => {
       const m = capaMunicipios.getLayers().find(x => x.cvemun === '15086');
@@ -375,6 +507,9 @@
       datos.municipios = new Map(S.objetos(municipios).map(r => [r.cvemun, r]));
       datos.porCiclo = new Map(S.objetos(porCiclo).map(r => [r.cvemun + '|' + r.ciclo, r]));
       datos.cruce = new Map(S.objetos(cruce).map(r => [r.cvemun, r]));
+      const fuentes = await S.json('datos/fuentes.json');
+      datos.fuentes = new Map(fuentes.fuentes.map(f => [f.id, f]));
+      datos.consultado = fuentes.consultado;
     } catch (e) {
       status.textContent = t('error', { msg: e.message });
       return;
@@ -385,6 +520,13 @@
     mapa = L.map('mapa', { preferCanvas: true, minZoom: 4 }).setView(centro, zoom);
     mapa.createPane('obras').style.zIndex = 450;
     mapa.on('moveend', setUrl);
+    /* «Ver el lugar en imagen de satélite», en la ficha de cada proyecto. */
+    mapa.getContainer().addEventListener('click', ev => {
+      const b = ev.target.closest('.boton-sat');
+      if (!b) return;
+      mapa.setView([Number(b.dataset.lat), Number(b.dataset.lon)], 17);
+      if (window.MapaTeselas) MapaTeselas.usar('esri-satelite');
+    });
 
     const pobMax = Math.max(...[...datos.municipios.values()].map(m => m.pobtot || 0));
     capaMunicipios = L.featureGroup();

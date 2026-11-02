@@ -17,7 +17,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--repeticiones", default="20")
     args = ap.parse_args()
-    for paso in ("descargar.py", "bronce.py", "plata.py", "oro.py", "almacen.py"):
+    for paso in ("descargar.py", "bronce.py", "plata.py", "enlaces.py", "oro.py", "almacen.py"):
         print(f"== {paso}", flush=True)
         subprocess.run([sys.executable, str(RAIZ / "etl" / paso)], check=True)
     print("== verificar_lago.py", flush=True)

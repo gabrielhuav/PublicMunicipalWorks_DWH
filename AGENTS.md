@@ -103,6 +103,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 | `lakehouse/capas/` | Una consulta por capa del sitio: `.pg.sql` en PostgreSQL, `.duck.sql` en el lago |
 | `lakehouse/sitio/` | **Sitio público nuevo** (mapa y consultas). Sus datos los escribe `etl/exportar_capas.py` |
 | `lakehouse/publicar/` | `publicar.ps1` arma la copia pública; `README.md` y `pages.yml` van a su raíz |
+| `lakehouse/etl/mapa_base.py` | Copia local del mapa base (Natural Earth) y respaldo incrustado en `mapa-teselas.js` |
+| `lakehouse/etl/enlaces.py` | Tabla anexa con los enlaces de los contratos, 2023-2025; no es parte de plata |
 | `paper/ijcopi/extender_v1.py` | **Arma la v1 extendida** desde la base; los textos nuevos viven aquí |
 | `paper/ijcopi/cifras_extension.py` | Cada cifra de la v1 con su archivo de evidencia, y las comprobaciones del texto |
 | `paper/ijcopi/word_a_pdf.ps1`, `verificar_amarillo.py`, `capturar_mapa.ps1` | Páginas y palabras en Word, amarillo completo y figura |
@@ -331,20 +333,17 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 - **Título aprobado por Gabriel el 2 nov:** "From Synthetic Seeds to Federal Records: An Extended
   Dimensional Data Warehouse for Municipal Public Works with a Measured Lakehouse Layer".
-- **Mapa base (pedido el 2 nov: "tiene que funcionar como el mapa del artículo de agua"):** se portó
-  `assets/mapa-teselas.js` del trabajo 38 a `lakehouse/sitio/mapa-teselas.js`, con su control "¿No
-  carga el mapa? Probar otro proveedor". Probado en local: lista con estados y cambio manual. Falta la
-  copia local nacional: pedir permiso para bajar de Natural Earth v5.1.2
-  `ne_10m_admin_0_countries` (13.3 MB), `ne_10m_admin_1_states_provinces_lines` (21.1 MB) y
-  `ne_10m_admin_1_label_points` (4.4 MB), y escribir `lakehouse/etl/mapa_base.py` con el formato del
-  generador del 38. Luego corregir el texto de la sección 9.4 del artículo y los README, y pedir
-  autorización para subir.
-- **Pedido el 2 nov, sin empezar:** filtrar en el mapa los proyectos por estatus (por ejemplo, solo
-  cancelados) y por marcas C1-C4.
-- **Imágenes como prueba (pregunta del 2 nov):** SHCP no trae fotos, pero `contratos.csv` trae `URL` y
-  `URL_DOCUMENTO`. En 2024 los 165,373 contratos traen `URL` y 106,307 traen `URL_DOCUMENTO`, sobre todo
-  carpetas de Google Drive, portales estatales y PDF. No se ha abierto ninguno. Se podrían enlazar en
-  la ficha de cada proyecto como "documentos que reportó la dependencia", nunca como prueba verificada.
+- **Mapa del sitio, pedidos del 2 nov, hechos y probados en local, sin publicar:**
+  - Mapa base como el del artículo de agua: `lakehouse/sitio/mapa-teselas.js` es el módulo del 38,
+    con su control. La copia local sale de Natural Earth 5.1.2 (permiso de Gabriel el 2 nov; tres
+    archivos fijados por SHA-256 en `lakehouse/etl/mapa_base.py`).
+  - Filtro de proyectos por estatus y por marcas C1-C4 (`?estatus=`, `?marcas=1`).
+  - Fuente en cada ficha: el archivo oficial con su SHA-256, y en los proyectos los enlaces que la
+    dependencia publicó con sus contratos (`lakehouse/etl/enlaces.py` → `anexo.enlaces_contratos`,
+    capa 06). 10,878 de 21,335 proyectos de 2024 tienen enlaces; se omiten 67 de OneDrive personal.
+  - Botón "Ver el lugar en imagen de satélite" (Esri, sin fecha de toma): enseña el lugar, no prueba.
+  - SHCP no publica fotos de las obras; no hay "antes y después" verificable en las fuentes.
+- La v1 del artículo ya describe esto en 9.4: 15 páginas, 9,877 palabras, 0 sin amarillo.
 - Decidir si los alumnos de los repositorios de referencia van en agradecimientos.
 - Revisar la v1 completa, sobre todo la declaración de IA, que dice que los autores revisaron y
   aprobaron el texto nuevo.

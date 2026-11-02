@@ -67,8 +67,16 @@ lakehouse/.venv/Scripts/python lakehouse/etl/exportar_capas.py
 lakehouse/.venv/Scripts/python lakehouse/verificacion/verificar_capas.py
 ```
 
-El mapa base prueba una cadena de proveedores sin clave y, si ninguno responde, dibuja los datos
-sin fondo. Leaflet va copiado en `sitio/vendor/` para no depender de una CDN.
+El mapa base usa el módulo de los mapas del trabajo 38 (`sitio/mapa-teselas.js`): prueba una
+cadena de proveedores sin clave, deja elegir otro a mano y, si ninguno responde, dibuja una copia
+local con el contorno del país y los límites estatales, de Natural Earth, que genera
+`etl/mapa_base.py`. Leaflet va copiado en `sitio/vendor/` para no depender de una CDN.
+
+La ficha de cada municipio y de cada proyecto nombra el archivo oficial del que sale, con su
+SHA-256. Los proyectos enlazan además los documentos que la dependencia publicó con sus contratos:
+`etl/enlaces.py` los guarda en la tabla anexa `anexo.enlaces_contratos` (2023 a 2025), fuera de
+plata, y la capa omite los que llevan la cuenta de correo de quien los subió. Los proyectos se
+pueden filtrar por estatus y por marcas C1 a C4.
 
 ## Interoperabilidad
 

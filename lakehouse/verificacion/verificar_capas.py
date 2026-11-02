@@ -49,10 +49,10 @@ def main():
                   f"{nombre(q):<22} {motor(q):<4} {filas:>7,} filas  sha256 {sha(datos)[:16]}")
     finally:
         bases.cerrar()
-    e = manifiesto["evidencia"]
-    origen = (RAIZ / e["origen"]).read_bytes()
-    decir(sha(origen) == e["sha256"] == sha((SALIDA / e["datos"]).read_bytes()),
-          f"{e['datos']} es copia exacta de {e['origen']}")
+    for e in manifiesto["copias"]:
+        origen = (RAIZ / e["origen"]).read_bytes()
+        decir(sha(origen) == e["sha256"] == sha((SALIDA / e["datos"]).read_bytes()),
+              f"{e['datos']} es copia exacta de {e['origen']}")
 
     lineas += ["", f"verificaciones fallidas: {fallos}"]
     print(lineas[-1])

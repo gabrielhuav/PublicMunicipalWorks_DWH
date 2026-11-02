@@ -71,6 +71,19 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 details summary { cursor: pointer; color: var(--marca); margin-top: .4rem; }
 .estado { margin: 0 0 .5rem; color: var(--texto-2); }
 
+/* Filtro de proyectos y fuentes de cada ficha */
+.filtros { border: 0; padding: 0; margin: .6rem 0 0; }
+.filtros legend { font-weight: 600; margin-bottom: .25rem; padding: 0; }
+.filtros .casilla { margin: .15rem 0; font-weight: 400; }
+.punto { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .2rem; }
+.fuentes { margin-top: .5rem; padding-top: .4rem; border-top: 1px solid #d9dee5; }
+.fuentes p { margin: .25rem 0; }
+.fuentes .docs { margin: .2rem 0; padding-left: 1.1rem; }
+.fuentes a { overflow-wrap: anywhere; }
+.fuentes .nota { color: #6b7480; }
+.boton-sat { margin-top: .4rem; padding: .3rem .6rem; border: 1px solid #d9dee5; border-radius: 6px;
+  background: #e3f0f1; color: #1d232b; font: inherit; font-size: .78rem; cursor: pointer; }
+
 /* Mapa base: control «¿No carga el mapa? Probar otro proveedor», copiado del trabajo 38
    (assets/estilo.css). Los proveedores sin versión oscura se invierten en modo oscuro. */
 .leaflet-layer.teselas-invertidas { filter: invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.55); }

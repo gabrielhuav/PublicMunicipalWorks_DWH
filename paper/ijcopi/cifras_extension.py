@@ -225,6 +225,10 @@ def cifras():
     man = leer(LAGO / "sitio" / "datos" / "manifiesto.json")
     assert "verificaciones fallidas: 0" in (V / "evidencia_capas.txt").read_text(encoding="utf-8")
     pon("capas_palabra", PALABRA[len(man["consultas"])], "sitio/datos/manifiesto.json")
+    obras = leer(LAGO / "sitio" / "datos" / "05_obras_edomex_2024.json")
+    enlaces = leer(LAGO / "sitio" / "datos" / "06_enlaces_edomex_2024.json")
+    pon("obras_2024", ent(len(obras["filas"])), "sitio/datos/05_obras_edomex_2024.json")
+    pon("docs_proy", ent(len({f[0] for f in enlaces["filas"]})), "sitio/datos/06_enlaces_edomex_2024.json")
     res = leer(LAGO / "sitio" / "datos" / "01_resumen.json")
     por_ciclo = {f[0]: dict(zip(res["columnas"], f)) for f in res["filas"]}
     pon("p2024", ent(por_ciclo[2024]["proyectos"]), "sitio/datos/01_resumen.json")

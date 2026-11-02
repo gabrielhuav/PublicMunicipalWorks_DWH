@@ -10,6 +10,7 @@ import decimal
 import hashlib
 import json
 import sys
+from pathlib import Path
 
 import psycopg2
 
@@ -18,6 +19,7 @@ from comun import BUCKET, PG_DSN, RAIZ, duck
 CAPAS = RAIZ / "capas"
 SALIDA = RAIZ / "sitio" / "datos"
 EVIDENCIA_LAGO = "verificacion/evidencia_lago.json"
+FUENTES = "fuentes.json"
 
 
 def plano(v):
@@ -102,14 +104,17 @@ def main():
             print(f"{nombre(q):<24}{motor(q):>5}{len(filas):>9,} filas {len(datos) / 1024:>8,.0f} KB")
     finally:
         bases.cerrar()
-    # La página de consultas muestra la comparación lago contra almacén tal como la escribió
-    # verificar_lago.py; se copia sin cambiar un byte.
-    evidencia = (RAIZ / EVIDENCIA_LAGO).read_bytes()
-    (SALIDA / "evidencia_lago.json").write_bytes(evidencia)
+    # Se copian sin cambiar un byte: la comparación lago contra almacén, tal como la escribió
+    # verificar_lago.py, y el manifiesto de fuentes, con el que cada ficha del mapa enlaza al
+    # archivo oficial del que sale.
+    copias = []
+    for origen in (EVIDENCIA_LAGO, FUENTES):
+        datos = (RAIZ / origen).read_bytes()
+        archivo = Path(origen).name
+        (SALIDA / archivo).write_bytes(datos)
+        copias.append({"datos": archivo, "origen": origen, "sha256": sha(datos)})
     manifiesto = {"generado_en": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
-                  "consultas": resumen,
-                  "evidencia": {"datos": "evidencia_lago.json", "origen": EVIDENCIA_LAGO,
-                                "sha256": sha(evidencia)}}
+                  "consultas": resumen, "evidencia": copias[0], "copias": copias}
     (SALIDA / "manifiesto.json").write_text(
         json.dumps(manifiesto, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     return 0

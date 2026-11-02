@@ -48,7 +48,8 @@
   }
 
   async function json(ruta) {
-    const r = await fetch(ruta);
+    // no-cache revalida con el servidor: tras publicar, el código nuevo nunca lee datos viejos
+    const r = await fetch(ruta, { cache: 'no-cache' });
     if (!r.ok) throw new Error(`${ruta}: ${r.status}`);
     return r.json();
   }
