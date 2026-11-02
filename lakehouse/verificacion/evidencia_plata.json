@@ -1,0 +1,388 @@
+{
+ "ciclos": {
+  "2020": {
+   "proyectos": {
+    "sha256_csv": "ad8e68491d0b1af68ff56e7587fb55d3bd2fdc79e64c1a35c6741196f34c6ffb",
+    "bytes": 652316217,
+    "filas": 457755,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 119,
+    "no_convertidos": {
+     "fecha_inicio": 20,
+     "fecha_termino": 11
+    },
+    "repetidos_folio_periodo": 0
+   },
+   "contratos": {
+    "sha256_csv": "8d1462f9e566296b362418b0302150ef9d876d51ba01a1b08474743a371620de",
+    "bytes": 47138472,
+    "filas": 300118,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 2,
+    "huerfanos": 0,
+    "no_convertidos": {}
+   },
+   "georreferencias": {
+    "sha256_csv": "cc42c641a4f230dae432e00389ac99982f95bc52ebb536ddbc7ca44f16123318",
+    "bytes": 122177506,
+    "filas": 461564,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 6,
+    "huerfanos": 0,
+    "no_convertidos": {
+     "id_municipio": 119009,
+     "id_localidad": 118525
+    }
+   },
+   "metas_avances": {
+    "sha256_csv": "874c82cedf20b83e00f6d75d4d10bb2923ffff9acf4340e0cf2c5713671f10eb",
+    "bytes": 29211362,
+    "filas": 458342,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "sha256_csv_avances": "1ed5e137d7a56410eb654277f3a018825167b2507943d9720d8fed11a71dd49e",
+    "no_convertidos": {}
+   },
+   "financiamiento": {
+    "sha256_csv": "2ee276d6117818a7685d89a823fe213d810271a2b951ba25174df1014051978b",
+    "bytes": 61034788,
+    "filas": 510707,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "observaciones": {
+    "filas": 175598,
+    "lineas_descartadas": 0,
+    "bytes": 27021499,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   }
+  },
+  "2021": {
+   "proyectos": {
+    "sha256_csv": "7ef6a0c7f6488fe7b05ddc06e1593314a29550c5a6dda9aa9583d7c8cae70fbd",
+    "bytes": 174117674,
+    "filas": 428944,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 86,
+    "no_convertidos": {},
+    "repetidos_folio_periodo": 0
+   },
+   "contratos": {
+    "sha256_csv": "60fd42a9614cd266d10a9184aa5c66ba25dbf45325e979edf863126242194f18",
+    "bytes": 27847947,
+    "filas": 209977,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 11,
+    "huerfanos": 0,
+    "no_convertidos": {}
+   },
+   "georreferencias": {
+    "sha256_csv": "12b8ae7e209661304b1f4866d55fc97df82399966568a1ae47f64193affb325b",
+    "bytes": 92810291,
+    "filas": 321441,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 6,
+    "huerfanos": 0,
+    "no_convertidos": {}
+   },
+   "metas_avances": {
+    "sha256_csv": "7df6a6fd59b263280c8861e4700be63ac66693386d67e92b469d0be15f1dc6fd",
+    "bytes": 24107303,
+    "filas": 429543,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "financiamiento": {
+    "sha256_csv": "ee25a611cee1ee9a9598ab57a4efd1f457d07421ffc0875ee184c1758528a78d",
+    "bytes": 50099865,
+    "filas": 460992,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "observaciones": {
+    "sha256_csv": "924a3a39e02e959dc3304d6097976a0adaedef8f9526ffada39b5ff1ee6cef0f",
+    "bytes": 44979802,
+    "filas": 274017,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   }
+  },
+  "2022": {
+   "proyectos": {
+    "sha256_csv": "8e8ced26d5e668111175eef799a720bcd85b09549ef9e4f5396514f040ca086b",
+    "bytes": 160873495,
+    "filas": 396668,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 74,
+    "no_convertidos": {},
+    "repetidos_folio_periodo": 0
+   },
+   "contratos": {
+    "sha256_csv": "0b96c68c75c38deb46066614f4b545a6c2d48eac28781c04abf63dabfc5c47f5",
+    "bytes": 22213402,
+    "filas": 180202,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 9,
+    "huerfanos": 0,
+    "no_convertidos": {}
+   },
+   "georreferencias": {
+    "sha256_csv": "429c78941139daf08fc0a1459441874c4f13151a51aaffe9e6d933d8e4f2f4f7",
+    "bytes": 80609059,
+    "filas": 278273,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 4,
+    "huerfanos": 0,
+    "no_convertidos": {}
+   },
+   "metas_avances": {
+    "sha256_csv": "be14e45dbea0cfc262f6b8637a6adf6fe1e0aa70f08bcbf396cfa260b8ec17c7",
+    "bytes": 21063156,
+    "filas": 398640,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "financiamiento": {
+    "sha256_csv": "771a145e0b6ed4816113c41f492b09103331d3a2c2bc74da2c9f085c1273b371",
+    "bytes": 44014850,
+    "filas": 426852,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "observaciones": {
+    "sha256_csv": "bd1d6900c6d2703df8d2ac44702c0cd6a79df5b738dc4978d486b5b49e601b0b",
+    "bytes": 63797328,
+    "filas": 411461,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   }
+  },
+  "2023": {
+   "proyectos": {
+    "sha256_csv": "c867b54adb750d9d525aec1f0328c3c31d75cb88f2c91f702b88699c43b7377f",
+    "bytes": 157896617,
+    "filas": 380815,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 45,
+    "no_convertidos": {
+     "beneficiarios": 15536,
+     "fecha_termino": 2,
+     "recaudado": 44526,
+     "comprometido": 44527,
+     "devengado": 44527,
+     "ejercido": 44527,
+     "pagado": 44527
+    },
+    "repetidos_folio_periodo": 0
+   },
+   "contratos": {
+    "sha256_csv": "a986c364dd293b3af540a8d76e6bf2a0c26f9b2b659a9f4893ad44b8ba76d1f2",
+    "bytes": 127033801,
+    "filas": 185535,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 89,
+    "huerfanos": 0,
+    "no_convertidos": {
+     "monto_modificado": 1833
+    }
+   },
+   "georreferencias": {
+    "sha256_csv": "b4bd0c54a989b5d12a0b7c7bf425ccfa4197c0d0a6916480dec1c429c7e8c454",
+    "bytes": 85617702,
+    "filas": 287493,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 4,
+    "huerfanos": 0,
+    "no_convertidos": {
+     "id_localidad": 6080
+    }
+   },
+   "metas_avances": {
+    "sha256_csv": "4c4211d316642f57f2eac666f73d9a48117273764e75eaf5efe69c064284e39a",
+    "bytes": 20438298,
+    "filas": 383875,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "financiamiento": {
+    "sha256_csv": "582a4009e3896fcd039be1b01f3e8a0423697b6c8608b62325bfec1e1dedd7c9",
+    "bytes": 42482793,
+    "filas": 409449,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {
+     "ciclo_recurso": 4
+    }
+   },
+   "observaciones": {
+    "sha256_csv": "3f010b8a1f7081e6c7fd4eb9c31c85eed7a1aefc97a9a73b1cef4f92f62d9bac",
+    "bytes": 71116526,
+    "filas": 458605,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   }
+  },
+  "2024": {
+   "proyectos": {
+    "sha256_csv": "f88cfa28a1c02ee1a0acfc217c3b1fe09b31c1e8f55157eb7407e95e8b0cc818",
+    "bytes": 107958762,
+    "filas": 253494,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 31,
+    "no_convertidos": {
+     "fecha_termino": 1
+    },
+    "repetidos_folio_periodo": 0
+   },
+   "contratos": {
+    "sha256_csv": "33afb427be3e84daae6f25824d7fed63ca33f60f66e23461825634cd07a583e1",
+    "bytes": 119691320,
+    "filas": 165373,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 73,
+    "huerfanos": 0,
+    "no_convertidos": {}
+   },
+   "georreferencias": {
+    "sha256_csv": "9ddc8c5d14ba28358c427da10de8ff532c6b3db06988e8b672ea7fc836907c5c",
+    "bytes": 77230057,
+    "filas": 259132,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 5,
+    "huerfanos": 0,
+    "no_convertidos": {}
+   },
+   "metas_avances": {
+    "sha256_csv": "52f64607fc9923b7500280b01f512055c4241f87ea54e7f0a4e2121426ba1208",
+    "bytes": 14303767,
+    "filas": 254955,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "financiamiento": {
+    "sha256_csv": "6a47fe3e9472e61bf773ff8844365b84061647f0ffcde3c4af66d18e409ae852",
+    "bytes": 29146804,
+    "filas": 268387,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "observaciones": {
+    "sha256_csv": "9edf22cb8d385819a6c272d925200d63ad0f4216678ff61b523f0b0c8cfa7547",
+    "bytes": 47697964,
+    "filas": 302627,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   }
+  },
+  "2025": {
+   "proyectos": {
+    "sha256_csv": "eea7887321476df49aaee565dd3684f4b191f55049048155d62cad4f6ebd164d",
+    "bytes": 39071464,
+    "filas": 91062,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {},
+    "repetidos_folio_periodo": 0
+   },
+   "contratos": {
+    "sha256_csv": "c38f4d8fdeafb3f27b5bedd87b007e435d89a691b8243fd3be0adfcf28b60cbc",
+    "bytes": 45191264,
+    "filas": 62363,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "huerfanos": 0,
+    "no_convertidos": {}
+   },
+   "georreferencias": {
+    "sha256_csv": "36c09110b590ba83c90babbd142ceaf4dd706287f215c36826060091a4c725b4",
+    "bytes": 27760924,
+    "filas": 94228,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "huerfanos": 0,
+    "no_convertidos": {
+     "id_localidad": 510
+    }
+   },
+   "metas_avances": {
+    "sha256_csv": "006d5f3379894d2eba6dc3655a159233327005e0b79620d2481341b5e249dd4b",
+    "bytes": 5489344,
+    "filas": 91850,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "financiamiento": {
+    "sha256_csv": "1e4c81af163f4991420843aeba81d0dad360968ee34797812bbc6879fa9972fd",
+    "bytes": 10535258,
+    "filas": 95505,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   },
+   "observaciones": {
+    "sha256_csv": "6c86a6553293b2cd3f06bed4f8143cc569938e8584ed71c639dba6da99d231e9",
+    "bytes": 28854963,
+    "filas": 189498,
+    "lineas_descartadas": 0,
+    "bytes_sin_definir": 0,
+    "no_convertidos": {}
+   }
+  }
+ },
+ "referencias": {
+  "localidades": {
+   "sha256_csv": "29e9bf43b7d22967d2bdc1ca0a3e47b0fd18802948f2ed42985ae1bc1e34151a",
+   "bytes": 149660864,
+   "filas": 195662,
+   "lineas_descartadas": 0,
+   "bytes_sin_definir": 0,
+   "no_convertidos": {
+    "altitud": 23
+   }
+  },
+  "municipios": {
+   "sha256_csv": "29e9bf43b7d22967d2bdc1ca0a3e47b0fd18802948f2ed42985ae1bc1e34151a",
+   "bytes": 149660864,
+   "filas": 195662,
+   "lineas_descartadas": 0,
+   "bytes_sin_definir": 0,
+   "no_convertidos": {}
+  },
+  "cngmd_contratos": {
+   "sha256_csv": "0ce3bc9c42ccb7dd7731c68b6a3fad4b69ec1ba2204c0306bc1f49058e4e031b",
+   "bytes": 443511,
+   "filas": 4950,
+   "lineas_descartadas": 0,
+   "bytes_sin_definir": 0,
+   "no_convertidos": {
+    "contratos_total": 69,
+    "contratos_ad": 68,
+    "contratos_inv": 71,
+    "monto_total": 116,
+    "monto_ad": 88,
+    "monto_inv": 71
+   }
+  },
+  "rezago_municipal": {
+   "sha256_csv": "0103c1856ec61d9148e1f995b9f4cfebf27c7963749999a9a437e4b4d80491b1",
+   "bytes": 428572,
+   "filas": 2469,
+   "no_convertidos": {}
+  }
+ },
+ "segundos": 199.8
+}

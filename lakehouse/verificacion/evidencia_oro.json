@@ -1,0 +1,27 @@
+{
+ "proyecto_ciclo": {
+  "filas": 1537019,
+  "bytes": 111154574,
+  "segundos": 10.1
+ },
+ "alertas": {
+  "filas": 1465856,
+  "bytes": 27454959,
+  "segundos": 3.9
+ },
+ "municipio_ciclo": {
+  "filas": 14561,
+  "bytes": 432720,
+  "segundos": 0.3
+ },
+ "calidad_geo": {
+  "filas": 6,
+  "bytes": 2413,
+  "segundos": 0.7
+ },
+ "cruce_cngmd": {
+  "filas": 2469,
+  "bytes": 85867,
+  "segundos": 0.2
+ }
+}

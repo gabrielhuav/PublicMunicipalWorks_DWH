@@ -1,0 +1,20 @@
+# Almacén de objetos del lago. SeaweedFS habla la misma API S3 que Cloudflare R2,
+# así que cambiar de uno a otro es cambiar el extremo y las llaves (etl/comun.py).
+# Las llaves son de prueba y solo existen en esta máquina. No toca
+# docker/compose.yml: la base del almacén sigue siendo aquella.
+name: obras-lago
+
+services:
+  s3:
+    image: chrislusf/seaweedfs:3.87
+    command: >
+      server -dir=/data -ip.bind=0.0.0.0 -volume.max=100
+      -s3 -s3.port=8333 -s3.config=/etc/seaweedfs/s3.json
+    ports:
+      - "${LAGO_PUERTO:-18333}:8333"
+    volumes:
+      - objetos:/data
+      - ./s3.json:/etc/seaweedfs/s3.json:ro
+
+volumes:
+  objetos:

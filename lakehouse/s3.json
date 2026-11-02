@@ -1,0 +1,9 @@
+{
+  "identities": [
+    {
+      "name": "lago",
+      "credentials": [{"accessKey": "lago_local", "secretKey": "lago_local_clave"}],
+      "actions": ["Admin", "Read", "List", "Tagging", "Write"]
+    }
+  ]
+}

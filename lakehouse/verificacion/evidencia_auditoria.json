@@ -1,0 +1,411 @@
+{
+ "poblacion": {
+  "filas_folio_ciclo": 1537019,
+  "folios": 967495,
+  "municipios": 2477,
+  "entidades": 32
+ },
+ "por_ciclo": [
+  {
+   "ciclo": 2020,
+   "folios": 343110,
+   "proyectos_inversion": 326842,
+   "aprobado": 521228624302.53,
+   "pagado_reportado": 528537149225.5,
+   "pagado": 338135456534.5
+  },
+  {
+   "ciclo": 2021,
+   "folios": 318203,
+   "proyectos_inversion": 306273,
+   "aprobado": 474788341700.0,
+   "pagado_reportado": 488286257206.58,
+   "pagado": 287884376146.58
+  },
+  {
+   "ciclo": 2022,
+   "folios": 278275,
+   "proyectos_inversion": 266429,
+   "aprobado": 411810489418.17,
+   "pagado_reportado": 289152206879.81,
+   "pagado": 289152206879.81
+  },
+  {
+   "ciclo": 2023,
+   "folios": 252875,
+   "proyectos_inversion": 240548,
+   "aprobado": 421857252861.55,
+   "pagado_reportado": 322305826004.92,
+   "pagado": 322305826004.92
+  },
+  {
+   "ciclo": 2024,
+   "folios": 253494,
+   "proyectos_inversion": 240352,
+   "aprobado": 481170195991.46,
+   "pagado_reportado": 325902855810.77,
+   "pagado": 325902855810.77
+  },
+  {
+   "ciclo": 2025,
+   "folios": 91062,
+   "proyectos_inversion": 85412,
+   "aprobado": 174104955881.8,
+   "pagado_reportado": 160877034433.54,
+   "pagado": 160877034433.54
+  }
+ ],
+ "pagado_es_folio": [
+  {
+   "folio": "SON200401881060",
+   "ciclo": 2021,
+   "entidad": "Sonora",
+   "aprobado": 1410809.0,
+   "pagado_reportado": 200401881060.0
+  },
+  {
+   "folio": "SON190401692691",
+   "ciclo": 2020,
+   "entidad": "Sonora",
+   "aprobado": 769230.77,
+   "pagado_reportado": 190401692691.0
+  }
+ ],
+ "pagado_mas_de_10_veces": {
+  "registros": 1130,
+  "pagado": 15110333150.6
+ },
+ "calidad_geo": [
+  {
+   "ciclo": 2020,
+   "puntos": 461564,
+   "en_mexico": 461558,
+   "localidad_en_censo": 321841,
+   "medidos": 321835,
+   "km_mediana": 0.406,
+   "km_p95": 9.57,
+   "hasta_5_km": 291066,
+   "mas_de_25_km": 8316
+  },
+  {
+   "ciclo": 2021,
+   "puntos": 321441,
+   "en_mexico": 321433,
+   "localidad_en_censo": 305206,
+   "medidos": 305198,
+   "km_mediana": 0.44,
+   "km_p95": 13.543,
+   "hasta_5_km": 271121,
+   "mas_de_25_km": 11370
+  },
+  {
+   "ciclo": 2022,
+   "puntos": 278273,
+   "en_mexico": 278266,
+   "localidad_en_censo": 260842,
+   "medidos": 260835,
+   "km_mediana": 0.418,
+   "km_p95": 9.926,
+   "hasta_5_km": 234843,
+   "mas_de_25_km": 7815
+  },
+  {
+   "ciclo": 2023,
+   "puntos": 287493,
+   "en_mexico": 287492,
+   "localidad_en_censo": 275878,
+   "medidos": 275877,
+   "km_mediana": 0.395,
+   "km_p95": 5.955,
+   "hasta_5_km": 258395,
+   "mas_de_25_km": 1017
+  },
+  {
+   "ciclo": 2024,
+   "puntos": 259132,
+   "en_mexico": 259131,
+   "localidad_en_censo": 249991,
+   "medidos": 249990,
+   "km_mediana": 0.405,
+   "km_p95": 5.974,
+   "hasta_5_km": 233975,
+   "mas_de_25_km": 898
+  },
+  {
+   "ciclo": 2025,
+   "puntos": 94228,
+   "en_mexico": 94228,
+   "localidad_en_censo": 92277,
+   "medidos": 92277,
+   "km_mediana": 0.383,
+   "km_p95": 5.152,
+   "hasta_5_km": 87489,
+   "mas_de_25_km": 219
+  }
+ ],
+ "cruce_cngmd": [
+  {
+   "relacion": "CNGMD mayor o igual que SHCP",
+   "municipios": 1133,
+   "contratos_cngmd": 43217,
+   "contratos_shcp": 24127
+  },
+  {
+   "relacion": "SHCP mayor que CNGMD",
+   "municipios": 853,
+   "contratos_cngmd": 30085,
+   "contratos_shcp": 49959
+  },
+  {
+   "relacion": "CNGMD con contratos, SHCP en cero",
+   "municipios": 294,
+   "contratos_cngmd": 5597,
+   "contratos_shcp": 0
+  },
+  {
+   "relacion": "CNGMD en cero, SHCP con contratos",
+   "municipios": 94,
+   "contratos_cngmd": 0,
+   "contratos_shcp": 3092
+  },
+  {
+   "relacion": "sin dato en CNGMD",
+   "municipios": 48,
+   "contratos_cngmd": null,
+   "contratos_shcp": 597
+  },
+  {
+   "relacion": "ambas en cero",
+   "municipios": 47,
+   "contratos_cngmd": 0,
+   "contratos_shcp": 0
+  }
+ ],
+ "cruce_temascaltepec": {
+  "cvemun": "15086",
+  "entidad": "México",
+  "municipio": "Temascaltepec",
+  "pobtot": 35014,
+  "contratos_cngmd": 0,
+  "monto_cngmd": null,
+  "contratos_shcp": 16,
+  "monto_shcp": 19364849.77,
+  "relacion": "CNGMD en cero, SHCP con contratos"
+ },
+ "alertas": {
+  "proyectos": 1465856,
+  "c1_ciclo": 2010,
+  "c1_tipo": 57797,
+  "c2": 387066,
+  "c3": 48943,
+  "c4": 74002,
+  "c1_ambos": 491,
+  "con_ambos_avances": 1291156,
+  "con_costo_unitario": 1440470
+ },
+ "versiones": {
+  "folios": 967495,
+  "en_varios_ciclos": 356914,
+  "cambian_estatus": 137644,
+  "cambian_monto": 60696,
+  "cambian_clasificacion": 0
+ },
+ "rezago": [
+  {
+   "ciclo": 2023,
+   "grado_rezago": "Muy bajo",
+   "municipios": 669,
+   "mediana_por_habitante": 839.76
+  },
+  {
+   "ciclo": 2023,
+   "grado_rezago": "Bajo",
+   "municipios": 888,
+   "mediana_por_habitante": 1874.11
+  },
+  {
+   "ciclo": 2023,
+   "grado_rezago": "Medio",
+   "municipios": 501,
+   "mediana_por_habitante": 2848.05
+  },
+  {
+   "ciclo": 2023,
+   "grado_rezago": "Alto",
+   "municipios": 238,
+   "mediana_por_habitante": 3454.48
+  },
+  {
+   "ciclo": 2023,
+   "grado_rezago": "Muy alto",
+   "municipios": 151,
+   "mediana_por_habitante": 4268.18
+  },
+  {
+   "ciclo": 2024,
+   "grado_rezago": "Muy bajo",
+   "municipios": 669,
+   "mediana_por_habitante": 762.66
+  },
+  {
+   "ciclo": 2024,
+   "grado_rezago": "Bajo",
+   "municipios": 886,
+   "mediana_por_habitante": 1673.26
+  },
+  {
+   "ciclo": 2024,
+   "grado_rezago": "Medio",
+   "municipios": 501,
+   "mediana_por_habitante": 2731.61
+  },
+  {
+   "ciclo": 2024,
+   "grado_rezago": "Alto",
+   "municipios": 241,
+   "mediana_por_habitante": 3775.14
+  },
+  {
+   "ciclo": 2024,
+   "grado_rezago": "Muy alto",
+   "municipios": 150,
+   "mediana_por_habitante": 4291.39
+  }
+ ],
+ "rezago_spearman": [
+  {
+   "ciclo": 2020,
+   "municipios": 2454,
+   "spearman": 0.574
+  },
+  {
+   "ciclo": 2021,
+   "municipios": 2451,
+   "spearman": 0.52
+  },
+  {
+   "ciclo": 2022,
+   "municipios": 2426,
+   "spearman": 0.385
+  },
+  {
+   "ciclo": 2023,
+   "municipios": 2433,
+   "spearman": 0.428
+  },
+  {
+   "ciclo": 2024,
+   "municipios": 2431,
+   "spearman": 0.389
+  },
+  {
+   "ciclo": 2025,
+   "municipios": 2312,
+   "spearman": 0.449
+  }
+ ],
+ "fais": [
+  {
+   "ciclo": 2020,
+   "pct_proyectos_fais": 78.5
+  },
+  {
+   "ciclo": 2021,
+   "pct_proyectos_fais": 77.7
+  },
+  {
+   "ciclo": 2022,
+   "pct_proyectos_fais": 76.7
+  },
+  {
+   "ciclo": 2023,
+   "pct_proyectos_fais": 79.8
+  },
+  {
+   "ciclo": 2024,
+   "pct_proyectos_fais": 80.0
+  },
+  {
+   "ciclo": 2025,
+   "pct_proyectos_fais": 81.8
+  }
+ ],
+ "modalidad": [
+  {
+   "modalidad": "Adjudicación directa",
+   "contratos": 162843,
+   "monto": 214492441972.13
+  },
+  {
+   "modalidad": "Invitación a cuando menos tres personas",
+   "contratos": 112148,
+   "monto": 270369263534.69
+  },
+  {
+   "modalidad": "Licitación pública nacional",
+   "contratos": 51334,
+   "monto": 416104911712.57
+  },
+  {
+   "modalidad": "Licitación pública internacional abierta",
+   "contratos": 309,
+   "monto": 2491493761.32
+  },
+  {
+   "modalidad": "Licitación pública internacional bajo la cobertura de tratados",
+   "contratos": 87,
+   "monto": 788060801.3
+  }
+ ],
+ "temascaltepec": [
+  {
+   "ciclo": 2020,
+   "proyectos": 250,
+   "aprobado": 189219564.61,
+   "pagado": 132580040.61,
+   "con_coordenadas": 250
+  },
+  {
+   "ciclo": 2021,
+   "proyectos": 89,
+   "aprobado": 114964883.3,
+   "pagado": 60734680.37,
+   "con_coordenadas": 89
+  },
+  {
+   "ciclo": 2022,
+   "proyectos": 85,
+   "aprobado": 104830042.87,
+   "pagado": 57487106.49,
+   "con_coordenadas": 85
+  },
+  {
+   "ciclo": 2023,
+   "proyectos": 86,
+   "aprobado": 115096286.87,
+   "pagado": 67760741.77,
+   "con_coordenadas": 86
+  },
+  {
+   "ciclo": 2024,
+   "proyectos": 149,
+   "aprobado": 180211552.09,
+   "pagado": 80498988.73,
+   "con_coordenadas": 149
+  },
+  {
+   "ciclo": 2025,
+   "proyectos": 59,
+   "aprobado": 58834555.0,
+   "pagado": 58803710.52,
+   "con_coordenadas": 59
+  }
+ ],
+ "temascaltepec_ultimo": {
+  "folios": 602,
+  "aprobado": 492934777.12,
+  "pagado": 435083523.77,
+  "terminados": 577,
+  "cancelados": 18
+ }
+}

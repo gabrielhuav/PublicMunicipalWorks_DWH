@@ -91,6 +91,13 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 | `scripts/medir_rendimiento.py` | Latencias contra `docker/compose.yml` |
 | `scripts/verificar_scd.py` | Clasificación SCD contra el esquema |
 | `docs/` | **Sitio de GitHub Pages de ICOKG. No se toca** |
+| `lakehouse/` | **Lago de datos** (bronce, plata, oro) e integración aditiva. Su `README.md` explica cómo reproducirlo |
+| `lakehouse/fuentes.json` | Manifiesto: 9 fuentes con bytes y SHA-256 |
+| `lakehouse/etl/ejecutar.py` | Reconstruye todo y verifica |
+| `lakehouse/oro/` | Una consulta por tabla oro |
+| `lakehouse/consultas/` | 7 pares de consultas (PostgreSQL y DuckDB) y una solo de lago; su `README.md` trae los comandos |
+| `lakehouse/verificacion/` | `verificar_lago.py`, `resumen_auditoria.py` y sus evidencias. De ahí salen las cifras del artículo |
+| `scripts/evaluacion/eval_criterio_costo.py` | Entrega 3: criterio de costo por tipo y brecha de pago |
 
 ## Hechos establecidos (no volver a investigar)
 
@@ -137,7 +144,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Censo ITER:** `.../ccpv/2020/datosabiertos/iter/iter_15_cpv2020_csv.zip`.
 - **Rezago social (CONEVAL):** CC BY 4.0 en `datos.gob.mx`, paquete `rezago_social`, por municipio y
   localidad. Solo se leyó el metadato; falta bajarlo.
-- **Pendiente:** confirmar los términos de uso de los datos de SHCP.
+- **Términos de SHCP (leídos el 2 nov):** permiten redistribuir y crear derivados citando conjunto,
+  dependencia, liga y fecha, y sin variar el sentido original de la información.
 
 ### Hallazgos exploratorios sobre los datos reales
 
@@ -145,6 +153,43 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - La regla C3 (físico < 30 y financiero > 80) se cumple en 2 de 389 pares con ambos datos.
 - Unos pocos puntos caen fuera del recuadro de Temascaltepec (1 de 59 en 2025, 4 de 149 en 2024).
   Falta medirlo contra el polígono municipal.
+
+### Lago de datos (2 nov, reconstruido con `lakehouse/etl/`)
+
+- **Gabriel decidió el 2 nov que el lago se puebla con todo el país:** no importa que los datos no
+  sean de Temascaltepec. El plan de cinco entregas está aprobado.
+- **Tamaño:** 6 ciclos, 32 entidades, 967,495 folios, 1,537,019 filas folio-ciclo y 2,008,738 filas
+  en `plata.proyectos`. Bronce 2,136 MB; plata 298 MB (contra 2,803 MB de CSV); oro 139 MB; las tablas
+  nuevas de PostgreSQL 752 MB. Plata se construye en unos 200 s.
+- **Las 7 consultas dan el mismo SHA-256 en PostgreSQL y en el lago.** El lago gana en barridos
+  (566 contra 25 ms, 291 contra 14 ms) y PostgreSQL en búsquedas con índice (1.5 contra 30 ms).
+  PostgreSQL corre con la configuración por omisión de la pila de referencia.
+- **Poda:** el filtro por ciclo y entidad planea 1 de 192 archivos. **Viaje en el tiempo:** 6
+  instantáneas, cada una con sus filas acumuladas. **Evolución:** agregar una columna no reescribe datos.
+- **Aditivo:** las 34 tablas originales quedan idénticas por md5 (`evidencia_aditiva.json`).
+- **Error de captura en SHCP:** 3 filas de Sonora traen como pagado los dígitos del folio, $600.9 mil
+  millones. El periodo 5 corrige una; 2 llegan a oro ($390.8 mil millones) y se anulan en `pagado`.
+- **En 2020, periodo 5,** 119,009 puntos traen nombres donde van claves: quedan fuera de la distancia.
+- **Calidad de coordenadas:** mediana de 0.4 km a la localidad del Censo. Más de 25 km: 2.6 a 3.7 % en
+  2020-2022 y 0.2 a 0.4 % desde 2023.
+- **CNGMD contra SHCP en 2022, 2,469 municipios:** 947 declaran menos contratos de obra que los que
+  registra SHCP (94 declaran cero, entre ellos Temascaltepec). Los universos difieren y SHCP puede
+  incluir contratos firmados antes de 2022: es una inconsistencia que revisar, no una prueba.
+- **Versiones:** de 356,914 folios en más de un ciclo, 137,644 cambian de estatus (38.6 %), 60,696 de
+  monto (17.0 %) y ninguno de clasificación.
+- **Reglas sobre 1,465,856 proyectos:** C1 del capítulo 2,010; C1 por tipo 57,797, y solo 491 cumplen
+  ambas, lo que confirma con datos reales que C1 señala obras grandes, no caras.
+- **Rezago:** la mediana de pago por habitante sube de $840 (muy bajo) a $4,268 (muy alto) en 2023;
+  Spearman de .39 a .57 entre ciclos.
+- **Modalidad, contratos de obra 2023-2025:** adjudicación directa 49.9 % de los contratos y 23.7 %
+  del monto.
+
+### Criterio de costo (entrega 3, 2 nov)
+
+- A 15 % de prevalencia, R0 repite el capítulo (.462 y .351). R2 (C1 por tipo con z > 3 más brecha de
+  pago) da .511 de precisión, .411 de recall, ROC-AUC .677 y PR-AUC .457; Isolation Forest da .650 y
+  .342. El recall de sobreprecio sube de .093 a .192 y el de pago adelantado de .061 a .167.
+- Los umbrales se fijaron antes de ver resultados y se reportan todos.
 
 ### Repositorios de alumnos
 
@@ -161,6 +206,11 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 - **Nunca uses `git push --tags`.** Hay 10 tags `v1.*-icokg2026` locales, pero en `origin` solo
   `v1.2.0` (`515a1c6`) y `v1.7.3` (`8feb73c`), los dos con release.
+- **MinIO ya no se puede bajar de Docker Hub ni de quay.io (2 nov):** por eso el lago usa SeaweedFS.
+  Tarda unos segundos en aceptar conexiones después de arrancar.
+- `VACUUM` paralelo falla en el contenedor por sus 64 MB de `/dev/shm`: `almacen.py` lo hace en serie.
+- PyIceberg 0.9 rechaza decimales de precisión 18 o menor: `plata.py` usa `decimal(20,2)`.
+- Bash rechazó dos veces bloques largos con heredocs y comillas: usa el Write para scripts largos.
 - El nombre de columnas de SHCP cambia por año. En 2020: `ID_MUNICIPIO_RESPONSABLE`, `MONTO_*`, `ESTATUS`,
   `metas.csv` y `avances_fisicos.csv`. Hasta 2023 un folio aparece en los periodos 4 y 5: toma el último.
 - Los CSV de SHCP van en cp1252 con bytes sueltos (`0x90`): lee con `encoding_errors='replace'`.
@@ -186,6 +236,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   repositorios de alumnos. Nada subido a `origin`.
 - **Descargas de trabajo:** los ZIP de SHCP y los extractos están en el scratchpad de la sesión, no
   en el repositorio. Otra sesión debe volver a bajarlos.
+- **Hecho (2 nov):** lago completo (entregas 1, 2 y 4) y criterio de costo (entrega 3). Falta la
+  entrega 5 (OC4IDS y RDF).
 - **Sin recalcular:** las 11 páginas y 6,844 palabras de la base en Word. Se miden con
   `word_a_pdf.ps1` antes de escribir.
 - **Riesgo de páginas:** faltan 2,738 palabras en 4 páginas, 684 por página contra 622 de la base.
@@ -193,15 +245,15 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 ### Pendientes para Gabriel
 
-- Aprobar el plan, el nombre del repositorio nuevo y el título.
+- Aprobar el nombre del repositorio nuevo y el título.
 - Confirmar el bloque de autores y si los alumnos van en agradecimientos o como autores.
 
 ## Siguiente paso
 
 1. [x] Reproducir las cifras principales y reportar cuáles no coinciden.
-2. [ ] Plan ordenado por valor y esfuerzo. **Entregado el 1 nov; espera la aprobación de Gabriel.**
-3. [ ] ETL completo y reproducible, con manifiesto, hashes y prueba desde un clon limpio.
-4. [ ] Consultas SQL y comandos para verlas en la base de datos.
+2. [x] Plan ordenado por valor y esfuerzo. Aprobado el 2 nov.
+3. [ ] ETL completo y reproducible, con manifiesto y hashes. Falta anotar la prueba desde un clon limpio.
+4. [x] Consultas SQL y comandos para verlas en la base de datos (`lakehouse/consultas/`).
 5. [ ] Páginas nuevas en el repositorio nuevo, verificadas contra la base.
 6. [ ] Extensión en `paper/ijcopi/`, con la plantilla, amarillo y revisión del PDF a ojo.
 
@@ -210,3 +262,5 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-01, Claude (Claude Code, Opus 5.5): creó la rama `ijcopi-obras`, esta memoria y el
   verificador de enlaces. Reprodujo las cifras del capítulo: encontró el error de población y el
   conteo de eventos. Verificó fuentes reales y revisó los repositorios de alumnos. No hizo push.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): con el plan aprobado, implementó `lakehouse/` con datos
+  nacionales: SeaweedFS, Iceberg, DuckDB y carga aditiva a PostgreSQL. Evaluó el criterio de costo. Sin push.

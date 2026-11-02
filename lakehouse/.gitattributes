@@ -1,0 +1,4 @@
+# El lago compara bytes: Git no debe tocar los saltos de línea de sus datos, y
+# core.autocrlf=true los cambiaría en esta PC.
+snapshots/** binary
+verificacion/*.csv binary

@@ -1,0 +1,141 @@
+{
+ "identicas": true,
+ "tablas": {
+  "public.acta_entrega": [
+   0,
+   "d41d8cd98f00b204e9800998ecf8427e"
+  ],
+  "public.constructora": [
+   10,
+   "ab023b59296548a45bb4adb4f8db02d8"
+  ],
+  "public.costos": [
+   13228,
+   "59b1f647620abd1a052f586f4b4c55b7"
+  ],
+  "public.financia": [
+   1899,
+   "4ce694bce201963fb06ce28293585d03"
+  ],
+  "public.firmantes": [
+   0,
+   "d41d8cd98f00b204e9800998ecf8427e"
+  ],
+  "public.fuente_presupuestaria": [
+   5,
+   "e1841506f0d739b732cd551df85b52fb"
+  ],
+  "public.imagenes_informe": [
+   0,
+   "d41d8cd98f00b204e9800998ecf8427e"
+  ],
+  "public.informes": [
+   14885,
+   "67b6078e73ffba8b863500cdd06c20d5"
+  ],
+  "public.obra": [
+   1247,
+   "246b834f88d4f32543b5000c631ff3f8"
+  ],
+  "public.opcion_seleccion": [
+   0,
+   "d41d8cd98f00b204e9800998ecf8427e"
+  ],
+  "public.permisos": [
+   0,
+   "d41d8cd98f00b204e9800998ecf8427e"
+  ],
+  "public.personal": [
+   54,
+   "9ab63fa15d5445e38c7ac48907183ba4"
+  ],
+  "public.pobladores": [
+   2341,
+   "1bdeb478881c046e62ba3cf4c0b77c8f"
+  ],
+  "public.presupuesto_obra": [
+   1247,
+   "ebc090386874156b33fb11a8b77c0af2"
+  ],
+  "public.propuestas_obras": [
+   2156,
+   "c2a0d16faa6a60d31383324db325301e"
+  ],
+  "public.proyectista": [
+   13,
+   "52dcdaf73fc659a5162c8f12b6208510"
+  ],
+  "public.region": [
+   165,
+   "10a003ab2a95d1c6f19509c2f5022532"
+  ],
+  "public.supervisor": [
+   14,
+   "73b5ea885e39c271af82800995ae79ac"
+  ],
+  "public.votos_propuestas": [
+   8723,
+   "acfa838e45b8ac2080b5387906a37400"
+  ],
+  "warehouse.dim_constructora": [
+   20,
+   "55aa7da64bf3176625aa17c3d57f8571"
+  ],
+  "warehouse.dim_fuente": [
+   5,
+   "476262bc673b138bab5711ae0adf96f6"
+  ],
+  "warehouse.dim_obra": [
+   1247,
+   "504781c079622cabf584cde8a0cb536d"
+  ],
+  "warehouse.dim_personal": [
+   104,
+   "e9196b237c8578dabf3b65827a6788aa"
+  ],
+  "warehouse.dim_poblador": [
+   2341,
+   "cb5af744d941ed3fc24fbd0b79bd446b"
+  ],
+  "warehouse.dim_presupuesto": [
+   1247,
+   "e8109cbe171400ed3a961d9bf01f5661"
+  ],
+  "warehouse.dim_propuesta": [
+   2156,
+   "c105751764b33ca5c6869c05052ca13f"
+  ],
+  "warehouse.dim_region": [
+   430,
+   "ee2436199a546a359b5ffedcbcb892ea"
+  ],
+  "warehouse.dim_tiempo": [
+   4018,
+   "0f66cd78c90765a244b009a9361c32cf"
+  ],
+  "warehouse.dim_tipo_evento": [
+   17,
+   "4629c462e5af187934bd2c0a30e263b8"
+  ],
+  "warehouse.fact_eventos_auditoria": [
+   55740,
+   "06c9e46abd73e12d0beff526144fa3fc"
+  ],
+  "warehouse.fact_eventos_auditoria_2024": [
+   8817,
+   "d4d694fb639aca658b16deb36b6b89cc"
+  ],
+  "warehouse.fact_eventos_auditoria_2025": [
+   8840,
+   "90f7a670d9a6e3fcc2450412a774e82b"
+  ],
+  "warehouse.fact_eventos_auditoria_2026": [
+   38083,
+   "fc2b30586cce982cda181f905148d8cf"
+  ],
+  "warehouse.fact_obra_mensual": [
+   29928,
+   "f95a119b6353d68b62cfe245b158ba19"
+  ]
+ }
+}
