@@ -64,10 +64,14 @@ details summary { cursor: pointer; color: var(--marca); margin-top: .4rem; }
 .estado { margin: 0 0 .5rem; color: var(--texto-2); }
 .teselas { margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--borde); }
 
-/* Vista para las figuras del artículo: solo el mapa y su leyenda. */
-body.figura .barra, body.figura .aviso, body.figura .control { display: none; }
-body.figura .rejilla { grid-template-columns: minmax(0, 1fr) 260px; }
-body.figura #mapa { height: calc(100vh - 32px); }
+/* Vista para las figuras del artículo: el mapa a toda la ventana, sin botones, y la leyenda
+   encima y en grande, para que se lea impresa. */
+body.figura .barra, body.figura .aviso, body.figura .control, body.figura .leaflet-control-zoom { display: none; }
+body.figura .rejilla { display: block; position: relative; padding: 0; }
+body.figura #mapa { height: 100vh; min-height: 0; border: 0; border-radius: 0; }
+body.figura .rejilla > aside:last-child { position: absolute; left: 12px; bottom: 28px; z-index: 1000;
+  font-size: 1.05rem; padding: .7rem .9rem; }
+body.figura #leyendaTitulo { font-size: 1.1rem; }
 body.figura .origen, body.figura .teselas, body.figura #detalle { display: none; }
 
 /* Página de consultas */

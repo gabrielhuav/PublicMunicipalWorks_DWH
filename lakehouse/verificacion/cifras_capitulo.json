@@ -1,0 +1,18 @@
+{
+ "temascaltepec": {
+  "cvemun": "15086",
+  "pobtot_censo_2020": 35014,
+  "fuente": "lakehouse/sitio/datos/02_municipios.json",
+  "capitulo": 64844
+ },
+ "eventos_auditoria": {
+  "total": 55740,
+  "de_voto": 17993,
+  "votos": 8723,
+  "capitulo": "about 28,000"
+ },
+ "api_public_obras": {
+  "bytes": 765748,
+  "capitulo": "753 kB"
+ }
+}

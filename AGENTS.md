@@ -103,6 +103,10 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 | `lakehouse/capas/` | Una consulta por capa del sitio: `.pg.sql` en PostgreSQL, `.duck.sql` en el lago |
 | `lakehouse/sitio/` | **Sitio público nuevo** (mapa y consultas). Sus datos los escribe `etl/exportar_capas.py` |
 | `lakehouse/publicar/` | `publicar.ps1` arma la copia pública; `README.md` y `pages.yml` van a su raíz |
+| `paper/ijcopi/extender_v1.py` | **Arma la v1 extendida** desde la base; los textos nuevos viven aquí |
+| `paper/ijcopi/cifras_extension.py` | Cada cifra de la v1 con su archivo de evidencia, y las comprobaciones del texto |
+| `paper/ijcopi/word_a_pdf.ps1`, `verificar_amarillo.py`, `capturar_mapa.ps1` | Páginas y palabras en Word, amarillo completo y figura |
+| `scripts/cifras_capitulo.py` | Mide las tres cifras del capítulo que la v1 corrige |
 
 ## Hechos establecidos (no volver a investigar)
 
@@ -189,8 +193,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   ambas, lo que confirma con datos reales que C1 señala obras grandes, no caras.
 - **Rezago:** la mediana de pago por habitante sube de $840 (muy bajo) a $4,268 (muy alto) en 2023;
   Spearman de .39 a .57 entre ciclos.
-- **Modalidad, contratos de obra 2023-2025:** adjudicación directa 49.9 % de los contratos y 23.7 %
-  del monto.
+- **Modalidad, contratos de obra 2023-2025:** adjudicación directa 49.8 % de los contratos y 23.7 %
+  del monto (antes decía 49.9 %; lo recalcula `paper/ijcopi/cifras_extension.py`).
 
 ### Sitio público (paso 5, 2 nov)
 
@@ -210,6 +214,29 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   se sabe por qué; el mapa lo advierte.
 - **Temascaltepec en INEGI:** 35,014 habitantes. CNGMD declara 0 contratos de obra en 2022 y SHCP 16.
 - El sitio no copia la demostración sintética del capítulo: enlaza a ella.
+
+### Extensión en Word (paso 6, empezó el 2 nov)
+
+- **Base medida el 2 nov con `paper/ijcopi/word_a_pdf.ps1`:** 11 páginas y 6,844 palabras. Meta:
+  al menos 9,582 palabras en 15 páginas como máximo.
+- **Método:** `paper/ijcopi/extender_v1.py` copia la base a `Paper37_IJCOPI_v1_extendida.docx` y le
+  inserta lo nuevo en amarillo con python-docx; la base no se toca. Las cifras salen de
+  `paper/ijcopi/cifras_extension.py`, que solo lee evidencias del repositorio.
+- **Estructura nueva:** RQ4; 7.5 criterio de costo por tipo (filas nuevas en la tabla 2); 7.7
+  correcciones; 8 capa lakehouse sobre registros oficiales; 9 evaluación medida (tabla 3, siete
+  consultas); 10 conclusiones (antes 8). Título propuesto y autores sin tocar hasta que Gabriel decida.
+- **Hecho el 2 nov: `paper/ijcopi/Paper37_IJCOPI_v1_extendida.docx` y su PDF.** 15 páginas, 9,790
+  palabras (meta 9,582), resumen de 140, seis palabras clave y 0 palabras agregadas sin amarillo
+  según `verificar_amarillo.py` (ajustado para separar párrafos). La última página queda a la mitad.
+  Revisado a ojo en el PDF.
+- **Figura 4** (`figura_mapa_lago.png`, marco amarillo) se capturó con `capturar_mapa.ps1` del sitio
+  local, con la vista de figura nueva de `sitio.css` (leyenda encima, sin botones). Esa vista aún no
+  está publicada.
+- **Correcciones medidas con `scripts/cifras_capitulo.py`:** 35,014 habitantes (no 64,844),
+  55,740 eventos de auditoría (no "about 28,000"; 8,723 votos dejan 17,993 eventos de voto) y
+  765,748 bytes en `/api/public/obras` (no 753 kB).
+- El puerto 55432 puede estar tomado como puerto efímero por otro programa: usa un override de
+  Compose con `ports: !override` y otro puerto, y pasa `LAGO_PG` con ese puerto.
 
 ### Interoperabilidad (entrega 5, 2 nov, Estado de México)
 
@@ -287,10 +314,9 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Descargas de trabajo:** los ZIP de SHCP y los extractos están en el scratchpad de la sesión, no
   en el repositorio. Otra sesión debe volver a bajarlos.
 - **Hecho (2 nov):** las cinco entregas del plan: lago, auditoría, criterio de costo, OC4IDS y grafo.
-- **Sin recalcular:** las 11 páginas y 6,844 palabras de la base en Word. Se miden con
-  `word_a_pdf.ps1` antes de escribir.
-- **Riesgo de páginas:** faltan 2,738 palabras en 4 páginas, 684 por página contra 622 de la base.
-  Cabe, como mucho, una figura nueva.
+- **Recalculado el 2 nov con `word_a_pdf.ps1`:** la base tiene 11 páginas y 6,844 palabras.
+- **Hecho (2 nov):** la v1 extendida, con 15 páginas y 9,790 palabras. Quedan media página y unas 200
+  palabras de margen: un cambio grande en autores o título cabe, una figura más no.
 
 - **Hecho (2 nov):** el sitio del lago, verificado contra las bases y publicado en
   `gabrielhuav/PublicMunicipalWorks_Lakehouse`. La rama `ijcopi-obras` sigue sin subirse a `origin`.
@@ -298,8 +324,13 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 ### Pendientes para Gabriel
 
 - Aprobar el título. El 2 nov dijo "el nombre te lo confirmo" al autorizar la subida; se tomó como el
-  nombre del repositorio, no como el título.
-- Confirmar el bloque de autores y si los alumnos van en agradecimientos o como autores.
+  nombre del repositorio, no como el título. La v1 ya trae el título propuesto, en amarillo.
+- Confirmar el bloque de autores y si los alumnos van en agradecimientos o como autores. La v1 deja
+  los autores de la base sin tocar.
+- Revisar la v1 completa, sobre todo la declaración de IA, que dice que los autores revisaron y
+  aprobaron el texto nuevo.
+- Autorizar otra subida al repositorio público: falta `scripts/cifras_capitulo.py`, su evidencia y la
+  vista de figura, que el artículo cita.
 
 ## Siguiente paso
 
@@ -309,7 +340,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
    archivos oficiales tomados de la caché porque SHCP estaba lento; se comprobó su SHA-256.
 4. [x] Consultas SQL y comandos para verlas en la base de datos (`lakehouse/consultas/`).
 5. [x] Páginas nuevas en el repositorio nuevo, verificadas contra la base y en vivo.
-6. [ ] Extensión en `paper/ijcopi/`, con la plantilla, amarillo y revisión del PDF a ojo.
+6. [ ] Extensión en `paper/ijcopi/`, con la plantilla, amarillo y revisión del PDF a ojo. Primera
+   versión completa armada y medida; falta la revisión de Gabriel, el título y los autores.
 
 ## Bitácora
 
@@ -325,3 +357,6 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - 2026-11-02, Claude (Claude Code, Opus 5.5): con autorización de Gabriel, corrió el verificador de
   enlaces (`fallos: 0`), creó `gabrielhuav/PublicMunicipalWorks_Lakehouse`, subió `main`, activó Pages
   y comprobó en vivo los 16 archivos del sitio. No subió la rama `ijcopi-obras`.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): midió la base en Word (11 páginas, 6,844 palabras) y armó
+  la v1 extendida con `extender_v1.py`: 15 páginas, 9,790 palabras, todo lo nuevo en amarillo. Midió
+  las tres correcciones del capítulo con `scripts/cifras_capitulo.py`. Sin push.
