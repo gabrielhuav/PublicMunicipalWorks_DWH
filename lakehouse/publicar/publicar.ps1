@@ -8,7 +8,7 @@ param(
 # Toma lo que esta en el commit de $Rama, no lo que haya sin guardar en la carpeta.
 $ErrorActionPreference = "Stop"
 $raiz = git -C $PSScriptRoot rev-parse --show-toplevel
-$rutas = @(".gitignore", "LICENSE.md", "backend", "db", "docker", "scripts", "lakehouse")
+$rutas = @(".gitattributes", "LICENSE.md", "backend", "db", "docker", "scripts", "lakehouse")
 
 if (-not (Test-Path (Join-Path $Destino ".git"))) {
     New-Item -ItemType Directory -Force $Destino | Out-Null
@@ -23,6 +23,8 @@ Remove-Item $tar
 
 $publicar = Join-Path $Destino "lakehouse\publicar"
 Move-Item (Join-Path $publicar "README.md") (Join-Path $Destino "README.md")
+# El .gitignore de la raiz trae reglas del manuscrito; la copia lleva uno propio.
+Move-Item (Join-Path $publicar "gitignore") (Join-Path $Destino ".gitignore")
 New-Item -ItemType Directory -Force (Join-Path $Destino ".github\workflows") | Out-Null
 Move-Item (Join-Path $publicar "pages.yml") (Join-Path $Destino ".github\workflows\pages.yml")
 Remove-Item -Recurse $publicar
