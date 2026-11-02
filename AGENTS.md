@@ -233,9 +233,9 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   Revisado a ojo en el PDF.
 - **Figura 4** (`figura_mapa_lago.png`, marco amarillo) se capturó con `capturar_mapa.ps1`, con la
   vista de figura de `sitio.css` (leyenda encima, sin botones), ya publicada.
-- **Autores (2 nov):** Gabriel dijo que estaban mal. Quedaron como en el trabajo 38: Gabriel Hurtado
-  Avilés, Roberto Eswart Zagal Flores, Uriel González Casiano y Marco Tulio Maldonado Mejía, todos con
-  afiliación 1, y los correos reordenados igual que en el 38. Lo movido o nuevo va en amarillo.
+- **Autores, confirmados por Gabriel el 2 nov:** como en el trabajo 38, Gabriel Hurtado Avilés, Roberto
+  Eswart Zagal Flores, Uriel González Casiano y Marco Tulio Maldonado Mejía, todos con afiliación 1, y
+  los correos reordenados igual que en el 38. Lo movido o nuevo va en amarillo. No se vuelve a tocar.
 - **Correcciones medidas con `scripts/cifras_capitulo.py`:** 35,014 habitantes (no 64,844),
   55,740 eventos de auditoría (no "about 28,000"; 8,723 votos dejan 17,993 eventos de voto) y
   765,748 bytes en `/api/public/obras` (no 753 kB).
