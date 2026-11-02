@@ -15,6 +15,34 @@ Repositorio de trabajo: <https://github.com/gabrielhuav/PublicMunicipalWorks_DWH
 
 Los repositorios son públicos: no escribas aquí enlaces a correos, borradores ni datos personales.
 
+## Relevo (2 nov, al cerrar la sesión de Claude)
+
+Gabriel se quedó sin créditos de Claude y delega el trabajo en otra IA. Así quedó todo:
+
+- **La rama `ijcopi-obras` se subió a `origin` el 2 nov, con su autorización.** Antes solo estaba en
+  local porque la regla 5 pide autorización para cada push, y hasta entonces solo se había autorizado
+  el repositorio del lago. Sigue sin fusionarse a `main` (regla 2).
+- **Sitio del lago publicado:** `gabrielhuav/PublicMunicipalWorks_Lakehouse`, commit `e16d6a4`, en
+  <https://gabrielhuav.github.io/PublicMunicipalWorks_Lakehouse/>. La v1 imprime sus URL: no muevas
+  páginas ni cambies los parámetros (`?estado=`, `?folio=`, `?comparar=1`, `?lang=`, `?vista=figura`).
+- **Artículo:** `paper/ijcopi/Paper37_IJCOPI_v1_extendida.docx` y su PDF: 15 páginas (el máximo),
+  10,172 palabras (mínimo 9,582), resumen de 140, seis palabras clave y todo lo nuevo en amarillo. Lo
+  arma `paper/ijcopi/extender_v1.py` desde la base congelada; no edites el .docx a mano, porque la
+  siguiente corrida lo sobrescribe.
+- **No queda margen de páginas:** todo texto nuevo obliga a recortar otro. Mide siempre con
+  `word_a_pdf.ps1`, corre `verificar_amarillo.py` y revisa el PDF a ojo.
+- **Lo que falta, en orden:** (1) Gabriel confirma lo que la sección 9.4 dice de los panoramas de
+  Street View (ver Ejemplo); (2) decide si los alumnos van en agradecimientos; (3) revisa la v1
+  completa, incluida la declaración de IA; (4) envío a IJCOPI antes del 9 nov, con el correo visto y
+  aprobado por Gabriel (regla 6). El encabezado de la plantilla dice "Author et al.": no se revisó si
+  IJCOPI pide cambiarlo.
+- **Para retomar:** Docker Desktop quedó apagado. El almacén se levanta con
+  `docker compose -f docker/compose.yml up -d db` y el lago con
+  `docker compose -f lakehouse/compose.yml up -d`; el sitio local, con la configuración `sitio-lago`
+  de `.claude/launch.json` (puerto 8948). Para publicar el sitio: commit en la rama,
+  `lakehouse/publicar/publicar.ps1`, commit y push en la copia pública con autorización, y
+  `lakehouse/publicar/comprobar_en_vivo.py` hasta "distintos: 0".
+
 ## Reglas que no se negocian
 
 1. **Los enlaces del capítulo de Springer son inmutables.** Los que apuntan a este trabajo son
@@ -102,7 +130,7 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 | `scripts/evaluacion/eval_criterio_costo.py` | Entrega 3: criterio de costo por tipo y brecha de pago |
 | `lakehouse/capas/` | Una consulta por capa del sitio: `.pg.sql` en PostgreSQL, `.duck.sql` en el lago |
 | `lakehouse/sitio/` | **Sitio público nuevo** (mapa y consultas). Sus datos los escribe `etl/exportar_capas.py` |
-| `lakehouse/publicar/` | `publicar.ps1` arma la copia pública; `README.md` y `pages.yml` van a su raíz |
+| `lakehouse/publicar/` | `publicar.ps1` arma la copia pública; `README.md` y `pages.yml` van a su raíz; `comprobar_en_vivo.py` compara el sitio en vivo |
 | `lakehouse/etl/mapa_base.py` | Copia local del mapa base (Natural Earth) y respaldo incrustado en `mapa-teselas.js` |
 | `lakehouse/etl/enlaces.py` | Tabla anexa con los enlaces de los contratos, 2023-2025; no es parte de plata |
 | `paper/ijcopi/extender_v1.py` | **Arma la v1 extendida** desde la base; los textos nuevos viven aquí |
@@ -211,7 +239,8 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   evidencia y la vista de figura. Los 17 archivos del sitio dan en vivo el mismo SHA-256 que en local.
 - **Para actualizarlo:** commit en la rama, `lakehouse/publicar/publicar.ps1`, revisar la copia en
   `Documents/GitHub Desktop/PublicMunicipalWorks_Lakehouse` (remoto `origin`), commit ahí y push
-  solo con autorización.
+  solo con autorización. Al terminar Pages, `lakehouse/publicar/comprobar_en_vivo.py` compara cada
+  archivo en vivo con el local.
 - **Capas:** 6 consultas, de 6 a 253,346 filas. Una consulta que empieza con `-- particion: columna`
   se corre una vez y se reparte en un archivo por valor, con `indice.json`: `05_puntos_2024` en 32
   (por estado, 38 MB) y `06_detalle_2024` en 2,492 (por municipio, 49 MB). `verificar_capas.py` las
@@ -233,13 +262,14 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   `paper/ijcopi/cifras_extension.py`, que solo lee evidencias del repositorio.
 - **Estructura nueva:** RQ4; 7.5 criterio de costo por tipo (filas nuevas en la tabla 2); 7.7
   correcciones; 8 capa lakehouse sobre registros oficiales; 9 evaluación medida (tabla 3, siete
-  consultas); 10 conclusiones (antes 8). Título propuesto y autores sin tocar hasta que Gabriel decida.
+  consultas); 10 conclusiones (antes 8). Título aprobado y autores confirmados el 2 nov (ver abajo).
 - **Hecho el 2 nov: `paper/ijcopi/Paper37_IJCOPI_v1_extendida.docx` y su PDF.** 15 páginas, 9,795
   palabras (meta 9,582), resumen de 140, seis palabras clave y 0 palabras agregadas sin amarillo
   según `verificar_amarillo.py` (ajustado para separar párrafos). La última página queda a la mitad.
   Revisado a ojo en el PDF.
-- **Figura 4** (`figura_mapa_lago.png`, marco amarillo) se capturó con `capturar_mapa.ps1`, con la
-  vista de figura de `sitio.css` (leyenda encima, sin botones), ya publicada.
+- **Figuras 4 y 5** (`figura_ejemplo_mapa.png` y `figura_ejemplo_satelite.jpg`, con marco amarillo)
+  salen de `capturar_mapa.ps1`; ver Ejemplo. Sustituyen a la figura nacional de antes, que Gabriel
+  encontró anticuada.
 - **Autores, confirmados por Gabriel el 2 nov:** como en el trabajo 38, Gabriel Hurtado Avilés, Roberto
   Eswart Zagal Flores, Uriel González Casiano y Marco Tulio Maldonado Mejía, todos con afiliación 1, y
   los correos reordenados igual que en el 38. Lo movido o nuevo va en amarillo. No se vuelve a tocar.
@@ -355,16 +385,13 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 
 - **Hecho (1 nov):** rama `ijcopi-obras`, esta memoria, `scripts/verificar_enlaces_springer.ps1` (21
   enlaces y 2 tags), reproducción de las cifras, verificación de fuentes y revisión de los
-  repositorios de alumnos. Nada subido a `origin`.
-- **Descargas de trabajo:** los ZIP de SHCP y los extractos están en el scratchpad de la sesión, no
-  en el repositorio. Otra sesión debe volver a bajarlos.
-- **Hecho (2 nov):** las cinco entregas del plan: lago, auditoría, criterio de costo, OC4IDS y grafo.
-- **Recalculado el 2 nov con `word_a_pdf.ps1`:** la base tiene 11 páginas y 6,844 palabras.
-- **Hecho (2 nov):** la v1 extendida, con 15 páginas y 9,795 palabras. Quedan media página y unas 200
-  palabras de margen: un cambio grande en autores o título cabe, una figura más no.
-
-- **Hecho (2 nov):** el sitio del lago, verificado contra las bases y publicado en
-  `gabrielhuav/PublicMunicipalWorks_Lakehouse`. La rama `ijcopi-obras` sigue sin subirse a `origin`.
+  repositorios de alumnos.
+- **Hecho (2 nov):** las cinco entregas del plan (lago, auditoría, criterio de costo, OC4IDS y
+  grafo); el sitio del lago, en cinco publicaciones, la última `e16d6a4`; y la v1 extendida, con 15
+  páginas y 10,172 palabras, sin margen de páginas.
+- **Rama `ijcopi-obras` en `origin` desde el 2 nov**, con autorización de Gabriel.
+- **Descargas de trabajo:** los ZIP de SHCP y los extractos quedaron en el scratchpad de una sesión,
+  no en el repositorio; `lakehouse/etl/ejecutar.py` los vuelve a bajar y comprueba su SHA-256.
 
 ### Pendientes para Gabriel
 
@@ -424,8 +451,11 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
    archivos oficiales tomados de la caché porque SHCP estaba lento; se comprobó su SHA-256.
 4. [x] Consultas SQL y comandos para verlas en la base de datos (`lakehouse/consultas/`).
 5. [x] Páginas nuevas en el repositorio nuevo, verificadas contra la base y en vivo.
-6. [ ] Extensión en `paper/ijcopi/`, con la plantilla, amarillo y revisión del PDF a ojo. Primera
-   versión completa armada y medida; falta la revisión de Gabriel, el título y los autores.
+6. [ ] Extensión en `paper/ijcopi/`, con la plantilla, amarillo y revisión del PDF a ojo. La v1 está
+   armada y medida, con el título y los autores aprobados; falta la revisión final de Gabriel (ver
+   Relevo).
+7. [ ] Envío a IJCOPI antes del 9 nov, a la dirección y con el asunto de "Requisitos de IJCOPI".
+   Gabriel ve y aprueba el correo antes de enviarlo.
 
 ## Bitácora
 
@@ -460,4 +490,7 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
   fechas de toma de Esri, Street View en el sitio (no en el artículo, por las reglas de Google), copias
   en Internet Archive y enlaces por folio. v1: 15 páginas, 10,172 palabras.
 - 2026-11-02, Claude (Claude Code, Opus 5.5): con autorización de Gabriel, enlaces de Springer con
-  `fallos: 0` y cuarta tanda publicada (`e16d6a4`); 2,545 archivos iguales en vivo. La rama sigue sin subirse.
+  `fallos: 0` y cuarta tanda publicada (`e16d6a4`); 2,545 archivos iguales en vivo.
+- 2026-11-02, Claude (Claude Code, Opus 5.5): Gabriel se quedó sin créditos y delega en otra IA. Se
+  escribió el Relevo y se guardó `lakehouse/publicar/comprobar_en_vivo.py`. Con su autorización y con
+  `fallos: 0` en el verificador de Springer, la rama `ijcopi-obras` se subió a `origin`.
