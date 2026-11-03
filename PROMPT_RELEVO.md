@@ -61,6 +61,20 @@ Funciones que tiene el mapa de obras (`lakehouse/sitio/`) y que faltan en el map
 6. **Estado completo en la URL (`setUrl` en `lakehouse/sitio/mapa.js`) y verificador en vivo (`lakehouse/publicar/comprobar_en_vivo.py`):**
    - Guarda posición (`?c=lat,lon,zoom`), indicador, filtros y elemento abierto en la URL para enlazar hallazgos desde el artículo, y comprueba tras publicar que todos los archivos en GitHub Pages tengan el mismo SHA-256 que en local.
 
+### Mensaje para iniciar la conversación en el proyecto de agua (`Data_Warehouse_static`)
+
+```text
+Hola. Vas a trabajar en mi artículo y sitio del trabajo 38 (agua en la ZMVM) para IJCOPI.
+- Repositorio de trabajo en esta PC: C:\Users\gabri\Documents\GitHub Desktop\Data_Warehouse_static, rama ijcopi-zmvm (en línea: https://github.com/gabrielhuav/Data_Warehouse_static/tree/ijcopi-zmvm).
+- Copia y sitio público: C:\Users\gabri\Documents\GitHub Desktop\Data_Warehouse_ZMVM (https://github.com/gabrielhuav/Data_Warehouse_ZMVM y https://gabrielhuav.github.io/Data_Warehouse_ZMVM/).
+
+Primero lee completo AGENTS.md en C:\Users\gabri\Documents\GitHub Desktop\Data_Warehouse_static\AGENTS.md y respeta todas sus reglas (ningún push sin mi autorización, no tocar enlaces de ICOKG, no reutilizar texto del trabajo 37). Háblame en español y sé breve.
+
+Después lee la sección "Lo que tiene este proyecto (PublicMunicipalWorks_DWH) que el artículo de agua (Data_Warehouse_static) aún no tiene" en C:\Users\gabri\Documents\GitHub Desktop\PublicMunicipalWorks_DWH\PROMPT_RELEVO.md (en línea: https://github.com/gabrielhuav/PublicMunicipalWorks_DWH/blob/ijcopi-obras/PROMPT_RELEVO.md) y revisa cómo están implementados el mapa y el buscador en C:\Users\gabri\Documents\GitHub Desktop\PublicMunicipalWorks_DWH\lakehouse\sitio\ (index.html, mapa.js, sitio.css, sitio.js, mapa-teselas.js) y lakehouse/publicar/comprobar_en_vivo.py.
+
+Quiero llevar al sitio de agua (ijcopi/mapa-zm.html, ijcopi/mapa-zm.js, ijcopi/zm.css) esas mejoras, empezando por el buscador unificado (que busque alcaldías/municipios, colonias, pozos, presas, acuíferos, estaciones y lugares abiertos por Photon/Nominatim con autocompletado y teclado) y lo que este proyecto de obras tiene y el de agua aún no, adaptándolo a las capas de agua y actualizando la sección correspondiente del .docx sin pasar de 15 páginas. Antes de editar, dime un plan breve de qué vas a integrar en el sitio de agua y en el artículo.
+```
+
 ## Después, en este orden (ver "Relevo" en AGENTS.md)
 
 1. Gabriel decide si los alumnos de los repositorios de referencia van en agradecimientos.

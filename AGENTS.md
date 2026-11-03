@@ -15,33 +15,16 @@ Repositorio de trabajo: <https://github.com/gabrielhuav/PublicMunicipalWorks_DWH
 
 Los repositorios son públicos: no escribas aquí enlaces a correos, borradores ni datos personales.
 
-## Relevo (2 nov, al cerrar la sesión de Claude)
+## Relevo (actualizado el 3 nov, tras la sesión de Gemini)
 
-Gabriel se quedó sin créditos de Claude y delega el trabajo en otra IA. Así quedó todo:
+Gabriel continuó el relevo de Claude con Gemini. Así quedó todo:
 
-- **La rama `ijcopi-obras` se subió a `origin` el 2 nov, con su autorización.** Antes solo estaba en
-  local porque la regla 5 pide autorización para cada push, y hasta entonces solo se había autorizado
-  el repositorio del lago. Sigue sin fusionarse a `main` (regla 2).
-- **Sitio del lago publicado:** `gabrielhuav/PublicMunicipalWorks_Lakehouse`, commit `e16d6a4`, en
-  <https://gabrielhuav.github.io/PublicMunicipalWorks_Lakehouse/>. La v1 imprime sus URL: no muevas
-  páginas ni cambies los parámetros (`?estado=`, `?folio=`, `?comparar=1`, `?lang=`, `?vista=figura`).
-- **Artículo:** `paper/ijcopi/Paper37_IJCOPI_v1_extendida.docx` y su PDF: 15 páginas (el máximo),
-  10,171 palabras (mínimo 9,582), resumen de 140, seis palabras clave y todo lo nuevo en amarillo. Lo
-  arma `paper/ijcopi/extender_v1.py` desde la base congelada; no edites el .docx a mano, porque la
-  siguiente corrida lo sobrescribe.
-- **No queda margen de páginas:** todo texto nuevo obliga a recortar otro. Mide siempre con
-  `word_a_pdf.ps1`, corre `verificar_amarillo.py` y revisa el PDF a ojo.
-- **Lo que falta, en orden:** (1) Gabriel confirma lo que la sección 9.4 dice de los panoramas de
-  Street View (ver Ejemplo; ya eligió la opción de enlazar en 9.4 al comparador en vivo del sitio);
-  (2) decide si los alumnos van en agradecimientos; (3) revisa la v1 completa, incluida la declaración
-  de IA; (4) envío a IJCOPI antes del 9 nov, con el correo visto y aprobado por Gabriel (regla 6). El
-  encabezado de la plantilla dice "Author et al.": no se revisó si IJCOPI pide cambiarlo.
-- **Para retomar:** Docker Desktop quedó apagado. El almacén se levanta con
-  `docker compose -f docker/compose.yml up -d db` y el lago con
-  `docker compose -f lakehouse/compose.yml up -d`; el sitio local, con la configuración `sitio-lago`
-  de `.claude/launch.json` (puerto 8948). Para publicar el sitio: commit en la rama,
-  `lakehouse/publicar/publicar.ps1`, commit y push en la copia pública con autorización, y
-  `lakehouse/publicar/comprobar_en_vivo.py` hasta "distintos: 0".
+- **Rama `ijcopi-obras` al día en `origin`:** sin fusionarse a `main` (regla 2). Incluye `PROMPT_RELEVO.md` con el resumen y el prompt para llevar el buscador y mejoras del mapa al proyecto hermano de agua (`Data_Warehouse_static`, trabajo 38).
+- **Sitio del lago publicado (sexta publicación):** `gabrielhuav/PublicMunicipalWorks_Lakehouse`, commit `1032ccf`, en <https://gabrielhuav.github.io/PublicMunicipalWorks_Lakehouse/> (`archivos: 2545, iguales: 2545, distintos: 0`). La v1 imprime sus URL: no muevas páginas ni cambies los parámetros (`?estado=`, `?folio=`, `?comparar=1`, `?lang=`, `?vista=figura`, `?evidencia=`).
+- **Artículo verificado:** `paper/ijcopi/Paper37_IJCOPI_v1_extendida.docx` y su PDF: **15 páginas** (el máximo), **10,180 palabras** (mínimo 9,582), resumen de **140 palabras**, **6 palabras clave** y **`palabras agregadas sin amarillo: 0`**. Se comprobaron todas las cifras contra sus scripts y evidencias, las **28 referencias** en APA 7 contra sus citas en el texto y las **32 URL y DOI** en línea (`200 OK` / DOI válido). Lo arma `paper/ijcopi/extender_v1.py` desde la base congelada; no edites el `.docx` a mano.
+- **No queda margen de páginas:** todo texto nuevo obliga a recortar otro. Mide siempre con `word_a_pdf.ps1`, corre `verificar_amarillo.py` y revisa el PDF a ojo.
+- **Lo que falta, en orden:** (1) Gabriel decide si los alumnos van en agradecimientos; (2) revisa la v1 completa, incluida la declaración de IA (que ya menciona a Claude y Gemini); (3) envío a IJCOPI antes del 9 nov, con el correo visto y aprobado por Gabriel (regla 6). El encabezado de la plantilla dice "Author et al.": no se revisó si IJCOPI pide cambiarlo.
+- **Para retomar:** Docker Desktop quedó apagado. El almacén se levanta con `docker compose -f docker/compose.yml up -d db` y el lago con `docker compose -f lakehouse/compose.yml up -d`; el sitio local, con la configuración `sitio-lago` de `.claude/launch.json` (puerto 8948). Para publicar el sitio: commit en la rama, `lakehouse/publicar/publicar.ps1`, commit y push en la copia pública con autorización, y `lakehouse/publicar/comprobar_en_vivo.py` hasta "distintos: 0".
 
 ## Reglas que no se negocian
 
@@ -388,10 +371,11 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Hecho (1 nov):** rama `ijcopi-obras`, esta memoria, `scripts/verificar_enlaces_springer.ps1` (21
   enlaces y 2 tags), reproducción de las cifras, verificación de fuentes y revisión de los
   repositorios de alumnos.
-- **Hecho (2 nov):** las cinco entregas del plan (lago, auditoría, criterio de costo, OC4IDS y
-  grafo); el sitio del lago, en cinco publicaciones, la última `e16d6a4`; y la v1 extendida, con 15
-  páginas y 10,171 palabras, sin margen de páginas.
-- **Rama `ijcopi-obras` en `origin` desde el 2 nov**, con autorización de Gabriel.
+- **Hecho (2-3 nov):** las cinco entregas del plan (lago, auditoría, criterio de costo, OC4IDS y
+  grafo); el sitio del lago, en seis publicaciones, la última `1032ccf` (`distintos: 0`); y la v1
+  extendida, con **15 páginas** y **10,180 palabras** (`palabras agregadas sin amarillo: 0`),
+  verificada en cifras, referencias (28) y enlaces/DOI (32).
+- **Rama `ijcopi-obras` en `origin` desde el 2 nov**, actualizada el 3 nov con autorización de Gabriel.
 - **Descargas de trabajo:** los ZIP de SHCP y los extractos quedaron en el scratchpad de una sesión,
   no en el repositorio; `lakehouse/etl/ejecutar.py` los vuelve a bajar y comprueba su SHA-256.
 
@@ -439,8 +423,15 @@ trabajo 38 va al mismo número y vive en `gabrielhuav/Data_Warehouse_static`, ra
 - **Pedidos del 2 nov, cuarta tanda, publicados con autorización (`e16d6a4` en el repositorio
   público; los 2,545 archivos del sitio dan en vivo el mismo SHA-256 que en local):** copia en Internet Archive junto a cada
   enlace de la dependencia; fechas reales de toma en el antes y ahora de Esri; Street View incrustado;
-  `?folio=` y `?comparar=1`; figuras 4 y 5 nuevas con el ejemplo del tanque (ver Ejemplo). Falta que
-  Gabriel confirme lo que el texto dice de los panoramas de Street View.
+  `?folio=` y `?comparar=1`; figuras 4 y 5 nuevas con el ejemplo del tanque (ver Ejemplo).
+- **Pedidos del 2-3 nov, quinta tanda, publicados con autorización (`1032ccf` en el repositorio
+  público; los 2,545 archivos del sitio dan en vivo el mismo SHA-256 que en local):** enlace en 9.4 al
+  comparador en vivo (`?estado=15&folio=MEX17170401001337&comparar=1`); filtro `ev.16` ("Con Street
+  View antes y después"); ocultación de círculos municipales de otros estados y recorte de puntos con
+  coordenadas fuera del estado seleccionado (`p.fuera`); Figura 4 recapturada con el mapa completo del
+  Estado de México y todos los filtros visibles; verificación de `Paper37_IJCOPI_v1_extendida.docx`
+  (15 páginas, 10,180 palabras, 0 sin amarillo, 28 referencias, 32 enlaces/DOI); y resumen en
+  `PROMPT_RELEVO.md` para llevar el buscador y mejoras del mapa al proyecto de agua (`Data_Warehouse_static`).
 - Decidir si los alumnos de los repositorios de referencia van en agradecimientos.
 - Revisar la v1 completa, sobre todo la declaración de IA, que dice que los autores revisaron y
   aprobaron el texto nuevo.
